@@ -1,0 +1,5 @@
+D:\01_cégep\session-4\dev-bdd\travaux\hugoland\HugoLand\TP01_Library\bin\Debug\TP01_Library.dll
+D:\01_cégep\session-4\dev-bdd\travaux\hugoland\HugoLand\TP01_Library\bin\Debug\TP01_Library.pdb
+D:\01_cégep\session-4\dev-bdd\travaux\hugoland\HugoLand\TP01_Library\obj\Debug\TP01_Library.csproj.CoreCompileInputs.cache
+D:\01_cégep\session-4\dev-bdd\travaux\hugoland\HugoLand\TP01_Library\obj\Debug\TP01_Library.dll
+D:\01_cégep\session-4\dev-bdd\travaux\hugoland\HugoLand\TP01_Library\obj\Debug\TP01_Library.pdb
