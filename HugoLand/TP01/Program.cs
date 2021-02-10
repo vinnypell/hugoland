@@ -10,6 +10,7 @@ namespace TP01
     {
         static void Main(string[] args)
         {
+
         }
     }
 }
