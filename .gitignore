@@ -14,3 +14,6 @@
 *.recipe
 *.txt
 *.idb
+.vs/HugoLand/v16/.suo
+.TP01\obj\Debug
+.TP01_Library\obj\Debug
