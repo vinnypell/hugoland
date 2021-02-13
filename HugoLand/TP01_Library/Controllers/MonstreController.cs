@@ -5,12 +5,12 @@ using System.Text;
 using System.Threading.Tasks;
 using TP01_Library.Controllers;
 
-namespace TP01_Library
+namespace TP01_Library.Controllers
 {
     /// <summary>
     /// Auteur :        Vincent Pelland
     /// Descripton:     Gère les actions sur les Monstres.
-    /// Date :          2020-02-10
+    /// Date :          2021-02-10
     /// </summary>
     public class MonstreController
     {
@@ -19,7 +19,7 @@ namespace TP01_Library
         /// <summary>
         /// Auteur :        Vincent Pelland
         /// Description:    Permet d'ajouter un monstre dans un monde spécifique.
-        /// Date :          2020-02-10
+        /// Date :          2021-02-10
         /// </summary>
         /// <param name="p_monde"></param>
         /// <param name="p_iPositionX"></param>
@@ -56,19 +56,22 @@ namespace TP01_Library
         /// <summary>
         /// Auteur :        Vincent Pelland
         /// Description:    Permet de supprimer/tuer un monstre selon son monde passé en paramètre.
-        /// Date :          2020-02-10
+        /// Date :          2021-02-10
         /// </summary>
         /// <param name="p_monde"></param>
         /// <param name="p_monstre"></param>
-        public void SupprimerMonstre(Monde p_monde, Monstre p_monstre)
+        public void SupprimerMonstre(Monde p_monde, int p_iMonstreId)
         {
             using (HugoLandContext dbContext = new HugoLandContext())
             {
-                Monstre monstre = dbContext.Monstres.FirstOrDefault(x => x.MondeId == p_monde.Id &&
-                                                                    x.Id == p_monstre.Id);
+                if (p_monde != null)
+                {
+                    Monstre monstre = dbContext.Monstres.FirstOrDefault(x => x.MondeId == p_monde.Id &&
+                                                                        x.Id == p_iMonstreId);
 
-                dbContext.Monstres.Remove(monstre);
-                dbContext.SaveChanges();
+                    dbContext.Monstres.Remove(monstre);
+                    dbContext.SaveChanges();
+                }
             }
         }
 
@@ -77,37 +80,46 @@ namespace TP01_Library
         /// Auteur :    Vincent Pelland
         /// Description:    Permet de modifier les informations 
         ///                 du monstre selon son monde passé en paramètre.
-        /// Date :  2020-02-10
+        /// Date :  2021-02-10
         /// </summary>
         /// <param name="p_monde"></param>
         /// <param name="p_monstre"></param>
         /// <param name="p_sNom"></param>
         /// <param name="p_iNouveauNiveau"></param>
-        public void ModifierInfoMonstre(Monde p_monde, Monstre p_monstre, string p_sNom = null, int p_iNouveauNiveau = 0)
+        public void ModifierInfoMonstre(Monstre p_monstre, Monde p_monde, Monde p_newMonde = null, string p_sNom = null, int p_iNouveauNiveau = -1)
         {
             using (HugoLandContext dbContext = new HugoLandContext())
             {
-                Monstre monstre = dbContext.Monstres.FirstOrDefault(x => x.MondeId == p_monde.Id &&
-                                                                    x.Id == p_monstre.Id);
-
-                if (p_iNouveauNiveau != 0)
+                if (p_monde != null)
                 {
-                    int iDmgMIN = Constantes.DMG_PER_LEVEL * p_iNouveauNiveau - Constantes.DMG_MIN_GAP;
-                    int iDmgMAX = Constantes.DMG_PER_LEVEL * p_iNouveauNiveau;
-                    int iStatPV = Constantes.HP_PER_LEVEL * p_iNouveauNiveau;
+                    Monstre monstre = dbContext.Monstres.FirstOrDefault(x => x.MondeId == p_monde.Id &&
+                                                                        x.Id == p_monstre.Id);
 
-                    monstre.Niveau = p_iNouveauNiveau;
-                    monstre.StatDmgMax = iDmgMAX;
-                    monstre.StatDmgMin = iDmgMIN;
-                    monstre.StatPV = iStatPV;
+                    if (p_iNouveauNiveau != -1)
+                    {
+                        int iDmgMIN = Constantes.DMG_PER_LEVEL * p_iNouveauNiveau - Constantes.DMG_MIN_GAP;
+                        int iDmgMAX = Constantes.DMG_PER_LEVEL * p_iNouveauNiveau;
+                        int iStatPV = Constantes.HP_PER_LEVEL * p_iNouveauNiveau;
+
+                        monstre.Niveau = p_iNouveauNiveau;
+                        monstre.StatDmgMax = iDmgMAX;
+                        monstre.StatDmgMin = iDmgMIN;
+                        monstre.StatPV = iStatPV;
+                    }
+
+                    if (!string.IsNullOrEmpty(p_sNom))
+                    {
+                        monstre.Nom = p_sNom;
+                    }
+
+                    if (p_newMonde != null)
+                    {
+                        monstre.Monde = p_newMonde;
+                        monstre.MondeId = p_newMonde.Id;
+                    }
+
+                    dbContext.SaveChanges();
                 }
-
-                if (string.IsNullOrEmpty(p_sNom))
-                {
-                    monstre.Nom = p_sNom;
-                }
-
-                dbContext.SaveChanges();
             }
         }
     }

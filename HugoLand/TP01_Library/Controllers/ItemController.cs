@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace TP01_Library
+namespace TP01_Library.Controllers
 {
     public class ItemController
     {
@@ -42,16 +42,20 @@ namespace TP01_Library
         /// </summary>
         /// <param name="p_Item"></param>
         /// <param name="p_CompteJoeur"></param>
-        public void SupprimerItem(Item p_Item, Hero p_Hero)
+        public void SupprimerItem(int p_iItemId, Hero p_Hero)
         {
             using (HugoLandContext dbcontext = new HugoLandContext())
             {
-                Item itemDelete = dbcontext.Items.FirstOrDefault(x => x.Id == p_Item.Id);
+                if (p_Hero != null)
+                {
+                    Item itemDelete = dbcontext.Items.FirstOrDefault(x => x.Id == p_iItemId);
 
-                itemDelete.x = null;
-                itemDelete.y = null;
-                itemDelete.IdHero = p_Hero.Id;
-                dbcontext.SaveChanges();
+                    itemDelete.x = null;
+                    itemDelete.y = null;
+
+                    itemDelete.IdHero = p_Hero.Id;
+                    dbcontext.SaveChanges();
+                }
             }
         }
         /// <summary>

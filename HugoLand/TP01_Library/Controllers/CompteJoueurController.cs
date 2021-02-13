@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace TP01_Library
+namespace TP01_Library.Controllers
 {
     public class CompteJoueurController
     {
@@ -37,11 +37,13 @@ namespace TP01_Library
         /// Date: 2021-02-11
         /// </summary>
         /// <param name="p_CompteJoueur"></param>
-        public void SupprimerJoueur(CompteJoueur p_CompteJoueur)
+        public void SupprimerJoueur(int p_iCompteJoueurId)
         {
             using (HugoLandContext dbcontext = new HugoLandContext())
             {
-                dbcontext.CompteJoueurs.Remove(p_CompteJoueur);
+                CompteJoueur compteJoueur = dbcontext.CompteJoueurs.FirstOrDefault(x => x.Id == p_iCompteJoueurId);
+
+                dbcontext.CompteJoueurs.Remove(compteJoueur);
                 dbcontext.SaveChanges();
             }
         }

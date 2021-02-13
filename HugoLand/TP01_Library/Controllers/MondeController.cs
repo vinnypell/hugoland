@@ -4,19 +4,19 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace TP01_Library
+namespace TP01_Library.Controllers
 {
     /// <summary>
     /// Auteur :        Vincent Pelland
     /// Description:    Gestion des mondes créés dans HugoLand.
-    /// Date :          2020-02-10
+    /// Date :          2021-02-10
     /// </summary>
     public class MondeController
     {
         /// <summary>
         /// Auteur :        Vincent Pelland
         /// Description:    Ajoute un monde neuf, sans listes mais fourni les dimensions et sa description.
-        /// Date :          2020-02-10
+        /// Date :          2021-02-10
         /// </summary>
         /// <param name="p_sDescription"></param>
         /// <param name="p_iLimiteX"></param>
@@ -38,14 +38,16 @@ namespace TP01_Library
         /// <summary>
         /// Auteur :        Vincent Pelland
         /// Description:    Supprime le monde passé en paramètre.
-        /// Date :          2020-02-10
+        /// Date :          2021-02-10
         /// </summary>
         /// <param name="p_monde"></param>
-        public void SupprimerMonde(Monde p_monde)
+        public void SupprimerMonde(int p_iMondeId)
         {
             using (HugoLandContext dbContext = new HugoLandContext())
             {
-                dbContext.Mondes.Remove(p_monde);
+                Monde monde = dbContext.Mondes.FirstOrDefault(x => x.Id == p_iMondeId);
+
+                dbContext.Mondes.Remove(monde);
                 dbContext.SaveChanges();
             }
         }
@@ -53,7 +55,7 @@ namespace TP01_Library
         /// <summary>
         /// Auteur :        Vincent Pelland
         /// Description:    Permet de modifier de nouvelles dimensions d'un monde passé en paramètre.
-        /// Date :          2020-02-10
+        /// Date :          2021-02-10
         /// </summary>
         /// <param name="p_monde"></param>
         /// <param name="p_iNouvelleDimensionsX"></param>
@@ -74,7 +76,7 @@ namespace TP01_Library
         /// <summary>
         /// Auteur :        Vincent Pelland
         /// Description:    Permet de modifier la description d'un monde passé en paramètre.
-        /// Date :          2020-02-10
+        /// Date :          2021-02-10
         /// </summary>
         /// <param name="p_monde"></param>
         /// <param name="p_sNouvelleDescription"></param>
@@ -94,7 +96,7 @@ namespace TP01_Library
         /// <summary>
         /// Auteur :        Vincent Pelland
         /// Description:    Retourne la liste des Mondes.
-        /// Date :          2020-02-10
+        /// Date :          2021-02-10
         /// </summary>
         /// <returns></returns>
         public List<Monde> ListerMondes()

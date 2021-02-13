@@ -12,6 +12,21 @@
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
+    <PublishUrl>publish\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -84,7 +99,6 @@
     <Compile Include="InventaireHero.cs">
       <DependentUpon>HugoLandContext.tt</DependentUpon>
     </Compile>
-    <Compile Include="Controllers\InventaireHeroController.cs" />
     <Compile Include="Controllers\EffetItemController.cs" />
     <Compile Include="Item.cs">
       <DependentUpon>HugoLandContext.tt</DependentUpon>
@@ -110,12 +124,26 @@
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>HugoLandContext.Designer.cs</LastGenOutput>
     </EntityDeploy>
+    <None Include="Datas\GameData\TileLookups.csv" />
+    <None Include="Datas\GrilleDeTests.xlsx" />
     <None Include="HugoLandContext.edmx.diagram">
       <DependentUpon>HugoLandContext.edmx</DependentUpon>
     </None>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Datas\GameData\Animations.bmp" />
+    <Content Include="Datas\GameData\eat.wav" />
+    <Content Include="Datas\GameData\fight.wav" />
+    <Content Include="Datas\GameData\kiss.wav" />
+    <Content Include="Datas\GameData\magic.wav" />
+    <Content Include="Datas\GameData\Map.txt" />
+    <Content Include="Datas\GameData\pickup.wav" />
+    <Content Include="Datas\GameData\start.wav" />
+    <Content Include="Datas\GameData\Tiles.bmp" />
+    <Content Include="Datas\rpggame.mdf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="HugoLandContext.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>HugoLandContext.edmx</DependentUpon>
@@ -129,6 +157,18 @@
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include=".NETFramework,Version=v4.7.2">
+      <Visible>False</Visible>
+      <ProductName>Microsoft .NET Framework 4.7.2 %28x86 and x64%29</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
