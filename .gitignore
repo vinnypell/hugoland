@@ -15,5 +15,7 @@
 *.txt
 *.idb
 .vs/HugoLand/v16/.suo
-.TP01\obj\Debug
 .TP01_Library\obj\Debug
+.TP01_Tests\obj\Debug
+.TP01_Library\bin\Debug
+.TP01_Tests\bin\Debug
