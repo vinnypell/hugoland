@@ -70,6 +70,34 @@ namespace TP01_Library.Controllers
         }
 
         /// <summary>
+        /// Auteur : Simon Lalancette
+        /// Desc : Modifie un classe selon une classe passée en paramètre
+        /// </summary>
+        /// <param name="modified"></param>
+        public void ModifierClasse(Classe modified)
+        {
+            using (var context = new HugoLandContext())
+            {
+                Classe original = context.Classes.FirstOrDefault(x => x.Id == modified.Id);
+
+                if(original != null)
+                {
+                    original.Heros = modified.Heros;
+                    original.Monde = modified.Monde;
+                    original.NomClasse = modified.NomClasse;
+                    original.StatBaseDex = modified.StatBaseDex;
+                    original.StatBaseInt = modified.StatBaseInt;
+                    original.StatBaseStr = modified.StatBaseStr;
+                    original.StatBaseVitalite = modified.StatBaseVitalite;
+                    original.Description = modified.Description;
+                }
+
+                context.SaveChanges();
+
+            }
+        }
+
+        /// <summary>
         /// Auteur :        Vincent Pelland
         /// Description:    Permet de modifier les valeurs d'une classe selon le monde spécifier en paramètre.
         /// Date :          2021-02-13

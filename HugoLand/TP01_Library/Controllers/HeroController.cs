@@ -7,234 +7,159 @@ using System.Threading.Tasks;
 namespace TP01_Library.Controllers
 {
     /// <summary>
-    /// Auteur :        Vincent Pelland
+    /// Auteur :        Simon Lalancette
     /// Description:    Gère les actions liées au Héros.
     /// Date :          2021-02-13
     /// </summary>
     public class HeroController
     {
         Random _rnd = new Random();
+        /// <summary>
+        /// Auteur : Simon Lalancette
+        /// Desc : Permet de créer un héro et de le sauvegarder dans la Bd
+        /// </summary>
+        /// <param name="joueur">le joueur qui crée le héro</param>
+        /// <param name="monde">le monde dans lequel le héro se trouve</param>
+        /// <param name="classe">la classe choisie</param>
+        /// <param name="position_x">position de départ x</param>
+        /// <param name="position_y">position de départ y</param>
+        /// <param name="nomHero">Nom du héro</param>
+        public void CreerHero(CompteJoueur joueur, Monde monde, Classe classe, int position_x, int position_y, string nomHero)
+        {
+            using (var context = new HugoLandContext())
+            {
+                //randomize base stats
+                int Dex = Outil.RollD20();
+                int intel = Outil.RollD20();
+                int str = Outil.RollD20();
+                int pv = 10 + Outil.RollD20();
+
+                Hero newHero = new Hero()
+                {
+                    Monde = monde,
+                    MondeId = monde.Id,
+                    NomHero = nomHero,
+                    Classe = classe,
+                    ClasseId = classe.Id,
+                    Experience = 0,
+                    Niveau = 1,
+                    x = position_x,
+                    y = position_y,
+                    StatDex = Dex + classe.StatBaseDex,
+                    StatInt = intel + classe.StatBaseInt,
+                    StatStr = str + classe.StatBaseStr,
+                    StatVitalite = pv + classe.StatBaseVitalite,
+                    EstConnecte = false,
+                    CompteJoueur = joueur,
+                    CompteJoueurId = joueur.Id
+                };
+
+                context.Heros.Add(newHero);
+                context.SaveChanges();
+            }
+        }
+
 
         /// <summary>
-        /// Auteur :        Vincent Pelland
-        /// Description:    Permet d'ajouter un héro avec des valeurs aléatoires basé sur le niveau du héro ou selon passé en paramètre.
-        /// Date :          2021-02-13
+        /// Auteur : Simon Lalancette
+        /// Desc : Permet de supprimer en cascade un héro et tout objet lié à lui
         /// </summary>
-        /// <param name="p_compteJoueur"></param>
-        /// <param name="p_monde"></param>
-        /// <param name="p_classe"></param>
-        /// <param name="p_sNom"></param>
-        /// <param name="p_bEstConnecte"></param>
-        /// <param name="p_iExperience"></param>
-        /// <param name="p_iPositionX"></param>
-        /// <param name="p_iPositionY"></param>
-        /// <param name="p_iNiveau"></param>
-        public void AjouterHero(CompteJoueur p_compteJoueur, Monde p_monde, Classe p_classe, string p_sNom, bool p_bEstConnecte,
-                                    int p_iExperience, int p_iPositionX, int p_iPositionY, int p_iNiveau = 1)
+        /// <param name="heroId"></param>
+        public void DeleteHero(int heroId)
         {
-            using (HugoLandContext dbContext = new HugoLandContext())
+            using (var context = new HugoLandContext())
             {
-                int iStatPV = 0;
-                if (p_iNiveau != 1)
-                {
-                    iStatPV = (int)((double)Constantes.HP_PER_LEVEL * Constantes.MULTIPLE_HERO_STAT) * p_iNiveau;
-                }
+                Hero toDelete = context.Heros.FirstOrDefault(x => x.Id == heroId);
 
-                int iMultiplier = _rnd.Next(0, (int)((double)Constantes.MAX_STAT * Constantes.MULTIPLE_HERO_STAT));
-                int iStatStr = (int)((double)Constantes.MAX_STAT * Constantes.MULTIPLE_HERO_STAT) * iMultiplier;
-                iMultiplier = _rnd.Next(0, (int)((double)Constantes.MAX_STAT * Constantes.MULTIPLE_HERO_STAT));
-                int iStatDex = (int)((double)Constantes.MAX_STAT * Constantes.MULTIPLE_HERO_STAT) * iMultiplier;
-                iMultiplier = _rnd.Next(0, (int)((double)Constantes.MAX_STAT * Constantes.MULTIPLE_HERO_STAT));
-                int iStatInt = (int)((double)Constantes.MAX_STAT * Constantes.MULTIPLE_HERO_STAT) * iMultiplier;
-
-                if (p_compteJoueur != null && p_monde != null && p_classe != null)
+                if (toDelete != null)
                 {
-                    dbContext.Heros.Add(new Hero()
-                    {
-                        CompteJoueur = p_compteJoueur,
-                        CompteJoueurId = p_compteJoueur.Id,
-                        Niveau = p_iNiveau,
-                        Experience = 0,
-                        x = p_iPositionX,
-                        y = p_iPositionY,
-                        StatStr = iStatStr,
-                        StatDex = iStatDex,
-                        StatInt = iStatInt,
-                        StatVitalite = iStatPV == 0 ? Constantes.HP_PER_LEVEL : iStatPV,
-                        Monde = p_monde,
-                        MondeId = p_monde.Id,
-                        Classe = p_classe,
-                        ClasseId = p_classe.Id,
-                        NomHero = p_sNom,
-                        EstConnecte = p_bEstConnecte
-                    });
+                    context.InventaireHeroes.RemoveRange(toDelete.InventaireHeroes);
+                    toDelete.InventaireHeroes.Clear();
+
+                    context.Items.RemoveRange(toDelete.Items);
+                    toDelete.Items.Clear();
+
+                    context.Heros.Remove(toDelete);
+
+                    context.SaveChanges();
                 }
             }
         }
 
         /// <summary>
-        /// Auteur :        Vincent Pelland
-        /// Description:    Permet de supprimer un héro selon le compte joueur et le monde passé en paramètre.
-        /// Date :          2021-02-13
+        /// Auteur : Simon Lalancette
+        /// Desc : Permet d'appliqué les modifications apportées à un héro grâce à un formulaire/menu
         /// </summary>
-        /// <param name="p_compteJoueur"></param>
-        /// <param name="p_monde"></param>
-        /// <param name="p_hero"></param>
-        public void SupprimerHero(CompteJoueur p_compteJoueur, Monde p_monde, int p_iHeroId)
+        /// <param name="modified"></param>
+        public void EditHero(Hero modified)
         {
-            using (HugoLandContext dbContext = new HugoLandContext())
+            using (var context = new HugoLandContext())
             {
-                if (p_compteJoueur != null && p_monde != null)
+                Hero original = context.Heros.FirstOrDefault(x => x.Id == modified.Id);
+
+                if (original != null)
                 {
-                    Hero hero = dbContext.Heros.FirstOrDefault(x => x.Id == p_iHeroId
-                                                                && x.CompteJoueurId == p_compteJoueur.Id
-                                                                && x.MondeId == p_monde.Id);
-
-                    dbContext.Heros.Remove(hero);
-                    dbContext.SaveChanges();
+                    original.Classe = modified.Classe;
+                    original.CompteJoueur = modified.CompteJoueur;
+                    original.Experience = modified.Experience;
+                    original.InventaireHeroes = modified.InventaireHeroes;
+                    original.Monde = modified.Monde;
+                    original.Niveau = modified.Niveau;
+                    original.NomHero = modified.NomHero;
+                    original.StatDex = modified.StatDex;
+                    original.StatInt = modified.StatInt;
+                    original.StatStr = modified.StatStr;
+                    original.StatVitalite = modified.StatVitalite;
+                    original.x = modified.x;
+                    original.y = modified.y;
+                    original.Items = modified.Items;
+                    original.EstConnecte = modified.EstConnecte;
                 }
+                context.SaveChanges();
             }
+
         }
-
         /// <summary>
-        /// Auteur :        Vincent Pelland
-        /// Description:    Permet de modifier les valeurs d'un hero selon le compte joueur et le monde passé en paramètre.
-        /// Date :          2021-02-13
+        /// Auteur : Simon Lalancette
+        /// Desc : retourne la liste des objestMonde dans un rayon de 200m autour du héro
         /// </summary>
-        /// <param name="p_compteJoueur"></param>
-        /// <param name="p_monde"></param>
-        /// <param name="p_hero"></param>
-        /// <param name="p_iExperience"></param>
-        /// <param name="p_iNiveau"></param>
-        /// <param name="p_sNom"></param>
-        /// <param name="p_newCompteJoueur"></param>
-        /// <param name="p_iStatPV"></param>
-        /// <param name="p_newMonde"></param>
-        public void ModifierValeursHeros(CompteJoueur p_compteJoueur, Monde p_monde, Hero p_hero, int p_iExperience = -1,
-                                        int p_iNiveau = -1, string p_sNom = "", CompteJoueur p_newCompteJoueur = null,
-                                        int p_iStatPV = -1, Monde p_newMonde = null)
-        {
-            using (HugoLandContext dbContext = new HugoLandContext())
-            {
-                if (p_compteJoueur != null && p_monde != null && p_hero != null)
-                {
-                    Hero hero = dbContext.Heros.FirstOrDefault(x => x.Id == p_hero.Id
-                                            && x.CompteJoueurId == p_compteJoueur.Id
-                                            && x.MondeId == p_monde.Id);
-                    if (p_iExperience != -1)
-                    {
-                        hero.Experience = p_iExperience;
-                    }
-
-                    if (p_iNiveau != -1)
-                    {
-                        int iMultiplier = _rnd.Next(0, (int)((double)Constantes.MAX_STAT * (p_iNiveau * Constantes.MULTIPLE_HERO_STAT)));
-                        int iStatPV = (int)((double)Constantes.HP_PER_LEVEL * Constantes.MULTIPLE_HERO_STAT) * p_iNiveau;
-
-                        iMultiplier = _rnd.Next(0, (int)((double)Constantes.MAX_STAT * Constantes.MULTIPLE_HERO_STAT));
-                        int iStatStr = (int)((double)Constantes.MAX_STAT * Constantes.MULTIPLE_HERO_STAT) * iMultiplier;
-                        iMultiplier = _rnd.Next(0, (int)((double)Constantes.MAX_STAT * Constantes.MULTIPLE_HERO_STAT));
-                        int iStatDex = (int)((double)Constantes.MAX_STAT * Constantes.MULTIPLE_HERO_STAT) * iMultiplier;
-                        iMultiplier = _rnd.Next(0, (int)((double)Constantes.MAX_STAT * Constantes.MULTIPLE_HERO_STAT));
-                        int iStatInt = (int)((double)Constantes.MAX_STAT * Constantes.MULTIPLE_HERO_STAT) * iMultiplier;
-
-                        hero.StatDex = iStatDex;
-                        hero.StatStr = iStatStr;
-                        hero.StatInt = iStatInt;
-                        hero.StatVitalite = iStatPV;
-                    }
-
-                    if (p_iStatPV != -1)
-                    {
-                        hero.StatVitalite = p_iStatPV;
-                    }
-
-                    if (!string.IsNullOrEmpty(p_sNom))
-                    {
-                        hero.NomHero = p_sNom;
-                    }
-
-                    if (p_newCompteJoueur != null)
-                    {
-                        hero.CompteJoueur = p_newCompteJoueur;
-                        hero.CompteJoueurId = p_newCompteJoueur.Id;
-                    }
-
-                    if (p_newMonde != null)
-                    {
-                        hero.Monde = p_newMonde;
-                        hero.MondeId = p_newMonde.Id;
-                    }
-
-                    dbContext.SaveChanges();
-                }
-            }
-        }
-
-        /// <summary>
-        /// Auteur :        Vincent Pelland
-        /// Description:    Retourne la liste des objets dans le monde spécifique d'un héro dans un rayon de 200.
-        /// Date :          2021-02-13
-        /// </summary>
-        /// <param name="p_hero"></param>
-        /// <param name="p_monde"></param>
+        /// <param name="hero"></param>
         /// <returns></returns>
-        public List<ObjetMonde> GetObjetMondes(Hero p_hero, Monde p_monde)
+        public List<ObjetMonde> ObjetsVuParHero(Hero hero)
         {
-            using (HugoLandContext dbContext = new HugoLandContext())
-            {
-                if (p_monde != null && p_hero != null)
-                {
-                    int iMaxPos = 200;
-                    return dbContext.ObjetMondes.Where(x => x.x < (p_hero.x + iMaxPos) || x.x > (p_hero.x - iMaxPos)
-                                                              && x.y < (p_hero.y + iMaxPos) || x.y < (p_hero.y - iMaxPos)).ToList();
-                }
-
-                return null;
-            }
+            return hero.Monde.ObjetMondes.Where(o => o.x >= (hero.x - 200) && o.x <= (hero.x + 200) && o.y >= (hero.y - 200) && o.y <= (hero.y + 200)).ToList();
         }
 
         /// <summary>
-        /// Auteur :        Vincent Pelland
-        /// Description:    Retourne la liste des héros d'un compte joueur
-        /// Date :          2021-02-13
+        /// Auteur : Simon Lalancette
+        /// Desc : retourne la liste de tous les héro associé au compte joueur
         /// </summary>
-        /// <param name="p_compteJoueur"></param>
+        /// <param name="JoueurId"></param>
         /// <returns></returns>
-        public List<Hero> GetHeroes(CompteJoueur p_compteJoueur)
+        public List<Hero> HeroCompteJoueur(int JoueurId)
         {
-            using (HugoLandContext dbContext = new HugoLandContext())
+            using (var context = new HugoLandContext())
             {
-                if (p_compteJoueur != null)
-                {
-                    return dbContext.CompteJoueurs.Where(x => x.Id == p_compteJoueur.Id).SelectMany(h => h.Heros).ToList();
-                } 
-
-                return null;
+                return context.Heros.Where(x => x.CompteJoueurId == JoueurId).ToList();
             }
         }
 
         /// <summary>
-        /// Auteur :        Vincent Pelland
-        /// Description:    Permet de modifier la position du héro en x ou y passé en paramètre.
-        /// Date :          2021-02-13
+        /// Auteur : Simon Lalancette
+        /// Desc : Met à jour la position du héro selon les nouvelles coordonnées
         /// </summary>
-        /// <param name="p_hero"></param>
-        /// <param name="p_iNewPositionX"></param>
-        /// <param name="p_iNewPositionY"></param>
-        public void ModifierPositionHero(Hero p_hero, int p_iNewPositionX, int p_iNewPositionY)
+        /// <param name="HeroId"></param>
+        /// <param name="newX"></param>
+        /// <param name="newY"></param>
+        public void Move(int HeroId, int newX, int newY)
         {
-            using (HugoLandContext dbContext = new HugoLandContext())
+            using (var context = new HugoLandContext())
             {
-                if (p_hero != null)
-                {
-                    Hero hero = dbContext.Heros.FirstOrDefault(x => x.Id == p_hero.Id);
+                Hero hero = context.Heros.Find(HeroId);
+                hero.x = newX;
+                hero.y = newY;
 
-                    hero.x = p_iNewPositionX;
-                    hero.y = p_iNewPositionY;
-
-                    dbContext.SaveChanges();
-                }
+                context.SaveChanges();
             }
         }
     }
