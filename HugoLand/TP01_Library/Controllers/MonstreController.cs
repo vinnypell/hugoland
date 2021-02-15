@@ -60,18 +60,15 @@ namespace TP01_Library.Controllers
         /// </summary>
         /// <param name="p_monde"></param>
         /// <param name="p_monstre"></param>
-        public void SupprimerMonstre(Monde p_monde, int p_iMonstreId)
+        public void SupprimerMonstre(int p_iMonstreId)
         {
             using (HugoLandContext dbContext = new HugoLandContext())
             {
-                if (p_monde != null)
-                {
-                    Monstre monstre = dbContext.Monstres.FirstOrDefault(x => x.MondeId == p_monde.Id &&
-                                                                        x.Id == p_iMonstreId);
 
-                    dbContext.Monstres.Remove(monstre);
-                    dbContext.SaveChanges();
-                }
+                Monstre monstre = dbContext.Monstres.FirstOrDefault(x => x.Id == p_iMonstreId);
+
+                dbContext.Monstres.Remove(monstre);
+                dbContext.SaveChanges();
             }
         }
 
