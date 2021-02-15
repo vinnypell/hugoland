@@ -20,39 +20,39 @@ namespace TP01_Library.Tests.Controllers
         public void AjouterObjetMondeTest()
         {
             #region Arrange
-            // environnement de test
-            Mock<DbSet<ObjetMonde>> mockSetObjMonde = new Mock<DbSet<ObjetMonde>>();
-            Mock<DbSet<Monde>> mockSetMonde = new Mock<DbSet<Monde>>();
-            Mock<HugoLandContext> mockDb = new Mock<HugoLandContext>();
-            mockDb.Setup(m => m.ObjetMondes).Returns(mockSetObjMonde.Object);
-            mockDb.Setup(m => m.Mondes).Returns(mockSetMonde.Object);
-
-            // variables monde
-            Monde monde;
-            int mondeId;
-
             // variables obj monde
+            ObjetMonde objetMonde = new ObjetMonde();
             string sDescription = "Objet monde test";
             int iPosX = 50;
             int iPosY = 100;
             int iTypeObjet = 5;
 
-            if (!mockDb.Object.Mondes.Any())
-            {
-                monde = mockDb.Object.Mondes.Add(new Monde()
-                {
-                    Description = "Monde test",
-                    LimiteX = 200,
-                    LimiteY = 200
-                });
+            // variables monde
+            Monde monde = new Monde();
+            int mondeId;
+            bool newMonde = false;
 
-                mockDb.Object.SaveChanges();
-                mondeId = monde.Id;
-            }
-            else
+            // environnement de test
+            using (HugoLandContext db = new HugoLandContext())
             {
-                monde = mockDb.Object.Mondes.FirstOrDefault();
+                monde = db.Mondes.FirstOrDefault();
                 mondeId = monde.Id;
+
+                if (monde == null)
+                {
+                    monde = new Monde()
+                    {
+                        Description = "Monde test",
+                        LimiteX = 200,
+                        LimiteY = 200
+                    };
+
+                    db.Mondes.Add(monde);
+                    db.SaveChanges();
+
+                    mondeId = monde.Id;
+                    newMonde = true;
+                }
             }
             #endregion
 
@@ -63,7 +63,10 @@ namespace TP01_Library.Tests.Controllers
 
             #region Assert
             // aller chercher l'obj monde créer
-            ObjetMonde objetMonde = mockDb.Object.ObjetMondes.FirstOrDefault(x => x.MondeId == mondeId && x.Description == sDescription);
+            using (HugoLandContext db = new HugoLandContext())
+            {
+                objetMonde = db.ObjetMondes.FirstOrDefault(x => x.MondeId == mondeId && x.Description == sDescription);
+            }
 
             // comparer chaque valeur
             Assert.AreEqual(sDescription, objetMonde.Description);
@@ -72,6 +75,19 @@ namespace TP01_Library.Tests.Controllers
             Assert.AreEqual(iTypeObjet, objetMonde.TypeObjet);
             Assert.AreEqual(mondeId, objetMonde.MondeId);
             #endregion
+
+            #region Supprimer
+            using (HugoLandContext db = new HugoLandContext())
+            {
+                objetMonde = db.ObjetMondes.FirstOrDefault(x => x.MondeId == mondeId && x.Description == sDescription &&
+                                                            x.x == iPosX && x.y == iPosY && x.TypeObjet == iTypeObjet);
+                db.ObjetMondes.Remove(objetMonde);
+                if (newMonde)
+                    db.Mondes.Remove(monde);
+                db.SaveChanges();
+            }
+            #endregion
+
         }
 
         [TestMethod()]
