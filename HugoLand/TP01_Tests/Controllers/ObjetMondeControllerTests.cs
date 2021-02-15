@@ -19,20 +19,119 @@ namespace TP01_Library.Tests.Controllers
         [TestMethod()]
         public void AjouterObjetMondeTest()
         {
+            #region Monde - pas null
+
             #region Arrange
             // variables obj monde
-            ObjetMonde objetMonde = new ObjetMonde();
+            ObjetMonde objetMonde;
             string sDescription = "Objet monde test";
             int iPosX = 50;
             int iPosY = 100;
             int iTypeObjet = 5;
 
             // variables monde
-            Monde monde = new Monde();
+            Monde monde;
+            int mondeId;
+            bool newMonde = false;
+            int count;
+
+            // environnement de test
+            using (HugoLandContext db = new HugoLandContext())
+            {
+                monde = db.Mondes.FirstOrDefault();
+                mondeId = monde.Id;
+                if (monde == null)
+                {
+                    monde = new Monde()
+                    {
+                        Description = "Monde test",
+                        LimiteX = 200,
+                        LimiteY = 200
+                    };
+
+                    db.Mondes.Add(monde);
+                    db.SaveChanges();
+
+                    mondeId = monde.Id;
+                    newMonde = true;
+                }
+            }
+
+
+            #endregion
+
+            #region Act
+            // call de la méthode à testé
+            ctrl.AjouterObjetMonde(mondeId, sDescription, iPosX, iPosY, iTypeObjet);
+            #endregion
+
+            #region Assert
+            // aller chercher l'obj monde créer
+            using (HugoLandContext db = new HugoLandContext())
+            {
+                objetMonde = db.ObjetMondes.FirstOrDefault(x => x.MondeId == mondeId && x.Description == sDescription);
+
+                // comparer chaque valeur
+                Assert.AreEqual(sDescription, objetMonde.Description);
+                Assert.AreEqual(iPosX, objetMonde.x);
+                Assert.AreEqual(iPosY, objetMonde.y);
+                Assert.AreEqual(iTypeObjet, objetMonde.TypeObjet);
+                Assert.AreEqual(mondeId, objetMonde.MondeId);
+            }
+            #endregion
+
+            #region Supprimer
+            using (HugoLandContext db = new HugoLandContext())
+            {
+                objetMonde = db.ObjetMondes.FirstOrDefault(x => x.MondeId == mondeId && x.Description == sDescription &&
+                                                            x.x == iPosX && x.y == iPosY && x.TypeObjet == iTypeObjet);
+                db.ObjetMondes.Remove(objetMonde);
+                if (newMonde)
+                    db.Mondes.Remove(monde);
+                db.SaveChanges();
+
+                count = db.ObjetMondes.Count();
+            }
+            #endregion
+
+            #endregion
+
+            #region Monde - null
+
+            #region Act & Assert
+            ctrl.AjouterObjetMonde(-1, sDescription, iPosX, iPosY, iTypeObjet);
+
+            using (HugoLandContext db = new HugoLandContext())
+            {
+                int newCount = db.ObjetMondes.Count();
+
+                Assert.AreEqual(count, newCount);
+            }
+            #endregion
+
+            #endregion
+        }
+
+        [TestMethod()]
+        public void SupprimerObjetMondeTest()
+        {
+            #region Monde - pas null
+
+            #region Arrange
+            // variables obj monde
+            ObjetMonde objetMonde;
+            int objetMondeId;
+            string sDescription = "Objet monde test";
+            int iPosX = 50;
+            int iPosY = 100;
+            int iTypeObjet = 5;
+            int objMondeCount;
+
+            // variables monde
+            Monde monde;
             int mondeId;
             bool newMonde = false;
 
-            // environnement de test
             using (HugoLandContext db = new HugoLandContext())
             {
                 monde = db.Mondes.FirstOrDefault();
@@ -53,53 +152,148 @@ namespace TP01_Library.Tests.Controllers
                     mondeId = monde.Id;
                     newMonde = true;
                 }
-            }
-            #endregion
 
-            #region Act
-            // call de la méthode à testé
-            ctrl.AjouterObjetMonde(monde, sDescription, iPosX, iPosY, iTypeObjet);
-            #endregion
+                objetMonde = new ObjetMonde()
+                {
+                    Description = sDescription,
+                    x = iPosX,
+                    y = iPosY,
+                    TypeObjet = iTypeObjet,
+                    MondeId = mondeId
+                };
 
-            #region Assert
-            // aller chercher l'obj monde créer
-            using (HugoLandContext db = new HugoLandContext())
-            {
-                objetMonde = db.ObjetMondes.FirstOrDefault(x => x.MondeId == mondeId && x.Description == sDescription);
-            }
-
-            // comparer chaque valeur
-            Assert.AreEqual(sDescription, objetMonde.Description);
-            Assert.AreEqual(iPosX, objetMonde.x);
-            Assert.AreEqual(iPosY, objetMonde.y);
-            Assert.AreEqual(iTypeObjet, objetMonde.TypeObjet);
-            Assert.AreEqual(mondeId, objetMonde.MondeId);
-            #endregion
-
-            #region Supprimer
-            using (HugoLandContext db = new HugoLandContext())
-            {
-                objetMonde = db.ObjetMondes.FirstOrDefault(x => x.MondeId == mondeId && x.Description == sDescription &&
-                                                            x.x == iPosX && x.y == iPosY && x.TypeObjet == iTypeObjet);
-                db.ObjetMondes.Remove(objetMonde);
-                if (newMonde)
-                    db.Mondes.Remove(monde);
+                db.ObjetMondes.Add(objetMonde);
                 db.SaveChanges();
+
+                objetMondeId = objetMonde.Id;
+
+                objMondeCount = db.ObjetMondes.Count();
             }
             #endregion
 
-        }
+            #region Act & Assert
+            // call de la méthode
+            ctrl.SupprimerObjetMonde(objetMondeId, mondeId);
 
-        [TestMethod()]
-        public void SupprimerObjetMondeTest()
-        {
-            Assert.Fail();
+            int newObjMondeCount;
+            // vérifie le fonctionnement
+            using (HugoLandContext db = new HugoLandContext())
+            {
+                newObjMondeCount = db.ObjetMondes.Count();
+
+                Assert.AreNotEqual(objMondeCount, newObjMondeCount);
+
+                if (newMonde)
+                {
+                    Monde monde_ = db.Mondes.Find(mondeId);
+                    db.Mondes.Remove(monde_);
+                    db.SaveChanges();
+                }
+            }
+            #endregion
+
+            #endregion
+
+            #region Monde - null (-1)
+
+            #region Arrange
+            using (HugoLandContext db = new HugoLandContext())
+            {
+                objetMonde = new ObjetMonde()
+                {
+                    Description = sDescription,
+                    x = iPosX,
+                    y = iPosY,
+                    TypeObjet = iTypeObjet,
+                    MondeId = mondeId
+                };
+
+                db.ObjetMondes.Add(objetMonde);
+                db.SaveChanges();
+
+                objetMondeId = objetMonde.Id;
+
+                objMondeCount = db.ObjetMondes.Count();
+            }
+            #endregion
+
+            #region Act & Assert
+            // call de la méthode
+            ctrl.SupprimerObjetMonde(objetMondeId);
+
+            // vérification
+            using (HugoLandContext db = new HugoLandContext())
+            {
+                int newCount = db.ObjetMondes.Count();
+
+                Assert.AreEqual(newObjMondeCount, newCount);
+            }
+            #endregion
+
+            #endregion
         }
 
         [TestMethod()]
         public void ModifierDescriptionObjetMondeTest()
         {
-            Assert.Fail();
+            #region Arrange
+            // variables locales
+            string sNewDescription = "Test modif description";
+            int objetMondeId;
+            int mondeId;
+            int newMondeId;
+
+            using (HugoLandContext db = new HugoLandContext())
+            {
+                ObjetMonde objet = db.ObjetMondes.FirstOrDefault();
+                objetMondeId = objet.Id;
+                mondeId = objet.MondeId;
+
+                newMondeId = db.Mondes.FirstOrDefault(x => x.Id != mondeId).Id;
+            }
+            #endregion
+
+            #region Act & Assert
+            // call de méthode
+            ctrl.ModifierDescriptionObjetMonde(objetMondeId, mondeId, newMondeId, sNewDescription);
+
+            // vérification
+            using (HugoLandContext db = new HugoLandContext())
+            {
+                ObjetMonde objetMonde = db.ObjetMondes.Find(objetMondeId);
+
+                Assert.AreEqual(sNewDescription, objetMonde.Description);
+                Assert.AreEqual(newMondeId, objetMonde.MondeId);
+            }
+            #endregion
+
+            #region Act & Assert - scénario deux
+            // call de méthode - sans changer la description
+            ctrl.ModifierDescriptionObjetMonde(objetMondeId, newMondeId, mondeId);
+
+            // vérification
+            using (HugoLandContext db = new HugoLandContext())
+            {
+                ObjetMonde objetMonde = db.ObjetMondes.Find(objetMondeId);
+
+                Assert.AreEqual(sNewDescription, objetMonde.Description);
+                Assert.AreEqual(mondeId, objetMonde.MondeId);
+            }
+            #endregion
+
+            #region Act & Assert - scénario trois
+            // call de méthode - sans changer le monde, mais modifie la description pour rien, qui ne devrait pas être changée
+            ctrl.ModifierDescriptionObjetMonde(objetMondeId, mondeId, p_sNouvelleDescription: "");
+
+            // vérification
+            using (HugoLandContext db = new HugoLandContext())
+            {
+                ObjetMonde objetMonde = db.ObjetMondes.Find(objetMondeId);
+
+                Assert.AreEqual(sNewDescription, objetMonde.Description);
+                Assert.AreEqual(mondeId, objetMonde.MondeId);
+            }
+            #endregion
         }
     }
 }
