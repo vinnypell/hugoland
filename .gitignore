@@ -25,3 +25,15 @@ HugoLand\.vs\HugoLand\v16\.suo
 ~\packages
 ~\*\bin
 ~\*\obj
+HugoLand/TP01_Library/bin/Debug/TP01_Library.dll.config
+HugoLand/TP01_Tests/bin/Debug/Microsoft.VisualStudio.TestPlatform.TestFramework.xml
+*.dll
+*.xml
+*.ssdl
+*.msl
+*.csdl
+HugoLand/TP01_Library/obj/Debug/.NETFramework,Version=v4.7.2.AssemblyAttributes.cs
+*.mdf
+*.config
+*.CopyComplete
+HugoLand/TP01_Tests/obj/Debug/.NETFramework,Version=v4.7.2.AssemblyAttributes.cs

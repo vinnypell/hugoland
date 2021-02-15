@@ -51,6 +51,7 @@ namespace TP01_Library.Tests.Controllers
 
             //Cleanup
             context.Heros.Remove(hero);
+
         }
 
         [TestMethod()]
