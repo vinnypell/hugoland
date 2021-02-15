@@ -56,8 +56,6 @@ namespace TP01_Library.Tests.Controllers
                     newMonde = true;
                 }
             }
-
-
             #endregion
 
             #region Act
@@ -91,21 +89,6 @@ namespace TP01_Library.Tests.Controllers
                 db.SaveChanges();
 
                 count = db.ObjetMondes.Count();
-            }
-            #endregion
-
-            #endregion
-
-            #region Monde - null
-
-            #region Act & Assert
-            ctrl.AjouterObjetMonde(-1, sDescription, iPosX, iPosY, iTypeObjet);
-
-            using (HugoLandContext db = new HugoLandContext())
-            {
-                int newCount = db.ObjetMondes.Count();
-
-                Assert.AreEqual(count, newCount);
             }
             #endregion
 
@@ -173,7 +156,7 @@ namespace TP01_Library.Tests.Controllers
 
             #region Act & Assert
             // call de la méthode
-            ctrl.SupprimerObjetMonde(objetMondeId, mondeId);
+            ctrl.SupprimerObjetMonde(objetMondeId);
 
             int newObjMondeCount;
             // vérifie le fonctionnement
@@ -189,44 +172,6 @@ namespace TP01_Library.Tests.Controllers
                     db.Mondes.Remove(monde_);
                     db.SaveChanges();
                 }
-            }
-            #endregion
-
-            #endregion
-
-            #region Monde - null (-1)
-
-            #region Arrange
-            using (HugoLandContext db = new HugoLandContext())
-            {
-                objetMonde = new ObjetMonde()
-                {
-                    Description = sDescription,
-                    x = iPosX,
-                    y = iPosY,
-                    TypeObjet = iTypeObjet,
-                    MondeId = mondeId
-                };
-
-                db.ObjetMondes.Add(objetMonde);
-                db.SaveChanges();
-
-                objetMondeId = objetMonde.Id;
-
-                objMondeCount = db.ObjetMondes.Count();
-            }
-            #endregion
-
-            #region Act & Assert
-            // call de la méthode
-            ctrl.SupprimerObjetMonde(objetMondeId);
-
-            // vérification
-            using (HugoLandContext db = new HugoLandContext())
-            {
-                int newCount = db.ObjetMondes.Count();
-
-                Assert.AreEqual(newObjMondeCount, newCount);
             }
             #endregion
 
