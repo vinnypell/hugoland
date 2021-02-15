@@ -27,19 +27,15 @@ namespace TP01_Library.Controllers
         {
             using (HugoLandContext dbContext = new HugoLandContext())
             {
-                if (p_iMondeId != -1)
+                dbContext.ObjetMondes.Add(new ObjetMonde()
                 {
-                    dbContext.ObjetMondes.Add(new ObjetMonde()
-                    {
-                        Description = p_sDescription,
-                        x = p_iPositionX,
-                        y = p_iPositionY,
-                        TypeObjet = p_iTypeObjet,
-                        MondeId = p_iMondeId
-                    });
-                    dbContext.SaveChanges();
-                }
-
+                    Description = p_sDescription,
+                    x = p_iPositionX,
+                    y = p_iPositionY,
+                    TypeObjet = p_iTypeObjet,
+                    MondeId = p_iMondeId
+                });
+                dbContext.SaveChanges();
             }
         }
 
@@ -50,29 +46,16 @@ namespace TP01_Library.Controllers
         /// </summary>
         /// <param name="p_monde"></param>
         /// <param name="p_objetMonde"></param>
-        public void SupprimerObjetMonde(int p_iObjetMondeId, int p_iMondeId = -1)
+        public void SupprimerObjetMonde(int p_iObjetMondeId)
         {
             using (HugoLandContext dbContext = new HugoLandContext())
             {
-                if (p_iObjetMondeId > 0)
-                {
-                    ObjetMonde objetMonde;
-                    if (p_iMondeId > 0)
-                    {
-                        objetMonde = dbContext.ObjetMondes.FirstOrDefault(x => x.MondeId == p_iMondeId
-                                                                            && x.Id == p_iObjetMondeId);
-                    }
-                    else
-                        objetMonde = dbContext.ObjetMondes.FirstOrDefault(x => x.Id == p_iObjetMondeId);
+                ObjetMonde objetMonde = dbContext.ObjetMondes.FirstOrDefault(x => x.Id == p_iObjetMondeId);
 
-                    dbContext.ObjetMondes.Remove(objetMonde);
-                    dbContext.SaveChanges();
-                }
+                dbContext.ObjetMondes.Remove(objetMonde);
+                dbContext.SaveChanges();
             }
         }
-
-
-
 
         /// <summary>
         /// Auteur :        Vincent Pelland

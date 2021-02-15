@@ -63,13 +63,13 @@ namespace TP01_Library.Controllers
         /// <param name="p_newItem"></param>
         /// <param name="p_iValeurEffet"></param>
         /// <param name="p_iTypeEffet"></param>
-        public void ModifierEffetItem(Item p_item, Item p_newItem, int p_iValeurEffet = -1, int p_iTypeEffet = -1)
+        public void ModifierEffetItem(Item p_item, Item p_newItem, int p_iEffetItemId, int p_iValeurEffet = -1, int p_iTypeEffet = -1)
         {
             using (HugoLandContext dbContext = new HugoLandContext())
             {
                 if (p_item != null)
                 {
-                    EffetItem effetItem = dbContext.EffetItems.FirstOrDefault(x => x.ItemId == p_item.Id);
+                    EffetItem effetItem = dbContext.EffetItems.FirstOrDefault(x => x.ItemId == p_item.Id && x.Id == p_iEffetItemId);
 
                     if (p_iTypeEffet != -1)
                     {
@@ -88,6 +88,7 @@ namespace TP01_Library.Controllers
                     }
 
                     dbContext.SaveChanges();
+
                 }
             }
         }

@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace TP01_Library.Controllers.Tests
+namespace TP01_Library.Tests.Controllers
 {
     [TestClass()]
     public class ClasseControllerTests
@@ -14,7 +14,7 @@ namespace TP01_Library.Controllers.Tests
         [TestMethod()]
         public void AjouterClasseTest()
         {
-            Assert.Fail();
+
         }
 
         [TestMethod()]

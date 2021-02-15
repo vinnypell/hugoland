@@ -80,11 +80,11 @@ namespace TP01_Library.Controllers
         /// </summary>
         /// <param name="p_monde"></param>
         /// <param name="p_sNouvelleDescription"></param>
-        public void ModifierDescriptionMonde(Monde p_monde, string p_sNouvelleDescription)
+        public void ModifierDescriptionMonde(int p_iMondeId, string p_sNouvelleDescription)
         {
             using (HugoLandContext dbContext = new HugoLandContext())
             {
-                Monde mondeModif = dbContext.Mondes.FirstOrDefault(x => x.Id == p_monde.Id);
+                Monde mondeModif = dbContext.Mondes.FirstOrDefault(x => x.Id == p_iMondeId);
 
                 mondeModif.Description = p_sNouvelleDescription;
 
