@@ -71,7 +71,7 @@ namespace TP01_Library.Controllers
 
         /// <summary>
         /// Auteur : Simon Lalancette
-        /// Desc : Modifie un classe selon une classe passée en paramètre
+        /// Desc : Modifie une classe selon une classe passée en paramètre
         /// </summary>
         /// <param name="modified"></param>
         public void ModifierClasse(Classe modified)

@@ -74,6 +74,7 @@
     </Compile>
     <Compile Include="Controllers\CompteJoueurController.cs" />
     <Compile Include="Controllers\Constantes.cs" />
+    <Compile Include="Controllers\Outil.cs" />
     <Compile Include="EffetItem.cs">
       <DependentUpon>HugoLandContext.tt</DependentUpon>
     </Compile>
