@@ -23,20 +23,23 @@ namespace TP01_Library.Controllers
         /// <param name="p_iPositionX"></param>
         /// <param name="p_iPositionY"></param>
         /// <param name="p_iTypeObjet"></param>
-        public void AjouterObjetMonde(Monde p_monde, string p_sDescription, int p_iPositionX, int p_iPositionY, int p_iTypeObjet)
+        public void AjouterObjetMonde(int p_iMondeId, string p_sDescription, int p_iPositionX, int p_iPositionY, int p_iTypeObjet)
         {
             using (HugoLandContext dbContext = new HugoLandContext())
             {
-                dbContext.ObjetMondes.Add(new ObjetMonde()
+                if (p_iMondeId != -1)
                 {
-                    Description = p_sDescription,
-                    x = p_iPositionX,
-                    y = p_iPositionY,
-                    TypeObjet = p_iTypeObjet,
-                    Monde = p_monde,
-                    MondeId = p_monde.Id
-                });
-                dbContext.SaveChanges();
+                    dbContext.ObjetMondes.Add(new ObjetMonde()
+                    {
+                        Description = p_sDescription,
+                        x = p_iPositionX,
+                        y = p_iPositionY,
+                        TypeObjet = p_iTypeObjet,
+                        MondeId = p_iMondeId
+                    });
+                    dbContext.SaveChanges();
+                }
+
             }
         }
 
@@ -51,17 +54,20 @@ namespace TP01_Library.Controllers
         {
             using (HugoLandContext dbContext = new HugoLandContext())
             {
-                ObjetMonde objetMonde;
-                if (p_iMondeId != -1)
+                if (p_iObjetMondeId > 0)
                 {
-                    objetMonde = dbContext.ObjetMondes.FirstOrDefault(x => x.MondeId == p_iMondeId
-                                                                        && x.Id == p_iObjetMondeId);
-                }
-                else
-                    objetMonde = dbContext.ObjetMondes.FirstOrDefault(x => x.Id == p_iObjetMondeId);
+                    ObjetMonde objetMonde;
+                    if (p_iMondeId > 0)
+                    {
+                        objetMonde = dbContext.ObjetMondes.FirstOrDefault(x => x.MondeId == p_iMondeId
+                                                                            && x.Id == p_iObjetMondeId);
+                    }
+                    else
+                        objetMonde = dbContext.ObjetMondes.FirstOrDefault(x => x.Id == p_iObjetMondeId);
 
-                dbContext.ObjetMondes.Remove(objetMonde);
+                    dbContext.ObjetMondes.Remove(objetMonde);
                     dbContext.SaveChanges();
+                }
             }
         }
 
@@ -78,18 +84,22 @@ namespace TP01_Library.Controllers
         /// <param name="p_monde"></param>
         /// <param name="p_newMonde"></param>
         /// <param name="p_sNouvelleDescription"></param>
-        public void ModifierDescriptionObjetMonde(ObjetMonde p_objetMonde, Monde p_monde, Monde p_newMonde = null, string p_sNouvelleDescription = "")
+        public void ModifierDescriptionObjetMonde(int p_iObjetMondeId, int p_iMondeId, int p_iNewMondeId = -1, string p_sNouvelleDescription = "")
         {
             using (HugoLandContext dbContext = new HugoLandContext())
             {
-                if (p_monde != null)
+                if (p_iObjetMondeId > 0)
                 {
-                    ObjetMonde objetMonde = dbContext.ObjetMondes.FirstOrDefault(x => x.MondeId == p_monde.Id &&
-                                                                                 x.Id == p_objetMonde.Id);
-                    if (p_newMonde != null)
+                    ObjetMonde objetMonde = dbContext.ObjetMondes.FirstOrDefault(x => x.MondeId == p_iMondeId &&
+                                                                                 x.Id == p_iObjetMondeId);
+                    if (p_iMondeId > 0)
                     {
-                        objetMonde.Monde = p_newMonde;
-                        objetMonde.MondeId = p_newMonde.Id;
+                        objetMonde.MondeId = p_iMondeId;
+                    }
+
+                    if (p_iNewMondeId > 0)
+                    {
+                        objetMonde.MondeId = p_iNewMondeId;
                     }
 
                     if (!string.IsNullOrEmpty(p_sNouvelleDescription))
