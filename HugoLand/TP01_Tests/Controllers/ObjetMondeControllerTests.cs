@@ -187,12 +187,54 @@ namespace TP01_Library.Tests.Controllers
             int objetMondeId;
             int mondeId;
             int newMondeId;
+            string sDescription = "Objet monde test";
+            int iPosX = 50;
+            int iPosY = 100;
+            int iTypeObjet = 5;
+            bool newObjMonde = false;
+            Monde monde;
+            ObjetMonde objetMonde;
 
             using (HugoLandContext db = new HugoLandContext())
             {
-                ObjetMonde objet = db.ObjetMondes.FirstOrDefault();
-                objetMondeId = objet.Id;
-                mondeId = objet.MondeId;
+                objetMonde = db.ObjetMondes.FirstOrDefault();
+
+                if (objetMonde == null)
+                {
+                    monde = db.Mondes.FirstOrDefault();
+
+                    monde = new Monde()
+                    {
+                        Description = "Monde test",
+                        LimiteX = 200,
+                        LimiteY = 200
+                    };
+
+                    db.Mondes.Add(monde);
+                    db.SaveChanges();
+
+                    mondeId = monde.Id;
+
+                    objetMonde = new ObjetMonde()
+                    {
+                        Description = sDescription,
+                        x = iPosX,
+                        y = iPosY,
+                        TypeObjet = iTypeObjet,
+                        MondeId = mondeId
+                    };
+
+                    db.ObjetMondes.Add(objetMonde);
+                    db.SaveChanges();
+
+                    objetMondeId = objetMonde.Id;
+                    mondeId = monde.Id;
+                }
+
+                newObjMonde = true;
+
+                objetMondeId = objetMonde.Id;
+                mondeId = objetMonde.MondeId;
 
                 newMondeId = db.Mondes.FirstOrDefault(x => x.Id != mondeId).Id;
             }
@@ -205,10 +247,10 @@ namespace TP01_Library.Tests.Controllers
             // vérification
             using (HugoLandContext db = new HugoLandContext())
             {
-                ObjetMonde objetMonde = db.ObjetMondes.Find(objetMondeId);
+                ObjetMonde objetMonde_ = db.ObjetMondes.Find(objetMondeId);
 
-                Assert.AreEqual(sNewDescription, objetMonde.Description);
-                Assert.AreEqual(newMondeId, objetMonde.MondeId);
+                Assert.AreEqual(sNewDescription, objetMonde_.Description);
+                Assert.AreEqual(newMondeId, objetMonde_.MondeId);
             }
             #endregion
 
@@ -219,10 +261,10 @@ namespace TP01_Library.Tests.Controllers
             // vérification
             using (HugoLandContext db = new HugoLandContext())
             {
-                ObjetMonde objetMonde = db.ObjetMondes.Find(objetMondeId);
+                ObjetMonde objetMonde_ = db.ObjetMondes.Find(objetMondeId);
 
-                Assert.AreEqual(sNewDescription, objetMonde.Description);
-                Assert.AreEqual(mondeId, objetMonde.MondeId);
+                Assert.AreEqual(sNewDescription, objetMonde_.Description);
+                Assert.AreEqual(mondeId, objetMonde_.MondeId);
             }
             #endregion
 
@@ -233,10 +275,18 @@ namespace TP01_Library.Tests.Controllers
             // vérification
             using (HugoLandContext db = new HugoLandContext())
             {
-                ObjetMonde objetMonde = db.ObjetMondes.Find(objetMondeId);
+                ObjetMonde objetMonde_ = db.ObjetMondes.Find(objetMondeId);
 
-                Assert.AreEqual(sNewDescription, objetMonde.Description);
-                Assert.AreEqual(mondeId, objetMonde.MondeId);
+                Assert.AreEqual(sNewDescription, objetMonde_.Description);
+                Assert.AreEqual(mondeId, objetMonde_.MondeId);
+
+                if (newObjMonde)
+                {
+                    Monde monde_ = db.Mondes.Find(mondeId);
+                    db.Mondes.Remove(monde_);
+                    db.ObjetMondes.Remove(objetMonde_);
+                    db.SaveChanges();
+                }
             }
             #endregion
         }
