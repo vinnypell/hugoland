@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Moq;
+using System.Data.Entity;
 
 namespace TP01_Library.Tests.Controllers
 {
@@ -110,7 +111,7 @@ namespace TP01_Library.Tests.Controllers
         [TestMethod()]
         public void ModifierPositionHeroTest()
         {
-Assert.Fail();
+            Assert.Fail();
         }
     }
 }
