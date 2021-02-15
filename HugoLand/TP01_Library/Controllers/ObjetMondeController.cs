@@ -47,17 +47,21 @@ namespace TP01_Library.Controllers
         /// </summary>
         /// <param name="p_monde"></param>
         /// <param name="p_objetMonde"></param>
-        public void SupprimerObjetMonde(Monde p_monde, int p_iObjetMondeId)
+        public void SupprimerObjetMonde(int p_iObjetMondeId, int p_iMondeId = -1)
         {
             using (HugoLandContext dbContext = new HugoLandContext())
             {
-                if (p_monde != null)
+                ObjetMonde objetMonde;
+                if (p_iMondeId != -1)
                 {
-                    ObjetMonde objetMonde = dbContext.ObjetMondes.FirstOrDefault(x => x.MondeId == p_monde.Id
+                    objetMonde = dbContext.ObjetMondes.FirstOrDefault(x => x.MondeId == p_iMondeId
                                                                         && x.Id == p_iObjetMondeId);
-                    dbContext.ObjetMondes.Remove(objetMonde);
-                    dbContext.SaveChanges();
                 }
+                else
+                    objetMonde = dbContext.ObjetMondes.FirstOrDefault(x => x.Id == p_iObjetMondeId);
+
+                dbContext.ObjetMondes.Remove(objetMonde);
+                    dbContext.SaveChanges();
             }
         }
 

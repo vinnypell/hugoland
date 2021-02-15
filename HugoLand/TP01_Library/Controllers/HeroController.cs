@@ -127,7 +127,8 @@ namespace TP01_Library.Controllers
         /// <returns></returns>
         public List<ObjetMonde> ObjetsVuParHero(Hero hero)
         {
-            return hero.Monde.ObjetMondes.Where(o => o.x >= (hero.x - 200) && o.x <= (hero.x + 200) && o.y >= (hero.y - 200) && o.y <= (hero.y + 200)).ToList();
+            return hero.Monde.ObjetMondes.Where(o => o.x >= (hero.x - 200) && o.x <= (hero.x + 200) &&
+                                                o.y >= (hero.y - 200) && o.y <= (hero.y + 200)).ToList();
         }
 
         /// <summary>

@@ -6,22 +6,19 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Moq;
+using System.Data.Entity;
 
 namespace TP01_Library.Tests.Controllers
 {
     [TestClass()]
     public class HeroControllerTests
     {
-        HeroController controller = new HeroController();
-        //Mock le dbContext
-        Mock<HugoLandContext> context = new Mock<HugoLandContext>();
 
         [TestMethod()]
         public void AjouterHeroTest()
         {
             #region Arrange
             // variables
-            context.
             #endregion
 
             #region Act
@@ -62,7 +59,7 @@ namespace TP01_Library.Tests.Controllers
         [TestMethod()]
         public void ModifierPositionHeroTest()
         {
-Assert.Fail();
+            Assert.Fail();
         }
     }
 }

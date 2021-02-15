@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using TP01_Library.Controllers;
 using Moq;
+using System.Data.Entity;
 
 namespace TP01_Library.Tests.Controllers
 {
@@ -19,18 +20,58 @@ namespace TP01_Library.Tests.Controllers
         public void AjouterObjetMondeTest()
         {
             #region Arrange
-            // variables
+            // environnement de test
+            Mock<DbSet<ObjetMonde>> mockSetObjMonde = new Mock<DbSet<ObjetMonde>>();
+            Mock<DbSet<Monde>> mockSetMonde = new Mock<DbSet<Monde>>();
+            Mock<HugoLandContext> mockDb = new Mock<HugoLandContext>();
+            mockDb.Setup(m => m.ObjetMondes).Returns(mockSetObjMonde.Object);
+            mockDb.Setup(m => m.Mondes).Returns(mockSetMonde.Object);
+
+            // variables monde
+            Monde monde;
+            int mondeId;
+
+            // variables obj monde
+            string sDescription = "Objet monde test";
+            int iPosX = 50;
+            int iPosY = 100;
+            int iTypeObjet = 5;
+
+            if (!mockDb.Object.Mondes.Any())
+            {
+                monde = mockDb.Object.Mondes.Add(new Monde()
+                {
+                    Description = "Monde test",
+                    LimiteX = 200,
+                    LimiteY = 200
+                });
+
+                mockDb.Object.SaveChanges();
+                mondeId = monde.Id;
+            }
+            else
+            {
+                monde = mockDb.Object.Mondes.FirstOrDefault();
+                mondeId = monde.Id;
+            }
             #endregion
 
             #region Act
             // call de la méthode à testé
+            ctrl.AjouterObjetMonde(monde, sDescription, iPosX, iPosY, iTypeObjet);
             #endregion
 
             #region Assert
-            // Assert.IsTrue(valeur1, valeur2);
-            #endregion
+            // aller chercher l'obj monde créer
+            ObjetMonde objetMonde = mockDb.Object.ObjetMondes.FirstOrDefault(x => x.MondeId == mondeId && x.Description == sDescription);
 
-            Assert.Fail();
+            // comparer chaque valeur
+            Assert.AreEqual(sDescription, objetMonde.Description);
+            Assert.AreEqual(iPosX, objetMonde.x);
+            Assert.AreEqual(iPosY, objetMonde.y);
+            Assert.AreEqual(iTypeObjet, objetMonde.TypeObjet);
+            Assert.AreEqual(mondeId, objetMonde.MondeId);
+            #endregion
         }
 
         [TestMethod()]
