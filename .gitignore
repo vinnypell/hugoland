@@ -20,3 +20,8 @@
 .TP01_Library\bin\Debug
 .TP01_Tests\bin\Debug
 HugoLand/.vs/HugoLand/v16/.suo
+*.cache
+~\.vs
+~\packages
+~\*\bin
+~\*\obj
