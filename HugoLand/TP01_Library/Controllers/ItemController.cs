@@ -30,6 +30,7 @@ namespace TP01_Library.Controllers
                     x = p_x,
                     y = p_y,
                     MondeId = p_MondeID,
+                    ImageId = p_ImageID
                 });
 
                 dbcontext.SaveChanges();
