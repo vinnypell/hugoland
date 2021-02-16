@@ -32,5 +32,10 @@ namespace TP01_Library
         public virtual Monde Monde { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Hero> Heros { get; set; }
+
+        public Classe Clone()
+        {
+            return (Classe)this.MemberwiseClone();
+        }
     }
 }
