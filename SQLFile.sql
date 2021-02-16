@@ -19,7 +19,9 @@ SELECT * FROM ObjetMonde
 --Delete all tables
 
 DELETE FROM Classe
+go
 DELETE FROM CompteJoueur
+go
 DELETE FROM EffetItem
 DELETE FROM Heros
 DELETE FROM InventaireHero
