@@ -22,5 +22,10 @@ namespace TP01_Library
         public int MondeId { get; set; }
     
         public virtual Monde Monde { get; set; }
+
+        public ObjetMonde Clone()
+        {
+            return (ObjetMonde)this.MemberwiseClone();
+        }
     }
 }

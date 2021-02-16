@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity.Core.Objects;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -22,14 +23,14 @@ namespace TP01_Library.Controllers
         /// <param name="p_TypeUtilisateur"></param>
         /// <param name="p_Mdp"></param>
         /// <returns>Message de succès ou d'erreur</returns>
-        public string CreerJoueur(string p_NomJoueur, string p_Courriel, string p_Prenom,string p_Nom, int p_TypeUtilisateur, string p_Mdp)
+        public string CreerJoueur(string p_NomJoueur, string p_Courriel, string p_Prenom, string p_Nom, int p_TypeUtilisateur, string p_Mdp)
         {
-            System.Data.Entity.Core.Objects.ObjectParameter myOutputParamString = new System.Data.Entity.Core.Objects.ObjectParameter("myOutputParamString", typeof(string));
             using (HugoLandContext dbcontext = new HugoLandContext())
             {
-                dbcontext.CreerCompteJoueur(p_NomJoueur, p_Courriel, p_Prenom, p_Nom, p_TypeUtilisateur,p_Mdp, myOutputParamString);
+                ObjectParameter message = new ObjectParameter("message", typeof(string));
+                dbcontext.CreerCompteJoueur(p_NomJoueur, p_Courriel, p_Prenom, p_Nom, p_TypeUtilisateur, p_Mdp, message);
+                return (Convert.ToString(message.Value));
             }
-            return (Convert.ToString(myOutputParamString.Value));
         }
         /// <summary>
         /// Auteur: Mathias Lavoie-Rivard | 
@@ -62,7 +63,7 @@ namespace TP01_Library.Controllers
 
                 if (string.IsNullOrEmpty(p_NomJoueur))
                 {
-                joueurModif.NomJoueur = p_NomJoueur;
+                    joueurModif.NomJoueur = p_NomJoueur;
                 }
                 if (string.IsNullOrEmpty(p_Courriel))
                 {
@@ -94,12 +95,12 @@ namespace TP01_Library.Controllers
         /// <returns>Message de succès ou d'erreur</returns>
         public string ValiderConnexion(string p_Mdp, string p_NomJoueur)
         {
-            System.Data.Entity.Core.Objects.ObjectParameter myOutputParamString = new System.Data.Entity.Core.Objects.ObjectParameter("myOutputParamString", typeof(string));
             using (HugoLandContext dbcontext = new HugoLandContext())
             {
-                dbcontext.Connexion(p_NomJoueur,p_Mdp,myOutputParamString);
+                ObjectParameter message = new ObjectParameter("message", typeof(string));
+                dbcontext.Connexion(p_NomJoueur, p_Mdp, message);
+                return (Convert.ToString(message.Value));
             }
-            return (Convert.ToString(myOutputParamString.Value));
         }
     }
 }

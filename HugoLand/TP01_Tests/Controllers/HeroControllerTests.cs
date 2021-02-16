@@ -157,10 +157,11 @@ namespace TP01_Library.Tests.Controllers
         public void GetObjetMondesTest()
         {
             Hero hero;
+            string sDescription = "Objet monde test";
+      
             List<ObjetMonde> objs = new List<ObjetMonde>();
             for (int i = 0; i < 5; i++)
             {
-                string sDescription = "Objet monde test";
                 int iPosX = 50 + i;
                 int iPosY = 100 + i;
 
@@ -190,28 +191,26 @@ namespace TP01_Library.Tests.Controllers
                 context.ObjetMondes.AddRange(objs);
                 context.Mondes.Add(monde);
                 context.Heros.Add(h);
+                context.SaveChanges();
 
-                hero = context.Heros.First(x => x.NomHero == h.NomHero && x.Monde == h.Monde);
+                hero = context.Heros.First(x => x.NomHero == h.NomHero && x.Monde.Description == h.Monde.Description);
             }
 
             List<ObjetMonde> objsVu = controller.ObjetsVuParHero(hero);
-            for(int i = 0; i < 5; i++)
+            for (int i = 0; i < 5; i++)
             {
-                if(i == 0)
-                {
-                    Assert.AreNotEqual(objs[i], objsVu[i]);
-                }
-                else
-                {
-                    Assert.AreEqual(objs[i], objsVu[i - 1]);
-                }
+                Assert.AreEqual(objs[i], objsVu[i]);
             }
 
             using (var context = new HugoLandContext())
             {
-                context.ObjetMondes.RemoveRange(objs);
-                context.Mondes.Remove(monde);
-                context.Heros.Remove(h);
+                List<ObjetMonde> objetMondes = context.ObjetMondes.Where(x => x.Description == sDescription).ToList();
+                Monde monde_ = context.Mondes.FirstOrDefault(x => x.Description == "TestMonde");
+                Hero hero_ = context.Heros.First(x => x.NomHero == h.NomHero && x.Monde.Description == h.Monde.Description);
+                context.ObjetMondes.RemoveRange(objetMondes);
+                context.Mondes.Remove(monde_);
+                context.Heros.Remove(hero_);
+                context.SaveChanges();
             }
         }
 
