@@ -25,6 +25,7 @@ namespace TP01_Library.Tests.Controllers
                 Assert.IsNotNull(classe);
 
                 context.Classes.Remove(classe);
+                context.SaveChanges();
             }
 
         }
@@ -39,17 +40,19 @@ namespace TP01_Library.Tests.Controllers
             {
                 context.Mondes.Add(monde);
                 context.Classes.Add(classe);
-                monde = context.Mondes.First(x => x.Description == "testMonde");
-                classe = context.Classes.First(x => x.NomClasse == "testClasse16");
+                context.SaveChanges();
+                monde = context.Mondes.FirstOrDefault(x => x.Description == "testMonde");
+                classe = context.Classes.FirstOrDefault(x => x.NomClasse == "testClasse16");
             }
 
-            controller.SupprimerClasse(monde, classe.Id);
+            controller.SupprimerClasse(classe.Id);
 
             using (var context = new HugoLandContext())
             {
                 Assert.IsNull(context.Classes.FirstOrDefault(x => x.Id == classe.Id));
-
+                monde = context.Mondes.FirstOrDefault(x => x.Description == "testMonde");
                 context.Mondes.Remove(monde);
+                context.SaveChanges();
             }
 
         }

@@ -55,17 +55,16 @@ namespace TP01_Library.Controllers
         /// </summary>
         /// <param name="p_monde"></param>
         /// <param name="p_iClasseId"></param>
-        public void SupprimerClasse(Monde p_monde, int p_iClasseId)
+        public void SupprimerClasse(int p_iClasseId)
         {
             using (HugoLandContext dbContext = new HugoLandContext())
             {
-                if (p_monde != null)
-                {
-                    Classe classe = dbContext.Classes.FirstOrDefault(x => x.MondeId == p_monde.Id && x.Id == p_iClasseId);
+                
+                    Classe classe = dbContext.Classes.FirstOrDefault(x => x.Id == p_iClasseId);
 
                     dbContext.Classes.Remove(classe);
                     dbContext.SaveChanges();
-                }
+                
             }
         }
 
