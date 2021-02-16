@@ -61,7 +61,7 @@ namespace TP01_Library.Tests.Controllers
         {
             #region Arrange
 
-            Monde monde = new Monde() { Description = "TestMonde" };
+            Monde monde = new Monde() { Description = "TestMyolo" };
             int xPos = 56;
             int yPos = 20;
             string sNom = "TestMonstre";
@@ -70,6 +70,7 @@ namespace TP01_Library.Tests.Controllers
             //Vérifie avec un monde non null
             #region Act and Assert
 
+            context.Mondes.Add(monde);
             Monstre m = new Monstre()
             {
                 Monde = monde,
@@ -85,13 +86,15 @@ namespace TP01_Library.Tests.Controllers
             Assert.IsNotNull(monstre);
 
             controller.SupprimerMonstre(monstre.Id);
-            monstre = context.Monstres.FirstOrDefault(x => x.Nom == sNom);
+            monstre = context.Monstres.FirstOrDefault(x => x.Id == monstre.Id);
             Assert.IsNull(monstre);
 
             #endregion
 
             //cleanup
-            context.Mondes.Remove(monde);
+
+            Monde Mondetest = context.Mondes.FirstOrDefault(x => x.Description == monde.Description);
+            context.Mondes.Remove(Mondetest);
             context.SaveChanges();
         }
         /// <summary>
@@ -107,6 +110,7 @@ namespace TP01_Library.Tests.Controllers
             int xPos = 56;
             int yPos = 20;
             string sNom = "TestMonstre";
+
 
 
         }
