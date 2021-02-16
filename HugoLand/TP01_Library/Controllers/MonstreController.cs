@@ -83,43 +83,37 @@ namespace TP01_Library.Controllers
         /// <param name="p_monstre"></param>
         /// <param name="p_sNom"></param>
         /// <param name="p_iNouveauNiveau"></param>
-        public void ModifierInfoMonstre(Monstre p_monstre, int p_Pv = -1, Monde p_newMonde = null, string p_sNom = null, int p_iNouveauNiveau = -1)
+        public void ModifierInfoMonstre(int p_iMonstreid, int p_Pv,int p_iMondeId, string p_sNom, int p_iNiveau)
         {
             using (HugoLandContext dbContext = new HugoLandContext())
             {
-                Monstre monstre = dbContext.Monstres.FirstOrDefault(x => x.Id == p_monstre.Id);
+                Monstre monstre = dbContext.Monstres.FirstOrDefault(x => x.Id == p_iMonstreid);
 
-                if (p_iNouveauNiveau != -1)
+                if (p_iNiveau != monstre.Niveau)
                 {
-                    int iDmgMIN = Constantes.DMG_PER_LEVEL * p_iNouveauNiveau - Constantes.DMG_MIN_GAP;
-                    int iDmgMAX = Constantes.DMG_PER_LEVEL * p_iNouveauNiveau;
+                    int iDmgMIN = Constantes.DMG_PER_LEVEL * p_iNiveau - Constantes.DMG_MIN_GAP;
+                    int iDmgMAX = Constantes.DMG_PER_LEVEL * p_iNiveau;
 
 
-                    monstre.Niveau = p_iNouveauNiveau;
+                    monstre.Niveau = p_iNiveau;
                     monstre.StatDmgMax = iDmgMAX;
                     monstre.StatDmgMin = iDmgMIN;
                     
                 }
 
-                if (!string.IsNullOrEmpty(p_sNom))
+                if (p_sNom != monstre.Nom)
                 {
                     monstre.Nom = p_sNom;
                 }
 
-                if (p_newMonde != null)
+                if (p_iMondeId != monstre.MondeId)
                 {
-                    monstre.Monde = p_newMonde;
-                    monstre.MondeId = p_newMonde.Id;
+                    monstre.MondeId = p_iMondeId;
                 }
 
-                if (p_Pv != -1)
+                if (p_Pv != monstre.StatPV)
                 {
                     monstre.StatPV = p_Pv;
-                }
-
-                if(p_sNom != null)
-                {
-                    monstre.Nom = p_sNom;
                 }
 
                 dbContext.SaveChanges();
