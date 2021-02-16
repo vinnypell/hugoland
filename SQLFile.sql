@@ -36,7 +36,7 @@ WHERE Item
 SELECT * FROM Monde
 
 DELETE FROM Monde
-WHERE Monde.Description = 'TestMonde'
+WHERE Monde.Description = 'TestMyolo'
 
 
 SELECT * FROM Monstre
