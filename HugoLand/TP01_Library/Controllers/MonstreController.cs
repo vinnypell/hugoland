@@ -83,40 +83,46 @@ namespace TP01_Library.Controllers
         /// <param name="p_monstre"></param>
         /// <param name="p_sNom"></param>
         /// <param name="p_iNouveauNiveau"></param>
-        public void ModifierInfoMonstre(Monstre p_monstre, Monde p_monde, Monde p_newMonde = null, string p_sNom = null, int p_iNouveauNiveau = -1)
+        public void ModifierInfoMonstre(Monstre p_monstre, int p_Pv = -1, Monde p_newMonde = null, string p_sNom = null, int p_iNouveauNiveau = -1)
         {
             using (HugoLandContext dbContext = new HugoLandContext())
             {
-                if (p_monde != null)
+                Monstre monstre = dbContext.Monstres.FirstOrDefault(x => x.Id == p_monstre.Id);
+
+                if (p_iNouveauNiveau != -1)
                 {
-                    Monstre monstre = dbContext.Monstres.FirstOrDefault(x => x.MondeId == p_monde.Id &&
-                                                                        x.Id == p_monstre.Id);
+                    int iDmgMIN = Constantes.DMG_PER_LEVEL * p_iNouveauNiveau - Constantes.DMG_MIN_GAP;
+                    int iDmgMAX = Constantes.DMG_PER_LEVEL * p_iNouveauNiveau;
 
-                    if (p_iNouveauNiveau != -1)
-                    {
-                        int iDmgMIN = Constantes.DMG_PER_LEVEL * p_iNouveauNiveau - Constantes.DMG_MIN_GAP;
-                        int iDmgMAX = Constantes.DMG_PER_LEVEL * p_iNouveauNiveau;
-                        int iStatPV = Constantes.HP_PER_LEVEL * p_iNouveauNiveau;
 
-                        monstre.Niveau = p_iNouveauNiveau;
-                        monstre.StatDmgMax = iDmgMAX;
-                        monstre.StatDmgMin = iDmgMIN;
-                        monstre.StatPV = iStatPV;
-                    }
-
-                    if (!string.IsNullOrEmpty(p_sNom))
-                    {
-                        monstre.Nom = p_sNom;
-                    }
-
-                    if (p_newMonde != null)
-                    {
-                        monstre.Monde = p_newMonde;
-                        monstre.MondeId = p_newMonde.Id;
-                    }
-
-                    dbContext.SaveChanges();
+                    monstre.Niveau = p_iNouveauNiveau;
+                    monstre.StatDmgMax = iDmgMAX;
+                    monstre.StatDmgMin = iDmgMIN;
+                    
                 }
+
+                if (!string.IsNullOrEmpty(p_sNom))
+                {
+                    monstre.Nom = p_sNom;
+                }
+
+                if (p_newMonde != null)
+                {
+                    monstre.Monde = p_newMonde;
+                    monstre.MondeId = p_newMonde.Id;
+                }
+
+                if (p_Pv != -1)
+                {
+                    monstre.StatPV = p_Pv;
+                }
+
+                if(p_sNom != null)
+                {
+                    monstre.Nom = p_sNom;
+                }
+
+                dbContext.SaveChanges();
             }
         }
     }
