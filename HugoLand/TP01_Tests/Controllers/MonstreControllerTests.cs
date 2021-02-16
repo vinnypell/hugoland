@@ -14,8 +14,6 @@ namespace TP01_Library.Tests.Controllers
     {
         private MonstreController controller = new MonstreController();
 
-        HugoLandContext context = new HugoLandContext();
-
         /// <summary>
         /// Auteur : Mathias Lavoie-Rivard
         /// Desc : Teste de la méthode AjouterMonstre
@@ -194,8 +192,8 @@ namespace TP01_Library.Tests.Controllers
 
             using (HugoLandContext db = new HugoLandContext())
             {
-                Monstre monstreFinal = context.Monstres.Find(monstreId);
-                Monde nouveauMonde = context.Mondes.Find(mondeModifId);
+                Monstre monstreFinal = db.Monstres.Find(monstreId);
+                Monde nouveauMonde = db.Mondes.Find(mondeModifId);
 
                 Assert.IsNotNull(monstreFinal);
                 Assert.IsNotNull(nouveauMonde);
