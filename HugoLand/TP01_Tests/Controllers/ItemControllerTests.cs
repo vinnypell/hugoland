@@ -13,17 +13,10 @@ namespace TP01_Library.Tests.Controllers
     public class ItemControllerTests
     {
         private ItemController controller = new ItemController();
-
+        private CompteJoueurController CJcontroller = new CompteJoueurController();
+        private HeroController Hcontroller = new HeroController();
         HugoLandContext context = new HugoLandContext();
-        CompteJoueur joueur;
-        Monde monde;
-        Classe classe;
-        public void innit()
-        {
-            CompteJoueur joueur = new CompteJoueur() { Nom = "TestJoueur", Prenom = "testPrenom", NomJoueur = "TestJoueur", Courriel = "testCourriel", MotDePasseHash = new byte[5] };
-            Monde monde = new Monde() { Description = "TestMonde" };
-            Classe classe = new Classe() { NomClasse = "testClasse", Description = "testClasse" };
-        }
+
         /// <summary>
         /// Auteur: Mathias Lavoie-Rivard
         /// Description: Teste de la méthode AjouterItems
@@ -38,12 +31,14 @@ namespace TP01_Library.Tests.Controllers
             int iCoordx = 82;
             int iCoordy = 23;
             int iImage = 2;
-            int iMondeId = 95;
+            Monde mondetest = new Monde() { Description = sDescription };
             #endregion
 
             #region Act
-
-            controller.AjouterItems(sNom, sDescription, iCoordx, iCoordy, iImage, iMondeId);
+            context.Mondes.Add(mondetest);
+            context.SaveChanges();
+            Monde testworld = context.Mondes.FirstOrDefault(x => x.Description == sDescription);
+            controller.AjouterItems(sNom, sDescription, iCoordx, iCoordy, iImage, testworld.Id);
             #endregion
 
             #region Assert
@@ -54,12 +49,14 @@ namespace TP01_Library.Tests.Controllers
             Assert.AreEqual(iCoordx, itemTest.x);
             Assert.AreEqual(iCoordy, itemTest.y);
             Assert.AreEqual(iImage, itemTest.ImageId);
-            Assert.AreEqual(iMondeId, itemTest.MondeId);
+            Assert.AreEqual(testworld.Id, itemTest.MondeId);
             #endregion
 
             //Cleanup
-            Item ItemTest = context.Items.FirstOrDefault(x => x.Nom == sNom);
-            context.Items.Remove(ItemTest);
+            itemTest = context.Items.FirstOrDefault(x => x.Nom == sNom);
+            testworld = context.Mondes.FirstOrDefault(x => x.Description == sDescription);
+            context.Mondes.Remove(testworld);
+            context.Items.Remove(itemTest);
             context.SaveChanges();
         }
         /// <summary>
@@ -77,30 +74,31 @@ namespace TP01_Library.Tests.Controllers
             int iCoordx = 82;
             int iCoordy = 23;
             int iImage = 2;
-            int iMondeId = 95;
 
             //Hero
 
-            int xPos = 14;
-            int yPos = 16;
-            string Nom = "TestHeroToDelete";
 
-
+            string message = CJcontroller.CreerJoueur("TestJoueur", "testCourriel", "testPrenom", "TestJoueur", 1, "dawdawdawdaw");
+            Monde monde = new Monde() { Description = "TestMonde" };
+            Classe classe = new Classe() { NomClasse = "testClasse", Description = "testClasse" };
 
             #endregion
 
             #region Act
 
+            context.Mondes.Add(monde);
+            context.SaveChanges();
 
-            Hero h = new Hero()
-            {
-                CompteJoueur = joueur,
-                Monde = monde,
-                Classe = classe,
-                x = xPos,
-                y = yPos,
-                NomHero = Nom
-            };
+            monde = context.Mondes.FirstOrDefault(x => x.Description == "TestMonde");
+            classe = new Classe() { NomClasse = "testClasse", Description = "testClasse",MondeId = monde.Id };
+            context.Classes.Add(classe);
+            context.SaveChanges();
+
+            CompteJoueur joueur = context.CompteJoueurs.FirstOrDefault(x => x.Nom == "TestJoeur");
+            monde = context.Mondes.FirstOrDefault(x => x.Description == "TestMonde");
+            classe = context.Classes.FirstOrDefault(x => x.NomClasse == "testClasse");
+
+
 
             Item testItem = new Item()
             {
@@ -109,29 +107,35 @@ namespace TP01_Library.Tests.Controllers
                 x = iCoordx,
                 y = iCoordy,
                 ImageId = iImage,
-                MondeId = iMondeId
+                MondeId = monde.Id
             };
 
-            context.Heros.Add(h);
             context.Items.Add(testItem);
             context.SaveChanges();
+
+
+
+            Hcontroller.CreerHero(joueur,monde,classe,2,3,"TestHero");
 
             #endregion
 
             #region Assert
             Item ItemTest = context.Items.FirstOrDefault(x => x.Nom == sNom);
-            Hero HeroTest = context.Heros.FirstOrDefault(x => x.NomHero == Nom);
+            Hero HeroTest = context.Heros.FirstOrDefault(x => x.NomHero == "TestHero");
             controller.SupprimerItem(ItemTest.Id, HeroTest);
 
             Item deletedItem = context.Items.FirstOrDefault(x => x.Nom == sNom);
             Assert.IsNotNull(deletedItem.IdHero);
-            Assert.IsNull(deletedItem.MondeId);
             Assert.IsNull(deletedItem.y);
             Assert.IsNull(deletedItem.x);
             #endregion
 
+            //clean
             context.Heros.Remove(HeroTest);
-
+            context.CompteJoueurs.Remove(joueur);
+            context.Mondes.Remove(monde);
+            context.Classes.Remove(classe);
+            context.SaveChanges();
         }
         /// <summary>
         /// Auteur: Mathias Lavoie-Rivard

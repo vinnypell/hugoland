@@ -32,29 +32,23 @@ namespace TP01_Library.Tests.Controllers
             // variables monde
             Monde monde;
             int mondeId;
-            bool newMonde = false;
-            int count;
+            int oldCount, currCount;
 
             // environnement de test
             using (HugoLandContext db = new HugoLandContext())
             {
-                monde = db.Mondes.FirstOrDefault();
-                mondeId = monde.Id;
-                if (monde == null)
+                monde = new Monde()
                 {
-                    monde = new Monde()
-                    {
-                        Description = "Monde test",
-                        LimiteX = 200,
-                        LimiteY = 200
-                    };
+                    Description = "Monde test",
+                    LimiteX = 200,
+                    LimiteY = 200
+                };
 
-                    db.Mondes.Add(monde);
-                    db.SaveChanges();
+                db.Mondes.Add(monde);
+                db.SaveChanges();
 
-                    mondeId = monde.Id;
-                    newMonde = true;
-                }
+                mondeId = monde.Id;
+                oldCount = db.ObjetMondes.Count();
             }
             #endregion
 
@@ -84,11 +78,11 @@ namespace TP01_Library.Tests.Controllers
                 objetMonde = db.ObjetMondes.FirstOrDefault(x => x.MondeId == mondeId && x.Description == sDescription &&
                                                             x.x == iPosX && x.y == iPosY && x.TypeObjet == iTypeObjet);
                 db.ObjetMondes.Remove(objetMonde);
-                if (newMonde)
-                    db.Mondes.Remove(monde);
+                db.Mondes.Remove(monde);
                 db.SaveChanges();
 
-                count = db.ObjetMondes.Count();
+                currCount = db.ObjetMondes.Count();
+                Assert.AreEqual(oldCount, currCount);
             }
             #endregion
 
@@ -113,28 +107,20 @@ namespace TP01_Library.Tests.Controllers
             // variables monde
             Monde monde;
             int mondeId;
-            bool newMonde = false;
 
             using (HugoLandContext db = new HugoLandContext())
             {
-                monde = db.Mondes.FirstOrDefault();
-                mondeId = monde.Id;
-
-                if (monde == null)
+                monde = new Monde()
                 {
-                    monde = new Monde()
-                    {
-                        Description = "Monde test",
-                        LimiteX = 200,
-                        LimiteY = 200
-                    };
+                    Description = "Monde test",
+                    LimiteX = 200,
+                    LimiteY = 200
+                };
 
-                    db.Mondes.Add(monde);
-                    db.SaveChanges();
+                db.Mondes.Add(monde);
+                db.SaveChanges();
 
-                    mondeId = monde.Id;
-                    newMonde = true;
-                }
+                mondeId = monde.Id;
 
                 objetMonde = new ObjetMonde()
                 {
@@ -166,12 +152,9 @@ namespace TP01_Library.Tests.Controllers
 
                 Assert.AreNotEqual(objMondeCount, newObjMondeCount);
 
-                if (newMonde)
-                {
-                    Monde monde_ = db.Mondes.Find(mondeId);
-                    db.Mondes.Remove(monde_);
-                    db.SaveChanges();
-                }
+                Monde monde_ = db.Mondes.Find(mondeId);
+                db.Mondes.Remove(monde_);
+                db.SaveChanges();
             }
             #endregion
 
@@ -191,52 +174,47 @@ namespace TP01_Library.Tests.Controllers
             int iPosX = 50;
             int iPosY = 100;
             int iTypeObjet = 5;
-            bool newObjMonde = false;
-            Monde monde;
+            Monde monde, newMonde;
             ObjetMonde objetMonde;
 
             using (HugoLandContext db = new HugoLandContext())
             {
-                objetMonde = db.ObjetMondes.FirstOrDefault();
-
-                if (objetMonde == null)
+                monde = new Monde()
                 {
-                    monde = db.Mondes.FirstOrDefault();
+                    Description = "Monde test",
+                    LimiteX = 200,
+                    LimiteY = 200
+                };
 
-                    monde = new Monde()
-                    {
-                        Description = "Monde test",
-                        LimiteX = 200,
-                        LimiteY = 200
-                    };
+                db.Mondes.Add(monde);
+                db.SaveChanges();
 
-                    db.Mondes.Add(monde);
-                    db.SaveChanges();
+                mondeId = monde.Id;
 
-                    mondeId = monde.Id;
+                objetMonde = new ObjetMonde()
+                {
+                    Description = sDescription,
+                    x = iPosX,
+                    y = iPosY,
+                    TypeObjet = iTypeObjet,
+                    MondeId = mondeId
+                };
 
-                    objetMonde = new ObjetMonde()
-                    {
-                        Description = sDescription,
-                        x = iPosX,
-                        y = iPosY,
-                        TypeObjet = iTypeObjet,
-                        MondeId = mondeId
-                    };
-
-                    db.ObjetMondes.Add(objetMonde);
-                    db.SaveChanges();
-
-                    objetMondeId = objetMonde.Id;
-                    mondeId = monde.Id;
-                }
-
-                newObjMonde = true;
+                db.ObjetMondes.Add(objetMonde);
+                db.SaveChanges();
 
                 objetMondeId = objetMonde.Id;
-                mondeId = objetMonde.MondeId;
 
-                newMondeId = db.Mondes.FirstOrDefault(x => x.Id != mondeId).Id;
+                newMonde = new Monde()
+                {
+                    Description = "newMonde",
+                    LimiteX = 50,
+                    LimiteY = 50
+                };
+
+                db.Mondes.Add(newMonde);
+                db.SaveChanges();
+                newMondeId = newMonde.Id;
             }
             #endregion
 
@@ -280,13 +258,10 @@ namespace TP01_Library.Tests.Controllers
                 Assert.AreEqual(sNewDescription, objetMonde_.Description);
                 Assert.AreEqual(mondeId, objetMonde_.MondeId);
 
-                if (newObjMonde)
-                {
-                    Monde monde_ = db.Mondes.Find(mondeId);
-                    db.Mondes.Remove(monde_);
-                    db.ObjetMondes.Remove(objetMonde_);
-                    db.SaveChanges();
-                }
+                Monde monde_ = db.Mondes.Find(mondeId);
+                db.Mondes.Remove(monde_);
+                db.ObjetMondes.Remove(objetMonde_);
+                db.SaveChanges();
             }
             #endregion
         }

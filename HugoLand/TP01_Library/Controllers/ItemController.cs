@@ -53,7 +53,6 @@ namespace TP01_Library.Controllers
 
                     itemDelete.x = null;
                     itemDelete.y = null;
-                    itemDelete.Monde = null;
                     itemDelete.IdHero = p_Hero.Id;
                     dbcontext.SaveChanges();
                 }

@@ -96,7 +96,7 @@ namespace TP01_Library.Tests.Controllers
                     Classe = classe,
                     x = xPos,
                     y = yPos,
-                    NomHero = Nom
+                    NomHero = Nom + "5"
                 };
 
                 context.Heros.Add(h);
@@ -104,7 +104,7 @@ namespace TP01_Library.Tests.Controllers
                 #endregion
 
                 #region Assert
-                hero = context.Heros.FirstOrDefault(x => x.NomHero == Nom);
+                hero = context.Heros.FirstOrDefault(x => x.NomHero == Nom + "5");
                 Assert.IsNotNull(hero);
 
             }
@@ -112,7 +112,7 @@ namespace TP01_Library.Tests.Controllers
             controller.DeleteHero(hero.Id);
             using (var context = new HugoLandContext())
             {
-                hero = context.Heros.FirstOrDefault(x => x.NomHero == Nom);
+                hero = context.Heros.FirstOrDefault(x => x.NomHero == Nom + "5");
                 Assert.IsNull(hero);
             }
             #endregion
