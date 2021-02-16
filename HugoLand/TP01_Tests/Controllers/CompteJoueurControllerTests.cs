@@ -153,11 +153,11 @@ namespace TP01_Library.Tests.Controllers
             #region Arrange
             string answer = "";
             string expectedAnswer = "SUCCESS";
-            string sNomComplet = "Sun Wukong";
-            string sCourriel = "sun_wukong@example.com";
-            string sPrenom = "Sun";
-            string sNom = "Wukong";
-            string sMdp = "sunWukong99";
+            string sNomComplet = "Zeus Almighty";
+            string sCourriel = "zeus_almighty@example.com";
+            string sPrenom = "Zeus";
+            string sNom = "Almighty";
+            string sMdp = "zeusAlmighty77";
             int TypeUtilisateur = 1;
             int iCompteJoueur;
 
@@ -179,9 +179,8 @@ namespace TP01_Library.Tests.Controllers
 
             using (HugoLandContext db = new HugoLandContext())
             {
-                CompteJoueur compteJoueur = db.CompteJoueurs.FirstOrDefault(x => x.NomJoueur == sNomComplet &&
-                                                                            x.Courriel == sCourriel && x.Id == iCompteJoueur);
-                db.CompteJoueurs.Remove(compteJoueur);
+                CompteJoueur compteJoueur_ = db.CompteJoueurs.Find(iCompteJoueur);
+                db.CompteJoueurs.Remove(compteJoueur_);
                 db.SaveChanges();
             }
             #endregion

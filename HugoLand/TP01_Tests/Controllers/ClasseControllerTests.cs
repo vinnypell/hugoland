@@ -14,7 +14,7 @@ namespace TP01_Library.Tests.Controllers
         [TestMethod()]
         public void AjouterClasseTest()
         {
-
+            Assert.Fail();
         }
 
         [TestMethod()]
