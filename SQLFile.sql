@@ -1,51 +1,29 @@
 SELECT * FROM Classe
 
-DELETE FROM Classe AS C
-WHERE Classe
-
-
 SELECT * FROM CompteJoueur
-
-DELETE FROM CompteJoueur
-WHERE CompteJoueur
-
 
 SELECT * FROM EffetItem
 
-DELETE FROM EffetItem
-WHERE EffetItem
-
-
 SELECT * FROM Heros
-
-DELETE FROM Heros
-WHERE Heros
-
 
 SELECT * FROM InventaireHero
 
-DELETE FROM InventaireHero
-WHERE InventaireHero
-
-
 SELECT * FROM Item
-
-DELETE FROM Item
-WHERE Item
 
 SELECT * FROM Monde
 
-DELETE FROM Monde
-WHERE Monde.Description = 'TestMyolo'
-
-
 SELECT * FROM Monstre
-
-DELETE FROM Monstre
-WHERE Monstre.Nom = 'TestMonstre'
-
 
 SELECT * FROM ObjetMonde
 
+--Delete all tables
+
+DELETE FROM Classe
+DELETE FROM CompteJoueur
+DELETE FROM EffetItem
+DELETE FROM Heros
+DELETE FROM InventaireHero
+DELETE FROM Item
+DELETE FROM Monde
+DELETE FROM Monstre
 DELETE FROM ObjetMonde
-WHERE ObjetMonde
