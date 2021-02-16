@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Data.Entity.Core.Objects;
 
 namespace TP01_Library.Tests.Controllers
 {
@@ -68,74 +69,147 @@ namespace TP01_Library.Tests.Controllers
         public void SupprimerItemTest()
         {
             #region Arrange
+
+            #region Arrange - création de héro
+            // variables
+            int xPos = 14;
+            int yPos = 16;
+            string Nom = "TestHero1";
+
+            Monde monde;
+            int mondeId;
+
+            CompteJoueur compteJoueur;
+            int compteJoueurId;
+            string sNomComplet = "TestJoueur1";
+            string sCourriel = "testCourriel@1";
+            string sPrenom = "testPrenom1";
+            string sNom = "testNom1";
+            string sMdp = "salutmapoule1";
+            int TypeUtilisateur = 3;
+
+            Classe classe;
+            int classeId;
+
+            Hero hero;
+            int heroId;
+
+            using (var db = new HugoLandContext())
+            {
+                monde = new Monde()
+                {
+                    Description = "",
+                    LimiteX = 200,
+                    LimiteY = 200
+                };
+
+                db.Mondes.Add(monde);
+                db.SaveChanges();
+
+                mondeId = monde.Id;
+
+                ObjectParameter message = new ObjectParameter("message", typeof(string));
+                db.CreerCompteJoueur(sNomComplet, sCourriel, sPrenom, sNom, TypeUtilisateur, sMdp, message);
+                db.SaveChanges();
+
+                classe = new Classe()
+                {
+                    NomClasse = "Test1",
+                    Description = "Test1",
+                    StatBaseDex = 1,
+                    StatBaseInt = 1,
+                    StatBaseStr = 1,
+                    StatBaseVitalite = 5,
+                    MondeId = mondeId
+                };
+
+                db.Classes.Add(classe);
+                db.SaveChanges();
+
+                classeId = classe.Id;
+
+                compteJoueur = db.CompteJoueurs.FirstOrDefault(x => x.NomJoueur == sNomComplet && x.Courriel == sCourriel);
+                compteJoueurId = compteJoueur.Id;
+
+                hero = new Hero()
+                {
+                    MondeId = mondeId,
+                    NomHero = "Junior au poulet",
+                    ClasseId = classeId,
+                    Experience = 0,
+                    Niveau = 1,
+                    x = xPos,
+                    y = yPos,
+                    StatDex = classe.StatBaseDex,
+                    StatInt = classe.StatBaseInt,
+                    StatStr = classe.StatBaseStr,
+                    StatVitalite = classe.StatBaseVitalite,
+                    EstConnecte = false,
+                    CompteJoueurId = compteJoueurId
+                };
+
+                db.Heros.Add(hero);
+                db.SaveChanges();
+
+                heroId = hero.Id;
+            }
+            #endregion
+
+            #region Act
+            // call de la méthode à testé
+
             //Item
-            string sNom = "TestItem";
+            string sNomItem = "TestItem";
             string sDescription = "TestDescription";
             int iCoordx = 82;
             int iCoordy = 23;
             int iImage = 2;
+            Item item;
+            int itemId;
 
-            //Hero
-
-
-            string message = CJcontroller.CreerJoueur("TestJoueur", "testCourriel", "testPrenom", "TestJoueur", 1, "dawdawdawdaw");
-            Monde monde = new Monde() { Description = "TestMonde" };
-            Classe classe = new Classe() { NomClasse = "testClasse", Description = "testClasse" };
-
-            #endregion
-
-            #region Act
-
-            context.Mondes.Add(monde);
-            context.SaveChanges();
-
-            monde = context.Mondes.FirstOrDefault(x => x.Description == "TestMonde");
-            classe = new Classe() { NomClasse = "testClasse", Description = "testClasse",MondeId = monde.Id };
-            context.Classes.Add(classe);
-            context.SaveChanges();
-
-            CompteJoueur joueur = context.CompteJoueurs.FirstOrDefault(x => x.Nom == "TestJoeur");
-            monde = context.Mondes.FirstOrDefault(x => x.Description == "TestMonde");
-            classe = context.Classes.FirstOrDefault(x => x.NomClasse == "testClasse");
-
-
-
-            Item testItem = new Item()
+            using (HugoLandContext context = new HugoLandContext())
             {
-                Nom = sNom,
-                Description = sDescription,
-                x = iCoordx,
-                y = iCoordy,
-                ImageId = iImage,
-                MondeId = monde.Id
-            };
+                item = new Item()
+                {
+                    Nom = sNomItem,
+                    Description = sDescription,
+                    x = iCoordx,
+                    y = iCoordy,
+                    ImageId = iImage,
+                    MondeId = mondeId
+                };
 
-            context.Items.Add(testItem);
-            context.SaveChanges();
-
-
-
-            Hcontroller.CreerHero(joueur,monde,classe,2,3,"TestHero");
+                context.Items.Add(item);
+                context.SaveChanges();
+                itemId = item.Id;
+            }
+            #endregion
 
             #endregion
 
             #region Assert
-            Item ItemTest = context.Items.FirstOrDefault(x => x.Nom == sNom);
-            Hero HeroTest = context.Heros.FirstOrDefault(x => x.NomHero == "TestHero");
-            controller.SupprimerItem(ItemTest.Id, HeroTest);
 
-            Item deletedItem = context.Items.FirstOrDefault(x => x.Nom == sNom);
-            Assert.IsNotNull(deletedItem.IdHero);
-            Assert.IsNull(deletedItem.y);
-            Assert.IsNull(deletedItem.x);
-            #endregion
+            controller.SupprimerItem(itemId, hero);
 
-            //clean
-            context.Heros.Remove(HeroTest);
-            context.CompteJoueurs.Remove(joueur);
-            context.Mondes.Remove(monde);
-            context.Classes.Remove(classe);
-            context.SaveChanges();
+            using (HugoLandContext context = new HugoLandContext())
+            {
+                Item deletedItem = context.Items.Find(itemId);
+                Assert.IsNotNull(deletedItem.IdHero);
+                Assert.IsNull(deletedItem.y);
+                Assert.IsNull(deletedItem.x);
+                #endregion
+
+                //clean
+                Hero hero_ = context.Heros.Find(heroId);
+                context.Heros.Remove(hero_);
+                CompteJoueur compteJoueur_ = context.CompteJoueurs.Find(compteJoueurId);
+                context.CompteJoueurs.Remove(compteJoueur_);
+                Monde monde_ = context.Mondes.Find(mondeId);
+                context.Mondes.Remove(monde_);
+                Classe classe_ = context.Classes.Find(classeId);
+                context.Classes.Remove(classe_);
+                context.SaveChanges();
+            }
         }
         /// <summary>
         /// Auteur: Mathias Lavoie-Rivard

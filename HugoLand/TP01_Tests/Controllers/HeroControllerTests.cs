@@ -198,7 +198,7 @@ namespace TP01_Library.Tests.Controllers
                 };
                 context.Heros.Add(h);
                 context.SaveChanges();
-                heroId = context.Heros.First(x => x.NomHero == h.NomHero && x.Classe == h.Classe).Id;
+
                 original = h.Clone();
                 modified = h.Clone();
             }
@@ -210,9 +210,9 @@ namespace TP01_Library.Tests.Controllers
 
             using (var ctx = new HugoLandContext())
             {
-                Hero fromDb = ctx.Heros.Find(heroId);
-                Assert.AreNotEqual<Hero>(original, fromDb);
-                Assert.AreEqual<Hero>(modified, fromDb);
+                Hero fromDb = ctx.Heros.Find(modified.Id);
+                Assert.AreNotEqual(original.NomHero, fromDb.NomHero);
+                Assert.AreEqual(modified.NomHero, fromDb.NomHero);
 
                 ctx.Heros.Remove(fromDb);
                 ctx.SaveChanges();
