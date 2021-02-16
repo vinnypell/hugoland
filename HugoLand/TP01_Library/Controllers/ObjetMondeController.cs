@@ -71,27 +71,23 @@ namespace TP01_Library.Controllers
         {
             using (HugoLandContext dbContext = new HugoLandContext())
             {
-                if (p_iObjetMondeId > 0)
+
+                ObjetMonde objetMonde = dbContext.ObjetMondes.FirstOrDefault(x => x.MondeId == p_iMondeId &&
+                                                                             x.Id == p_iObjetMondeId);
+
+                objetMonde.MondeId = p_iMondeId;
+
+                if (p_iNewMondeId > 0)
                 {
-                    ObjetMonde objetMonde = dbContext.ObjetMondes.FirstOrDefault(x => x.MondeId == p_iMondeId &&
-                                                                                 x.Id == p_iObjetMondeId);
-                    if (p_iMondeId > 0)
-                    {
-                        objetMonde.MondeId = p_iMondeId;
-                    }
-
-                    if (p_iNewMondeId > 0)
-                    {
-                        objetMonde.MondeId = p_iNewMondeId;
-                    }
-
-                    if (!string.IsNullOrEmpty(p_sNouvelleDescription))
-                    {
-                        objetMonde.Description = p_sNouvelleDescription;
-                    }
-
-                    dbContext.SaveChanges();
+                    objetMonde.MondeId = p_iNewMondeId;
                 }
+
+                if (!string.IsNullOrEmpty(p_sNouvelleDescription))
+                {
+                    objetMonde.Description = p_sNouvelleDescription;
+                }
+
+                dbContext.SaveChanges();
             }
         }
     }

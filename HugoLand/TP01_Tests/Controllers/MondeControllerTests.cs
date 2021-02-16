@@ -92,7 +92,59 @@ namespace TP01_Library.Tests.Controllers
         [TestMethod()]
         public void ModifierDimensionsMondeTest()
         {
-            Assert.Fail();
+            #region Arrange
+            // variables
+            Monde monde;
+            bool newMonde = false;
+            int mondeId;
+            int oldiLimiteX, oldiLimiteY;
+            int newiLimiteX = 500;
+            int newiLimiteY = 750;
+
+            using (HugoLandContext db = new HugoLandContext())
+            {
+                monde = db.Mondes.FirstOrDefault();
+
+                if (monde == null)
+                {
+                    monde = new Monde()
+                    {
+                        Description = "",
+                        LimiteX = 0,
+                        LimiteY = 0
+                    };
+
+                    db.Mondes.Add(monde);
+                    db.SaveChanges();
+
+                    newMonde = true;
+                }
+                oldiLimiteX = monde.LimiteX;
+                oldiLimiteY = monde.LimiteY;
+                mondeId = monde.Id;
+            }
+            #endregion
+
+            #region Act & Assert
+            // call de la méthode
+            ctrl.ModifierDimensionsMonde(mondeId, newiLimiteX, newiLimiteY);
+
+            // vérification
+            using (HugoLandContext db = new HugoLandContext())
+            {
+                Monde monde_ = db.Mondes.Find(mondeId);
+
+                Assert.AreEqual(newiLimiteX, monde_.LimiteX);
+                Assert.AreEqual(newiLimiteY, monde_.LimiteY);
+                Assert.AreEqual(mondeId, monde_.Id);
+
+                if (newMonde)
+                {
+                    db.Mondes.Remove(monde_);
+                    db.SaveChanges();
+                }
+            }
+            #endregion
         }
 
         [TestMethod()]
