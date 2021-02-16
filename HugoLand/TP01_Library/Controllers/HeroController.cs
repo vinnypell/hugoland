@@ -29,15 +29,11 @@ namespace TP01_Library.Controllers
             using (var context = new HugoLandContext())
             {
                 //randomize base stats
-                //int Dex = Outil.RollD20();
-                //int intel = Outil.RollD20();
-                //int str = Outil.RollD20();
-                //int pv = 10 + Outil.RollD20();
+                int Dex = Outil.RollD20();
+                int intel = Outil.RollD20();
+                int str = Outil.RollD20();
+                int pv = 10 + Outil.RollD20();
 
-                int Dex = 0;
-                int intel = 0;
-                int str = 0;
-                int pv = 0;
 
                 Hero newHero = new Hero()
                 {
