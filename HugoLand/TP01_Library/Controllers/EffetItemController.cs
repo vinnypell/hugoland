@@ -16,21 +16,18 @@ namespace TP01_Library.Controllers
         /// <param name="p_item"></param>
         /// <param name="p_iValeurEffet"></param>
         /// <param name="p_iTypeEffet"></param>
-        public void AjouterEffetItem(Item p_item, int p_iValeurEffet, int p_iTypeEffet)
+        public void AjouterEffetItem(int p_iItemId, int p_iValeurEffet, int p_iTypeEffet)
         {
             using (HugoLandContext dbContext = new HugoLandContext())
             {
-                if (p_item != null)
+                dbContext.EffetItems.Add(new EffetItem()
                 {
-                    dbContext.EffetItems.Add(new EffetItem()
-                    {
-                        Item = p_item,
-                        ItemId = p_item.Id,
-                        ValeurEffet = p_iValeurEffet,
-                        TypeEffet = p_iTypeEffet
-                    });
-                    dbContext.SaveChanges();
-                }
+                    ItemId = p_iItemId,
+                    ValeurEffet = p_iValeurEffet,
+                    TypeEffet = p_iTypeEffet
+                });
+                dbContext.SaveChanges();
+
             }
         }
 
@@ -40,16 +37,13 @@ namespace TP01_Library.Controllers
         /// Date :          2021-02-13
         /// </summary>
         /// <param name="p_item"></param>
-        public void SupprimerEffetItem(int p_iEffetItemId, Item p_item)
+        public void SupprimerEffetItem(int p_iEffetItemId, int p_iItemId)
         {
             using (HugoLandContext dbContext = new HugoLandContext())
             {
-                if (p_item != null)
-                {
-                    EffetItem effetItem = dbContext.EffetItems.FirstOrDefault(x => x.ItemId == p_item.Id && x.Id == p_iEffetItemId);
-                    dbContext.EffetItems.Remove(effetItem);
-                    dbContext.SaveChanges();
-                }
+                EffetItem effetItem = dbContext.EffetItems.FirstOrDefault(x => x.ItemId == p_iItemId && x.Id == p_iEffetItemId);
+                dbContext.EffetItems.Remove(effetItem);
+                dbContext.SaveChanges();
             }
         }
 
@@ -63,33 +57,29 @@ namespace TP01_Library.Controllers
         /// <param name="p_newItem"></param>
         /// <param name="p_iValeurEffet"></param>
         /// <param name="p_iTypeEffet"></param>
-        public void ModifierEffetItem(Item p_item, Item p_newItem, int p_iEffetItemId, int p_iValeurEffet = -1, int p_iTypeEffet = -1)
+        public void ModifierEffetItem(int p_iItemId, int p_iEffetItemId, int p_iValeurEffet, int p_iTypeEffet)
         {
             using (HugoLandContext dbContext = new HugoLandContext())
             {
-                if (p_item != null)
+
+                EffetItem effetItem = dbContext.EffetItems.FirstOrDefault(x => x.Id == p_iEffetItemId);
+
+                if (p_iTypeEffet != effetItem.TypeEffet)
                 {
-                    EffetItem effetItem = dbContext.EffetItems.FirstOrDefault(x => x.ItemId == p_item.Id && x.Id == p_iEffetItemId);
-
-                    if (p_iTypeEffet != -1)
-                    {
-                        effetItem.TypeEffet = p_iTypeEffet;
-                    }
-
-                    if (p_iValeurEffet != -1)
-                    {
-                        effetItem.ValeurEffet = p_iValeurEffet;
-                    }
-
-                    if (p_newItem != null)
-                    {
-                        effetItem.Item = p_newItem;
-                        effetItem.ItemId = p_newItem.Id;
-                    }
-
-                    dbContext.SaveChanges();
-
+                    effetItem.TypeEffet = p_iTypeEffet;
                 }
+
+                if (p_iValeurEffet != effetItem.ValeurEffet)
+                {
+                    effetItem.ValeurEffet = p_iValeurEffet;
+                }
+
+                if (p_iItemId != effetItem.ItemId)
+                {
+                    effetItem.ItemId = p_iItemId;
+                }
+
+                dbContext.SaveChanges();
             }
         }
     }
