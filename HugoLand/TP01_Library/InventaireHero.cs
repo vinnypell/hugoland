@@ -17,6 +17,7 @@ namespace TP01_Library
         public int IdHero { get; set; }
         public int ItemId { get; set; }
         public int IdInventaireHero { get; set; }
+        public int Quantite { get; set; }
     
         public virtual Hero Hero { get; set; }
         public virtual Item Item { get; set; }
