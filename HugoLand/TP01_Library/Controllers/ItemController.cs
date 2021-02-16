@@ -53,7 +53,7 @@ namespace TP01_Library.Controllers
 
                     itemDelete.x = null;
                     itemDelete.y = null;
-
+                    itemDelete.Monde = null;
                     itemDelete.IdHero = p_Hero.Id;
                     dbcontext.SaveChanges();
                 }
@@ -64,7 +64,7 @@ namespace TP01_Library.Controllers
         /// Summary: Permet de modifier la quantité d'item qu'un hero a | 
         /// Date: 2021-02-11
         /// </summary>
-        public void ModifierQuantiteItem(Item p_Item, int p_quantite)
+        public void ModifierQuantiteItem(int Item_ID, int p_quantite)
         {
             using (HugoLandContext dbcontext = new HugoLandContext())
             {
