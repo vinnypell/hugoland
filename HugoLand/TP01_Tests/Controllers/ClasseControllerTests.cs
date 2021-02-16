@@ -11,22 +11,76 @@ namespace TP01_Library.Tests.Controllers
     [TestClass()]
     public class ClasseControllerTests
     {
+        ClasseController controller = new ClasseController();
+
         [TestMethod()]
         public void AjouterClasseTest()
         {
-            Assert.Fail();
+            Monde monde = new Monde() { Description = "TestMonde" };
+            controller.AjouterClasse(monde, "test1", "Testkjahwlkhawl", 12, 12, 15, 80);
+
+            using (var context = new HugoLandContext())
+            {
+                Classe classe = context.Classes.FirstOrDefault(x => x.NomClasse == "test1");
+                Assert.IsNotNull(classe);
+
+                context.Classes.Remove(classe);
+            }
+
         }
 
         [TestMethod()]
         public void SupprimerClasseTest()
         {
-            Assert.Fail();
+            Classe classe = new Classe() { NomClasse = "testClasse16", Description = "testClasse" };
+            Monde monde = new Monde() { Description = "TestMonde", Classes = { classe } };
+
+            using (var context = new HugoLandContext())
+            {
+                context.Mondes.Add(monde);
+                context.Classes.Add(classe);
+                monde = context.Mondes.First(x => x.Description == "testMonde");
+                classe = context.Classes.First(x => x.NomClasse == "testClasse16");
+            }
+
+            controller.SupprimerClasse(monde, classe.Id);
+
+            using (var context = new HugoLandContext())
+            {
+                Assert.IsNull(context.Classes.FirstOrDefault(x => x.Id == classe.Id));
+
+                context.Mondes.Remove(monde);
+            }
+
         }
 
         [TestMethod()]
         public void ModifierClasseTest()
         {
-            Assert.Fail();
+            Classe classe = new Classe() { NomClasse = "testClasse16", Description = "testClasse" };
+            Monde monde = new Monde() { Description = "TestMonde", Classes = { classe } };
+
+            using (var context = new HugoLandContext())
+            {
+                context.Mondes.Add(monde);
+                context.Classes.Add(classe);
+                monde = context.Mondes.First(x => x.Description == "testMonde");
+                classe = context.Classes.First(x => x.NomClasse == "testClasse16");
+            }
+            Classe original = classe.Clone();
+            classe.NomClasse = "Modifié";
+            controller.ModifierClasse(classe);
+
+            using (var context = new HugoLandContext())
+            {
+                classe = context.Classes.FirstOrDefault(x => x.Id == classe.Id);
+
+                Assert.AreNotEqual(original.NomClasse, classe.NomClasse);
+
+                context.Classes.Remove(classe);
+                context.Mondes.Remove(monde);
+            }
+
         }
 
         [TestMethod()]
