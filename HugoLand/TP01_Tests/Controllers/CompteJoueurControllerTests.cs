@@ -95,7 +95,56 @@ namespace TP01_Library.Tests.Controllers
         [TestMethod()]
         public void ModifierJoueurTest()
         {
-            Assert.Fail();
+            #region Arrange
+            // old values
+            string sNomComplet = "Sun Wukong";
+            string sCourriel = "sun_wukong@example.com";
+            string sPrenom = "Sun";
+            string sNom = "Wukong";
+            string sMdp = "sunWukong99";
+            int TypeUtilisateur = 1;
+            int iCompteJoueur;
+
+            // new values
+            string sNewNomComplet = "Monkey king";
+            string sNewCourriel = "monkey_king@example.com";
+            string sNewPrenom = "Monkey S";
+            string sNewNom = "W King";
+            int NewTypeUtilisateur = 5;
+
+            using (HugoLandContext db = new HugoLandContext())
+            {
+                ObjectParameter message = new ObjectParameter("message", typeof(string));
+                db.CreerCompteJoueur(sNomComplet, sCourriel, sPrenom, sNom, TypeUtilisateur, sMdp, message);
+
+                iCompteJoueur = db.CompteJoueurs.FirstOrDefault(x => x.NomJoueur == sNomComplet &&
+                                                                            x.Courriel == sCourriel).Id;
+            }
+            #endregion
+
+            #region Act & Assert
+            // call la méthode
+            ctrl.ModifierJoueur(iCompteJoueur, sNewNomComplet, sNewCourriel, sNewPrenom, sNewNom, NewTypeUtilisateur);
+
+            using (HugoLandContext db = new HugoLandContext())
+            {
+                CompteJoueur compteJoueur = db.CompteJoueurs.FirstOrDefault(x => x.NomJoueur == sNewNomComplet &&
+                                                            x.Courriel == sNewCourriel && x.Id == iCompteJoueur);
+                Assert.IsNotNull(compteJoueur);
+                Assert.AreNotEqual(sNomComplet, compteJoueur.NomJoueur);
+                Assert.AreNotEqual(sCourriel, compteJoueur.Courriel);
+                Assert.AreNotEqual(sPrenom, compteJoueur.Prenom);
+                Assert.AreNotEqual(sNom, compteJoueur.Nom);
+
+                Assert.AreEqual(sNewNomComplet, compteJoueur.NomJoueur);
+                Assert.AreEqual(sNewCourriel, compteJoueur.Courriel);
+                Assert.AreEqual(sNewPrenom, compteJoueur.Prenom);
+                Assert.AreEqual(sNewNom, compteJoueur.Nom);
+
+                db.CompteJoueurs.Remove(compteJoueur);
+                db.SaveChanges();
+            }
+            #endregion
         }
 
         [TestMethod()]
@@ -103,12 +152,12 @@ namespace TP01_Library.Tests.Controllers
         {
             #region Arrange
             string answer = "";
-            string expectedAnswer = "SUCCES";
-            string sNomComplet = "Sun Wukong";
-            string sCourriel = "sun_wukong@example.com";
-            string sPrenom = "Sun";
-            string sNom = "Wukong";
-            string sMdp = "sunWukong99";
+            string expectedAnswer = "SUCCESS";
+            string sNomComplet = "Zeus Almighty";
+            string sCourriel = "zeus_almighty@example.com";
+            string sPrenom = "Zeus";
+            string sNom = "Almighty";
+            string sMdp = "zeusAlmighty77";
             int TypeUtilisateur = 1;
             int iCompteJoueur;
 
@@ -127,6 +176,13 @@ namespace TP01_Library.Tests.Controllers
             answer = ctrl.ValiderConnexion(sMdp, sNomComplet);
 
             Assert.AreEqual(expectedAnswer, answer);
+
+            using (HugoLandContext db = new HugoLandContext())
+            {
+                CompteJoueur compteJoueur_ = db.CompteJoueurs.Find(iCompteJoueur);
+                db.CompteJoueurs.Remove(compteJoueur_);
+                db.SaveChanges();
+            }
             #endregion
         }
     }

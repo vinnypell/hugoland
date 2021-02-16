@@ -54,30 +54,30 @@ namespace TP01_Library.Controllers
         /// Date: 2021-02-11
         /// </summary>
         /// <param name="p_CompteJoueur"></param>
-        public void ModifierJoueur(CompteJoueur p_CompteJoueur, string p_NomJoueur = null, string p_Courriel = null, string p_Prenom = null, string p_Nom = null, int? p_TypeUtilisateur = null)
+        public void ModifierJoueur(int p_iCompteJoueurId, string p_NomJoueur, string p_Courriel, string p_Prenom, string p_Nom, int? p_TypeUtilisateur)
         {
             //TODO AJOUTER LES INFORAMTION AU COMPTE ET VÉRIFIER SI L'INFORMATION EST CHANGÉ OU NON.
             using (HugoLandContext dbContext = new HugoLandContext())
             {
-                CompteJoueur joueurModif = dbContext.CompteJoueurs.FirstOrDefault(x => x.Id == p_CompteJoueur.Id);
+                CompteJoueur joueurModif = dbContext.CompteJoueurs.FirstOrDefault(x => x.Id == p_iCompteJoueurId);
 
-                if (string.IsNullOrEmpty(p_NomJoueur))
+                if (p_NomJoueur != joueurModif.NomJoueur)
                 {
                     joueurModif.NomJoueur = p_NomJoueur;
                 }
-                if (string.IsNullOrEmpty(p_Courriel))
+                if (p_Courriel != joueurModif.Courriel)
                 {
                     joueurModif.Courriel = p_Courriel;
                 }
-                if (string.IsNullOrEmpty(p_Prenom))
+                if (p_Prenom != joueurModif.Prenom)
                 {
                     joueurModif.Prenom = p_Prenom;
                 }
-                if (string.IsNullOrEmpty(p_Nom))
+                if (p_Nom != joueurModif.Nom)
                 {
                     joueurModif.Nom = p_Nom;
                 }
-                if (p_TypeUtilisateur == null)
+                if (p_TypeUtilisateur != null && p_TypeUtilisateur != joueurModif.TypeUtilisateur)
                 {
                     joueurModif.TypeUtilisateur = (int)p_TypeUtilisateur;
                 }
