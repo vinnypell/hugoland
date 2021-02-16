@@ -19,7 +19,7 @@ namespace TP01_Library.Tests.Controllers
         [TestMethod()]
         public void AjouterObjetMondeTest()
         {
-            #region Monde - pas null
+            #region Monde
 
             #region Arrange
             // variables obj monde
@@ -98,7 +98,7 @@ namespace TP01_Library.Tests.Controllers
         [TestMethod()]
         public void SupprimerObjetMondeTest()
         {
-            #region Monde - pas null
+            #region Monde
 
             #region Arrange
             // variables obj monde

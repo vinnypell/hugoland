@@ -25,6 +25,7 @@ namespace TP01_Library.Tests.Controllers
         [TestMethod()]
         public void AjouterHeroTest()
         {
+            //test
             #region Arrange
             // variables
             CompteJoueur joueur = new CompteJoueur() { Nom = "TestJoueur"};
