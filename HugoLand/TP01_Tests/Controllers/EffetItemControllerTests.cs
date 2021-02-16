@@ -25,44 +25,32 @@ namespace TP01_Library.Tests.Controllers
             EffetItem effetItem;
             int iValeurEffet = 5;
             int iTypeEffet = 10;
-            bool newMonde = false;
-            bool newItem = false;
 
             using (HugoLandContext db = new HugoLandContext())
             {
-                item = db.Items.FirstOrDefault();
-
-                if (item == null)
+                monde = new Monde()
                 {
-                    monde = db.Mondes.FirstOrDefault();
-                    if (monde == null)
-                    {
-                        monde = new Monde()
-                        {
-                            Description = "",
-                            LimiteX = 0,
-                            LimiteY = 0
-                        };
-                        db.Mondes.Add(monde);
-                        db.SaveChanges();
-                        newMonde = true;
-                    }
+                    Description = "",
+                    LimiteX = 0,
+                    LimiteY = 0
+                };
+                db.Mondes.Add(monde);
+                db.SaveChanges();
 
+                mondeId = monde.Id;
 
-                    item = new Item()
-                    {
-                        Nom = "Bâton magique",
-                        Description = "Bâton de Sun-Wukong",
-                        x = 0,
-                        y = 0,
-                        MondeId = monde.Id
-                    };
+                item = new Item()
+                {
+                    Nom = "Bâton magique",
+                    Description = "Bâton de Sun-Wukong",
+                    x = 0,
+                    y = 0,
+                    MondeId = mondeId
+                };
 
-                    db.Items.Add(item);
-                    db.SaveChanges();
-                    newItem = true;
-                }
-                mondeId = item.MondeId;
+                db.Items.Add(item);
+                db.SaveChanges();
+
                 itemId = item.Id;
             }
             #endregion
@@ -81,20 +69,15 @@ namespace TP01_Library.Tests.Controllers
                 Assert.AreEqual(iValeurEffet, effetItem.ValeurEffet);
                 Assert.AreEqual(itemId, effetItem.ItemId);
 
-                if (newItem)
-                {
-                    Item item_ = db.Items.Find(itemId);
-                    db.Items.Remove(item_);
-                    if (newMonde)
-                    {
-                        Monde monde_ = db.Mondes.Find(mondeId);
-                        db.Mondes.Remove(monde_);
-                    }
-                    db.SaveChanges();
-                }
+                Item item_ = db.Items.Find(itemId);
+                db.Items.Remove(item_);
+                Monde monde_ = db.Mondes.Find(mondeId);
+                db.Mondes.Remove(monde_);
+                db.EffetItems.Remove(effetItem);
+                db.SaveChanges();
             }
-            #endregion
         }
+        #endregion
 
         [TestMethod()]
         public void SupprimerEffetItemTest()
@@ -110,44 +93,30 @@ namespace TP01_Library.Tests.Controllers
             int iValeurEffet = 5;
             int iTypeEffet = 10;
             int m_count;
-            bool newMonde = false;
-            bool newItem = false;
 
             using (HugoLandContext db = new HugoLandContext())
             {
-                item = db.Items.FirstOrDefault();
-
-                if (item == null)
+                monde = new Monde()
                 {
-                    monde = db.Mondes.FirstOrDefault();
-                    if (monde == null)
-                    {
-                        monde = new Monde()
-                        {
-                            Description = "",
-                            LimiteX = 0,
-                            LimiteY = 0
-                        };
-                        db.Mondes.Add(monde);
-                        db.SaveChanges();
-                        newMonde = true;
-                    }
+                    Description = "",
+                    LimiteX = 0,
+                    LimiteY = 0
+                };
+                db.Mondes.Add(monde);
+                db.SaveChanges();
+                mondeId = monde.Id;
 
+                item = new Item()
+                {
+                    Nom = "Bâton magique",
+                    Description = "Bâton de Sun-Wukong",
+                    x = 0,
+                    y = 0,
+                    MondeId = mondeId
+                };
 
-                    item = new Item()
-                    {
-                        Nom = "Bâton magique",
-                        Description = "Bâton de Sun-Wukong",
-                        x = 0,
-                        y = 0,
-                        MondeId = monde.Id
-                    };
-
-                    db.Items.Add(item);
-                    db.SaveChanges();
-                    newItem = true;
-                }
-                mondeId = item.MondeId;
+                db.Items.Add(item);
+                db.SaveChanges();
                 itemId = item.Id;
 
                 effetItem = new EffetItem()
@@ -175,17 +144,11 @@ namespace TP01_Library.Tests.Controllers
 
                 Assert.AreNotEqual(m_count, newCount);
 
-                if (newItem)
-                {
-                    Item item_ = db.Items.Find(itemId);
-                    db.Items.Remove(item_);
-                    if (newMonde)
-                    {
-                        Monde monde_ = db.Mondes.Find(mondeId);
-                        db.Mondes.Remove(monde_);
-                    }
-                    db.SaveChanges();
-                }
+                Item item_ = db.Items.Find(itemId);
+                db.Items.Remove(item_);
+                Monde monde_ = db.Mondes.Find(mondeId);
+                db.Mondes.Remove(monde_);
+                db.SaveChanges();
             }
             #endregion
         }
@@ -203,65 +166,46 @@ namespace TP01_Library.Tests.Controllers
             int effetItemId;
             int iValeurEffet = 5;
             int iTypeEffet = 10;
-            int m_count;
-            bool newMonde = false;
-            bool newItem = false;
-            bool newEffetItem = false;
 
             using (HugoLandContext db = new HugoLandContext())
             {
-                effetItem = db.EffetItems.FirstOrDefault();
-                if (effetItem == null)
+
+                monde = new Monde()
                 {
-                    item = db.Items.FirstOrDefault();
+                    Description = "",
+                    LimiteX = 0,
+                    LimiteY = 0
+                };
+                db.Mondes.Add(monde);
+                db.SaveChanges();
 
-                    if (item == null)
-                    {
-                        monde = db.Mondes.FirstOrDefault();
-                        if (monde == null)
-                        {
-                            monde = new Monde()
-                            {
-                                Description = "",
-                                LimiteX = 0,
-                                LimiteY = 0
-                            };
-                            db.Mondes.Add(monde);
-                            db.SaveChanges();
-                            newMonde = true;
-                        }
+                mondeId = monde.Id;
 
-                        item = new Item()
-                        {
-                            Nom = "Bâton magique",
-                            Description = "Bâton de Sun-Wukong",
-                            x = 0,
-                            y = 0,
-                            MondeId = monde.Id
-                        };
+                item = new Item()
+                {
+                    Nom = "Bâton magique",
+                    Description = "Bâton de Sun-Wukong",
+                    x = 0,
+                    y = 0,
+                    MondeId = mondeId
+                };
 
-                        db.Items.Add(item);
-                        db.SaveChanges();
-                        newItem = true;
-                    }
-                    mondeId = item.MondeId;
-                    itemId = item.Id;
+                db.Items.Add(item);
+                db.SaveChanges();
 
-                    effetItem = new EffetItem()
-                    {
-                        ItemId = itemId,
-                        ValeurEffet = iValeurEffet,
-                        TypeEffet = iTypeEffet
-                    };
+                itemId = item.Id;
 
-                    db.EffetItems.Add(effetItem);
-                    db.SaveChanges();
-                    newEffetItem = true;
-                }
+                effetItem = new EffetItem()
+                {
+                    ItemId = itemId,
+                    ValeurEffet = iValeurEffet,
+                    TypeEffet = iTypeEffet
+                };
+
+                db.EffetItems.Add(effetItem);
+                db.SaveChanges();
 
                 effetItemId = effetItem.Id;
-                itemId = effetItem.ItemId;
-                mondeId = effetItem.Item.MondeId;
             }
             #endregion
 
@@ -274,24 +218,16 @@ namespace TP01_Library.Tests.Controllers
             {
                 int newCount = db.EffetItems.Count();
 
-                if (newEffetItem)
-                {
-                    EffetItem effetItem_ = db.EffetItems.Find(effetItemId);
-                    db.EffetItems.Remove(effetItem_);
-                    if (newItem)
-                    {
-                        Item item_ = db.Items.Find(itemId);
-                        db.Items.Remove(item_);
-                        if (newMonde)
-                        {
-                            Monde monde_ = db.Mondes.Find(mondeId);
-                            db.Mondes.Remove(monde_);
-                        }
-                    }
-                    db.SaveChanges();
-                }
+                EffetItem effetItem_ = db.EffetItems.Find(effetItemId);
+                db.EffetItems.Remove(effetItem_);
+                Item item_ = db.Items.Find(itemId);
+                db.Items.Remove(item_);
+                Monde monde_ = db.Mondes.Find(mondeId);
+                db.Mondes.Remove(monde_);
+                db.SaveChanges();
             }
-            #endregion
         }
+        #endregion
     }
 }
+

@@ -103,22 +103,16 @@ namespace TP01_Library.Tests.Controllers
 
             using (HugoLandContext db = new HugoLandContext())
             {
-                monde = db.Mondes.FirstOrDefault();
-
-                if (monde == null)
+                monde = new Monde()
                 {
-                    monde = new Monde()
-                    {
-                        Description = "",
-                        LimiteX = 0,
-                        LimiteY = 0
-                    };
+                    Description = "",
+                    LimiteX = 0,
+                    LimiteY = 0
+                };
 
-                    db.Mondes.Add(monde);
-                    db.SaveChanges();
+                db.Mondes.Add(monde);
+                db.SaveChanges();
 
-                    newMonde = true;
-                }
                 oldiLimiteX = monde.LimiteX;
                 oldiLimiteY = monde.LimiteY;
                 mondeId = monde.Id;
@@ -138,11 +132,8 @@ namespace TP01_Library.Tests.Controllers
                 Assert.AreEqual(newiLimiteY, monde_.LimiteY);
                 Assert.AreEqual(mondeId, monde_.Id);
 
-                if (newMonde)
-                {
-                    db.Mondes.Remove(monde_);
-                    db.SaveChanges();
-                }
+                db.Mondes.Remove(monde_);
+                db.SaveChanges();
             }
             #endregion
         }
@@ -155,29 +146,22 @@ namespace TP01_Library.Tests.Controllers
             string sNewDescription = "Nouvelle description";
             string sOldDescription;
             Monde monde;
-            bool newMonde = false;
             int mondeId;
             int iLimiteX = 1000;
             int iLimiteY = 1500;
 
             using (HugoLandContext db = new HugoLandContext())
             {
-                monde = db.Mondes.FirstOrDefault();
-
-                if (monde == null)
+                monde = new Monde()
                 {
-                    monde = new Monde()
-                    {
-                        Description = "",
-                        LimiteX = iLimiteX,
-                        LimiteY = iLimiteY
-                    };
+                    Description = "",
+                    LimiteX = iLimiteX,
+                    LimiteY = iLimiteY
+                };
 
-                    db.Mondes.Add(monde);
-                    db.SaveChanges();
+                db.Mondes.Add(monde);
+                db.SaveChanges();
 
-                    newMonde = true;
-                }
 
                 sOldDescription = monde.Description;
                 mondeId = monde.Id;
@@ -196,11 +180,8 @@ namespace TP01_Library.Tests.Controllers
                 Assert.AreEqual(sNewDescription, monde_.Description);
                 Assert.AreEqual(mondeId, monde_.Id);
 
-                if (newMonde)
-                {
-                    db.Mondes.Remove(monde_);
-                    db.SaveChanges();
-                }
+                db.Mondes.Remove(monde_);
+                db.SaveChanges();
             }
             #endregion
         }
