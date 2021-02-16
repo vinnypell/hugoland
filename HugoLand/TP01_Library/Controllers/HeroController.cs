@@ -34,7 +34,6 @@ namespace TP01_Library.Controllers
                 int str = Outil.RollD20();
                 int pv = 10 + Outil.RollD20();
 
-
                 Hero newHero = new Hero()
                 {
                     Monde = monde,

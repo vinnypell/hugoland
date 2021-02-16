@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Moq;
 using System.Data.Entity;
+using System.Data.Entity.Core.Objects;
 
 namespace TP01_Library.Tests.Controllers
 {
@@ -34,15 +35,62 @@ namespace TP01_Library.Tests.Controllers
         {
             #region Arrange
             // variables
-
             int xPos = 14;
             int yPos = 16;
-            string Nom = "TestHero";
-            using (var context = new HugoLandContext())
+            string Nom = "TestHero1";
+
+            Monde monde;
+            int mondeId;
+
+            CompteJoueur compteJoueur;
+            int compteJoueurId;
+            string sNomComplet = "TestJoueur1";
+            string sCourriel = "testCourriel@1";
+            string sPrenom = "testPrenom1";
+            string sNom = "testNom1";
+            string sMdp = "salutmapoule1";
+            int TypeUtilisateur = 3;
+
+            Classe classe;
+            int classeId;
+
+            using (var db = new HugoLandContext())
             {
-                context.CompteJoueurs.Add(joueur);
-                context.Mondes.Add(monde);
-                context.SaveChanges();
+                monde = new Monde()
+                {
+                    Description = "",
+                    LimiteX = 200,
+                    LimiteY = 200
+                };
+
+                db.Mondes.Add(monde);
+                db.SaveChanges();
+
+                mondeId = monde.Id;
+
+                ObjectParameter message = new ObjectParameter("message", typeof(string));
+                db.CreerCompteJoueur(sNomComplet, sCourriel, sPrenom, sNom, TypeUtilisateur, sMdp, message);
+                db.SaveChanges();
+
+                classe = new Classe()
+                {
+                    NomClasse = "Test1",
+                    Description = "Test1",
+                    StatBaseDex = 1,
+                    StatBaseInt = 1,
+                    StatBaseStr = 1,
+                    StatBaseVitalite = 5,
+                    MondeId = mondeId
+                };
+
+                db.Classes.Add(classe);
+                db.SaveChanges();
+
+                classeId = classe.Id;
+
+                compteJoueur = db.CompteJoueurs.FirstOrDefault(x => x.NomJoueur == sNomComplet && x.Courriel == sCourriel);
+                compteJoueurId = compteJoueur.Id;
+
             }
             #endregion
 
@@ -60,18 +108,22 @@ namespace TP01_Library.Tests.Controllers
                 Assert.AreEqual(joueur.NomJoueur, hero.CompteJoueur.NomJoueur);
                 Assert.AreEqual(monde.Description, hero.Monde.Description);
                 Assert.AreEqual(xPos, hero.x);
-                #endregion
 
                 //Cleanup
-                context.Heros.Remove(hero);
-                Monde monde_ = context.Mondes.FirstOrDefault(x => x.Description == "TestMonde");
-                Hero hero_ = context.Heros.First(x => x.NomHero == Nom && x.Monde.Description == monde.Description);
-                CompteJoueur cj = context.CompteJoueurs.First(x => x.NomJoueur == joueur.NomJoueur);
+                Classe classe_ = context.Classes.OrderByDescending(x => x.Id).First();
+                context.Classes.Remove(classe_);
+
+                Monde monde_ = context.Mondes.OrderByDescending(x => x.Id).First();
                 context.Mondes.Remove(monde_);
-                context.Heros.Remove(hero_);
+ 
+                CompteJoueur cj = context.CompteJoueurs.OrderByDescending(x => x.Id).First();
                 context.CompteJoueurs.Remove(cj);
+
+                context.Heros.Remove(hero);
                 context.SaveChanges();
             }
+            #endregion
+
         }
 
         [TestMethod()]

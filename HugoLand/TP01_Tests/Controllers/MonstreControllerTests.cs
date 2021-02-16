@@ -131,8 +131,6 @@ namespace TP01_Library.Tests.Controllers
 
             using (HugoLandContext db = new HugoLandContext())
             {
-                monstre = db.Monstres.FirstOrDefault();
-
                 monde = new Monde()
                 {
                     Description = "",
@@ -208,8 +206,7 @@ namespace TP01_Library.Tests.Controllers
                 db.Mondes.Remove(nouveauMonde);
                 db.SaveChanges();
             }
+            #endregion
         }
-
-        #endregion
     }
 }
