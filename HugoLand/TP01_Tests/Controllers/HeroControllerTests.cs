@@ -14,9 +14,16 @@ namespace TP01_Library.Tests.Controllers
     public class HeroControllerTests
     {
         HeroController controller = new HeroController();
-        //Mock le dbContext
-        HugoLandContext context = new HugoLandContext();
-
+        CompteJoueur joueur;
+        Monde monde;
+        Classe classe;
+        [TestInitialize]
+        public void innit()
+        {
+            joueur = new CompteJoueur() { Nom = "TestJoueur", Prenom = "testPrenom", NomJoueur = "TestJoueur", Courriel = "testCourriel", MotDePasseHash = new byte[5] };
+            monde = new Monde() { Description = "TestMonde" };
+            classe = new Classe() { NomClasse = "testClasse", Description = "testClasse" };
+        }
         /// <summary>
         /// Auteur : Simon Lalancette
         /// Desc : Test de la méthode AjouterHéro
@@ -25,12 +32,9 @@ namespace TP01_Library.Tests.Controllers
         [TestMethod()]
         public void AjouterHeroTest()
         {
-            //test
             #region Arrange
             // variables
-            CompteJoueur joueur = new CompteJoueur() { Nom = "TestJoueur"};
-            Monde monde = new Monde() { Description = "TestMonde"};
-            Classe classe = new Classe();
+
             int xPos = 14;
             int yPos = 16;
             string Nom = "TestHero";
@@ -42,66 +46,173 @@ namespace TP01_Library.Tests.Controllers
             #endregion
 
             #region Assert
-            Hero hero = context.Heros.FirstOrDefault(x => x.NomHero == Nom);
+            using (var context = new HugoLandContext())
+            {
+                Hero hero = context.Heros.FirstOrDefault(x => x.NomHero == Nom);
 
-            Assert.IsNotNull(hero);
-            Assert.AreEqual(joueur, hero.CompteJoueur);
-            Assert.AreEqual(monde, hero.Monde);
-            Assert.AreEqual(xPos, hero.x);
-            #endregion
+                Assert.IsNotNull(hero);
+                Assert.AreEqual(joueur, hero.CompteJoueur);
+                Assert.AreEqual(monde, hero.Monde);
+                Assert.AreEqual(xPos, hero.x);
+                #endregion
 
-            //Cleanup
-            context.Heros.Remove(hero);
-
+                //Cleanup
+                context.Heros.Remove(hero);
+                context.SaveChanges();
+            }
         }
 
         [TestMethod()]
         public void SupprimerHeroTest()
         {
+            Hero hero;
             #region Arrange
             // variables
-            CompteJoueur joueur = new CompteJoueur() { Nom = "TestJoueur" };
-            Monde monde = new Monde() { Description = "TestMonde" };
-            Classe classe = new Classe();
             int xPos = 14;
             int yPos = 16;
             string Nom = "TestHeroToDelete";
             #endregion
 
             #region Act
-            // call de la méthode à testé
-            Hero h = new Hero()
+            using (var context = new HugoLandContext())
             {
-                CompteJoueur = joueur,
-                Monde = monde,
-                Classe = classe,
-                x = xPos,
-                y = yPos,
-                NomHero = Nom
-            };
-            context.Heros.Add(h);
-            #endregion
+                // call de la méthode à testé
+                Hero h = new Hero()
+                {
+                    CompteJoueur = joueur,
+                    Monde = monde,
+                    Classe = classe,
+                    x = xPos,
+                    y = yPos,
+                    NomHero = Nom
+                };
+                context.Heros.Add(h);
+                context.SaveChanges();
+                #endregion
 
-            #region Assert
-            Hero hero = context.Heros.FirstOrDefault(x => x.NomHero == Nom);
-            Assert.IsNotNull(hero);
+                #region Assert
+                hero = context.Heros.FirstOrDefault(x => x.NomHero == Nom);
+                Assert.IsNotNull(hero);
+            }
 
             controller.DeleteHero(hero.Id);
-            hero = context.Heros.FirstOrDefault(x => x.NomHero == Nom);
-            Assert.IsNull(hero);
+            using (var context = new HugoLandContext())
+            {
+                hero = context.Heros.FirstOrDefault(x => x.NomHero == Nom);
+                Assert.IsNull(hero);
+            }
             #endregion
         }
 
         [TestMethod()]
         public void ModifierValeursHerosTest()
         {
-            Assert.Fail();
+            Hero modified;
+            Hero original;
+            int heroId = 0;
+            #region Arrange
+            // variables
+            int xPos = 14;
+            int yPos = 16;
+            string Nom = "TestHeroToDelete";
+            #endregion
+
+            #region Act
+            using (var context = new HugoLandContext())
+            {
+                // call de la méthode à testé
+                Hero h = new Hero()
+                {
+                    CompteJoueur = joueur,
+                    Monde = monde,
+                    Classe = classe,
+                    x = xPos,
+                    y = yPos,
+                    NomHero = Nom
+                };
+                context.Heros.Add(h);
+                context.SaveChanges();
+                heroId = context.Heros.First(x => x.NomHero == h.NomHero && x.Classe == h.Classe).Id;
+                original = h.Clone();
+                modified = h.Clone();
+            }
+            #endregion
+            modified.NomHero = "nomModifié";
+            modified.x = 4512;
+
+            controller.EditHero(modified);
+
+            using (var ctx = new HugoLandContext())
+            {
+                Hero fromDb = ctx.Heros.Find(heroId);
+                Assert.AreNotEqual<Hero>(original, fromDb);
+                Assert.AreEqual<Hero>(modified, fromDb);
+
+                ctx.Heros.Remove(fromDb);
+                ctx.SaveChanges();
+            }
         }
 
         [TestMethod()]
         public void GetObjetMondesTest()
         {
-            Assert.Fail();
+            Hero hero;
+            List<ObjetMonde> objs = new List<ObjetMonde>();
+            for (int i = 0; i < 5; i++)
+            {
+                string sDescription = "Objet monde test";
+                int iPosX = 50 + i;
+                int iPosY = 100 + i;
+
+                ObjetMonde obj = new ObjetMonde()
+                {
+                    Description = sDescription,
+                    x = iPosX,
+                    y = iPosY,
+                    TypeObjet = i
+                };
+                objs.Add(obj);
+            }
+
+            monde.ObjetMondes = objs;
+            Hero h = new Hero()
+            {
+                CompteJoueur = joueur,
+                Monde = monde,
+                Classe = classe,
+                x = 51,
+                y = 101,
+                NomHero = "TestNom"
+            };
+
+            using (var context = new HugoLandContext())
+            {
+                context.ObjetMondes.AddRange(objs);
+                context.Mondes.Add(monde);
+                context.Heros.Add(h);
+
+                hero = context.Heros.First(x => x.NomHero == h.NomHero && x.Monde == h.Monde);
+            }
+
+            List<ObjetMonde> objsVu = controller.ObjetsVuParHero(hero);
+            for(int i = 0; i < 5; i++)
+            {
+                if(i == 0)
+                {
+                    Assert.AreNotEqual(objs[i], objsVu[i]);
+                }
+                else
+                {
+                    Assert.AreEqual(objs[i], objsVu[i - 1]);
+                }
+            }
+
+            using (var context = new HugoLandContext())
+            {
+                context.ObjetMondes.RemoveRange(objs);
+                context.Mondes.Remove(monde);
+                context.Heros.Remove(h);
+            }
         }
 
         [TestMethod()]
