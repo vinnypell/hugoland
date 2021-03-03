@@ -34,5 +34,6 @@ HugoLand/TP01_Tests/bin/Debug/Microsoft.VisualStudio.TestPlatform.TestFramework.
 *.csdl
 HugoLand/TP01_Library/obj/Debug/.NETFramework,Version=v4.7.2.AssemblyAttributes.cs
 *.mdf
+*.config
 *.CopyComplete
 HugoLand/TP01_Tests/obj/Debug/.NETFramework,Version=v4.7.2.AssemblyAttributes.cs
