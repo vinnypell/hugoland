@@ -1,0 +1,140 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{C8BBBDF1-5593-43E8-A0B9-2E33F321A13B}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>TP01_Library</RootNamespace>
+    <AssemblyName>TP01_Library</AssemblyName>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <Deterministic>true</Deterministic>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\TP02 - HugoLand - Editeur de Mondes (Base)\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\TP02 - HugoLand - Editeur de Mondes (Base)\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Controllers\ClasseController.cs" />
+    <Compile Include="Controllers\CompteJoueurController.cs" />
+    <Compile Include="Controllers\Constantes.cs" />
+    <Compile Include="Controllers\EffetItemController.cs" />
+    <Compile Include="Controllers\HeroController.cs" />
+    <Compile Include="Controllers\ItemController.cs" />
+    <Compile Include="Controllers\MondeController.cs" />
+    <Compile Include="Controllers\MonstreController.cs" />
+    <Compile Include="Controllers\ObjetMondeController.cs" />
+    <Compile Include="Controllers\Outil.cs" />
+    <Compile Include="Models\Classe.cs">
+      <DependentUpon>HugoLandContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\CompteJoueur.cs">
+      <DependentUpon>HugoLandContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EffetItem.cs">
+      <DependentUpon>HugoLandContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Hero.cs">
+      <DependentUpon>HugoLandContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\HugoLandContext.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>HugoLandContext.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\HugoLandContext.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>HugoLandContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\HugoLandContext.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>HugoLandContext.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Models\InventaireHero.cs">
+      <DependentUpon>HugoLandContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Item.cs">
+      <DependentUpon>HugoLandContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Monde.cs">
+      <DependentUpon>HugoLandContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Monstre.cs">
+      <DependentUpon>HugoLandContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ObjetMonde.cs">
+      <DependentUpon>HugoLandContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\sysdiagram.cs">
+      <DependentUpon>HugoLandContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <EntityDeploy Include="Models\HugoLandContext.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>HugoLandContext.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.Config" />
+    <None Include="Models\HugoLandContext.edmx.diagram">
+      <DependentUpon>HugoLandContext.edmx</DependentUpon>
+    </None>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Models\HugoLandContext.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>HugoLandContext.Context.cs</LastGenOutput>
+      <DependentUpon>HugoLandContext.edmx</DependentUpon>
+    </Content>
+    <Content Include="Models\HugoLandContext.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>HugoLandContext.edmx</DependentUpon>
+      <LastGenOutput>HugoLandContext.cs</LastGenOutput>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>

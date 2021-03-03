@@ -163,6 +163,12 @@
   <ItemGroup>
     <Folder Include="BLL\" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\TP01_Library\TP01_Library.csproj">
+      <Project>{c8bbbdf1-5593-43e8-a0b9-2e33f321a13b}</Project>
+      <Name>TP01_Library</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PreBuildEvent />
