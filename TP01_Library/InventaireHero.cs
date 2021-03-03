@@ -20,5 +20,6 @@ namespace TP01_Library
     
         public virtual Hero Hero { get; set; }
         public virtual Item Item { get; set; }
+        public int Quantite { get; set; }
     }
 }
