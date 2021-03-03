@@ -4,7 +4,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using TP01_Library.Controllers;
-using TP01_Library.Models;
 
 namespace TP01_Library.Controllers
 {

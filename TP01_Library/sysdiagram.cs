@@ -7,20 +7,17 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace TP01_Library.Models
+namespace TP01_Library
 {
     using System;
     using System.Collections.Generic;
     
-    public partial class ObjetMonde
+    public partial class sysdiagram
     {
-        public int Id { get; set; }
-        public int x { get; set; }
-        public int y { get; set; }
-        public string Description { get; set; }
-        public int TypeObjet { get; set; }
-        public int MondeId { get; set; }
-    
-        public virtual Monde Monde { get; set; }
+        public string name { get; set; }
+        public int principal_id { get; set; }
+        public int diagram_id { get; set; }
+        public Nullable<int> version { get; set; }
+        public byte[] definition { get; set; }
     }
 }

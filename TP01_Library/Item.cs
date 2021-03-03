@@ -7,29 +7,34 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace TP01_Library.Models
+namespace TP01_Library
 {
     using System;
     using System.Collections.Generic;
     
-    public partial class CompteJoueur
+    public partial class Item
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public CompteJoueur()
+        public Item()
         {
-            this.Heros = new HashSet<Hero>();
+            this.EffetItems = new HashSet<EffetItem>();
+            this.InventaireHeroes = new HashSet<InventaireHero>();
         }
     
         public int Id { get; set; }
-        public string NomJoueur { get; set; }
-        public string Courriel { get; set; }
-        public string Prenom { get; set; }
         public string Nom { get; set; }
-        public int TypeUtilisateur { get; set; }
-        public byte[] MotDePasseHash { get; set; }
-        public System.Guid Salt { get; set; }
+        public string Description { get; set; }
+        public Nullable<int> x { get; set; }
+        public Nullable<int> y { get; set; }
+        public int MondeId { get; set; }
+        public Nullable<int> ImageId { get; set; }
+        public Nullable<int> IdHero { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Hero> Heros { get; set; }
+        public virtual ICollection<EffetItem> EffetItems { get; set; }
+        public virtual Hero Hero { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<InventaireHero> InventaireHeroes { get; set; }
+        public virtual Monde Monde { get; set; }
     }
 }

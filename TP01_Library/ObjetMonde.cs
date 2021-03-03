@@ -7,23 +7,19 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace TP01_Library.Models
+namespace TP01_Library
 {
     using System;
     using System.Collections.Generic;
     
-    public partial class Monstre
+    public partial class ObjetMonde
     {
         public int Id { get; set; }
-        public string Nom { get; set; }
-        public int Niveau { get; set; }
         public int x { get; set; }
         public int y { get; set; }
-        public int StatPV { get; set; }
-        public float StatDmgMin { get; set; }
-        public float StatDmgMax { get; set; }
+        public string Description { get; set; }
+        public int TypeObjet { get; set; }
         public int MondeId { get; set; }
-        public Nullable<int> ImageId { get; set; }
     
         public virtual Monde Monde { get; set; }
     }

@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="HugoLandContext.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+      <Schema Namespace="HugoLandModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Classe">
           <Key>
             <PropertyRef Name="Id" />
@@ -281,7 +281,7 @@
           <Parameter Name="pMotDePasse" Type="nvarchar" Mode="In" />
           <Parameter Name="Message" Type="nvarchar" Mode="InOut" />
         </Function>
-        <EntityContainer Name="HugoLandContextStoreContainer">
+        <EntityContainer Name="HugoLandModelStoreContainer">
           <EntitySet Name="Classe" EntityType="Self.Classe" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CompteJoueur" EntityType="Self.CompteJoueur" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="EffetItem" EntityType="Self.EffetItem" Schema="dbo" store:Type="Tables" />
@@ -341,7 +341,7 @@
     </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
-      <Schema Namespace="HugoLandContext" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+      <Schema Namespace="HugoLandModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
         <EntityType Name="Classe">
           <Key>
             <PropertyRef Name="Id" />
@@ -626,7 +626,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityContainer Name="Entities" annotation:LazyLoadingEnabled="true">
+        <EntityContainer Name="HugoLandContext" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Classes" EntityType="Self.Classe" />
           <EntitySet Name="CompteJoueurs" EntityType="Self.CompteJoueur" />
           <EntitySet Name="EffetItems" EntityType="Self.EffetItem" />
@@ -701,9 +701,9 @@
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="HugoLandContextStoreContainer" CdmEntityContainer="Entities">
+        <EntityContainerMapping StorageEntityContainer="HugoLandModelStoreContainer" CdmEntityContainer="HugoLandContext">
           <EntitySetMapping Name="Classes">
-            <EntityTypeMapping TypeName="HugoLandContext.Classe">
+            <EntityTypeMapping TypeName="HugoLandModel.Classe">
               <MappingFragment StoreEntitySet="Classe">
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="NomClasse" ColumnName="NomClasse" />
@@ -717,7 +717,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="CompteJoueurs">
-            <EntityTypeMapping TypeName="HugoLandContext.CompteJoueur">
+            <EntityTypeMapping TypeName="HugoLandModel.CompteJoueur">
               <MappingFragment StoreEntitySet="CompteJoueur">
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="NomJoueur" ColumnName="NomJoueur" />
@@ -731,7 +731,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="EffetItems">
-            <EntityTypeMapping TypeName="HugoLandContext.EffetItem">
+            <EntityTypeMapping TypeName="HugoLandModel.EffetItem">
               <MappingFragment StoreEntitySet="EffetItem">
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="ItemId" ColumnName="ItemId" />
@@ -741,7 +741,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Heros">
-            <EntityTypeMapping TypeName="HugoLandContext.Hero">
+            <EntityTypeMapping TypeName="HugoLandModel.Hero">
               <MappingFragment StoreEntitySet="Heros">
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="CompteJoueurId" ColumnName="CompteJoueurId" />
@@ -761,7 +761,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="InventaireHeroes">
-            <EntityTypeMapping TypeName="HugoLandContext.InventaireHero">
+            <EntityTypeMapping TypeName="HugoLandModel.InventaireHero">
               <MappingFragment StoreEntitySet="InventaireHero">
                 <ScalarProperty Name="IdHero" ColumnName="IdHero" />
                 <ScalarProperty Name="ItemId" ColumnName="ItemId" />
@@ -770,7 +770,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Items">
-            <EntityTypeMapping TypeName="HugoLandContext.Item">
+            <EntityTypeMapping TypeName="HugoLandModel.Item">
               <MappingFragment StoreEntitySet="Item">
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="Nom" ColumnName="Nom" />
@@ -784,7 +784,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Mondes">
-            <EntityTypeMapping TypeName="HugoLandContext.Monde">
+            <EntityTypeMapping TypeName="HugoLandModel.Monde">
               <MappingFragment StoreEntitySet="Monde">
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="Description" ColumnName="Description" />
@@ -794,7 +794,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Monstres">
-            <EntityTypeMapping TypeName="HugoLandContext.Monstre">
+            <EntityTypeMapping TypeName="HugoLandModel.Monstre">
               <MappingFragment StoreEntitySet="Monstre">
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="Nom" ColumnName="Nom" />
@@ -810,7 +810,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="ObjetMondes">
-            <EntityTypeMapping TypeName="HugoLandContext.ObjetMonde">
+            <EntityTypeMapping TypeName="HugoLandModel.ObjetMonde">
               <MappingFragment StoreEntitySet="ObjetMonde">
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="x" ColumnName="x" />
@@ -822,7 +822,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="sysdiagrams">
-            <EntityTypeMapping TypeName="HugoLandContext.sysdiagram">
+            <EntityTypeMapping TypeName="HugoLandModel.sysdiagram">
               <MappingFragment StoreEntitySet="sysdiagrams">
                 <ScalarProperty Name="name" ColumnName="name" />
                 <ScalarProperty Name="principal_id" ColumnName="principal_id" />
@@ -832,8 +832,8 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <FunctionImportMapping FunctionImportName="Connexion" FunctionName="HugoLandContext.Store.Connexion" />
-          <FunctionImportMapping FunctionImportName="CreerCompteJoueur" FunctionName="HugoLandContext.Store.CreerCompteJoueur" />
+          <FunctionImportMapping FunctionImportName="Connexion" FunctionName="HugoLandModel.Store.Connexion" />
+          <FunctionImportMapping FunctionImportName="CreerCompteJoueur" FunctionName="HugoLandModel.Store.CreerCompteJoueur" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

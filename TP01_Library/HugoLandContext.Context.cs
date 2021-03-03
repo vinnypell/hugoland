@@ -7,7 +7,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace TP01_Library.Models
+namespace TP01_Library
 {
     using System;
     using System.Data.Entity;
@@ -15,10 +15,10 @@ namespace TP01_Library.Models
     using System.Data.Entity.Core.Objects;
     using System.Linq;
     
-    public partial class Entities : DbContext
+    public partial class HugoLandContext : DbContext
     {
-        public Entities()
-            : base("name=Entities")
+        public HugoLandContext()
+            : base("name=HugoLandContext")
         {
         }
     
