@@ -1,0 +1,30 @@
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31019.35
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EditeurHugoLand", "EditeurHugoLand.csproj", "{99B9D438-E187-4B53-A534-3690CD20F1E4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TP01_Library", "..\..\..\HugoLand\TP01_Library\TP01_Library.csproj", "{A2C408E8-69C3-4212-9A8E-E4A66BD7A3F7}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{99B9D438-E187-4B53-A534-3690CD20F1E4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{99B9D438-E187-4B53-A534-3690CD20F1E4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{99B9D438-E187-4B53-A534-3690CD20F1E4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{99B9D438-E187-4B53-A534-3690CD20F1E4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A2C408E8-69C3-4212-9A8E-E4A66BD7A3F7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A2C408E8-69C3-4212-9A8E-E4A66BD7A3F7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A2C408E8-69C3-4212-9A8E-E4A66BD7A3F7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A2C408E8-69C3-4212-9A8E-E4A66BD7A3F7}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {941C7687-2589-4942-AEB4-A772BE781F2F}
+	EndGlobalSection
+EndGlobal
