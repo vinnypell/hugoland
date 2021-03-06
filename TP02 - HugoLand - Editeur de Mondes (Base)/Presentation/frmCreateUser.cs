@@ -104,8 +104,14 @@ namespace HugoLandEditeur.Presentation
             }
             else
             {
-                controller.CreerJoueur(UserName, Email, FirstName, LastName, Type, PasswordConfig);
-                this.Hide();
+                string Validation = controller.CreerJoueur(UserName, Email, FirstName, LastName, Type, PasswordConfig);
+                if (Validation == "SUCCESS")
+                {
+                    
+                }
+                else
+                    MessageBox.Show(Validation, "ERROR",
+       MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
 
 
