@@ -187,6 +187,12 @@ namespace HugoLandEditeur
 
         }
 
+        /// <summary>
+        /// Description: Gère la sauvegarde d'un [Monde]
+        /// Détails: AjouterMonde() et SupprimerMonde() => MondeController
+        /// </summary>
+        /// <param name="strFilename"></param>
+        /// <returns></returns>
         public int Save(String strFilename)
         {
             //int i,j;
@@ -210,6 +216,11 @@ namespace HugoLandEditeur
             return 0;
         }
 
+        /// <summary>
+        /// Description: Faire afficher le [Monde] choisi dans la méthode précédente, qui offrait la liste des mondes
+        /// </summary>
+        /// <param name="strFilename"></param>
+        /// <returns></returns>
         public int Load(String strFilename)
         {
             //int i;
@@ -317,6 +328,14 @@ namespace HugoLandEditeur
             return 0;
         }
 
+        /// <summary>
+        /// Description: Gère chaque tuile d'une grandeur de 32 par 32
+        /// Détails: N'ajoute pas un [Monde]
+        /// </summary>
+        /// <param name="width"></param>
+        /// <param name="height"></param>
+        /// <param name="defaulttile"></param>
+        /// <returns></returns>
         public bool CreateNew(int width, int height, int defaulttile)
         {
             int i, j;
