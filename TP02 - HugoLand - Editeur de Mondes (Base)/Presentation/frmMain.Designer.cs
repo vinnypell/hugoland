@@ -47,7 +47,6 @@ namespace HugoLandEditeur
 		private System.Windows.Forms.MenuItem mnuFileOpen;
 		private System.Windows.Forms.MenuItem mnuFileClose;
 		private System.Windows.Forms.MenuItem menuItem4;
-		private System.Windows.Forms.MenuItem mnuCreateNewUser;
 		private System.Windows.Forms.MenuItem menuItem6;
 		private System.Windows.Forms.MenuItem mnuFileSave;
 
@@ -103,7 +102,8 @@ namespace HugoLandEditeur
             this.mnuZoomX8 = new System.Windows.Forms.MenuItem();
             this.mnuZoomX16 = new System.Windows.Forms.MenuItem();
             this.menuItem1 = new System.Windows.Forms.MenuItem();
-            this.mnuCreateNewUser = new System.Windows.Forms.MenuItem();
+            this.mnuManage = new System.Windows.Forms.MenuItem();
+            this.mnuCreateUser = new System.Windows.Forms.MenuItem();
             this.mnuHelp = new System.Windows.Forms.MenuItem();
             this.mnuHelpAbout = new System.Windows.Forms.MenuItem();
             this.tbMain = new System.Windows.Forms.ToolBar();
@@ -157,6 +157,7 @@ namespace HugoLandEditeur
             this.mbMain.MenuItems.AddRange(new System.Windows.Forms.MenuItem[] {
             this.mnuFile,
             this.mnuSettings,
+            this.mnuManage,
             this.mnuHelp});
             // 
             // mnuFile
@@ -216,10 +217,10 @@ namespace HugoLandEditeur
             this.mnuSettings.Index = 1;
             this.mnuSettings.MenuItems.AddRange(new System.Windows.Forms.MenuItem[] {
             this.mnuZoom,
-            this.menuItem1,
-            this.mnuCreateNewUser});
+            this.menuItem1});
             this.mnuSettings.Text = "&Settings";
             this.mnuSettings.Visible = false;
+            this.mnuSettings.Click += new System.EventHandler(this.mnuSettings_Click);
             // 
             // mnuZoom
             // 
@@ -267,15 +268,22 @@ namespace HugoLandEditeur
             this.menuItem1.Index = 1;
             this.menuItem1.Text = "-";
             // 
-            // mnuCreateNewUser
+            // mnuManage
             // 
-            this.mnuCreateNewUser.Index = 2;
-            this.mnuCreateNewUser.Text = "Create a new user";
-            this.mnuCreateNewUser.Click += new System.EventHandler(this.mnuCreateNewUser_Click);
+            this.mnuManage.Index = 2;
+            this.mnuManage.MenuItems.AddRange(new System.Windows.Forms.MenuItem[] {
+            this.mnuCreateUser});
+            this.mnuManage.Text = "Manage";
+            // 
+            // mnuCreateUser
+            // 
+            this.mnuCreateUser.Index = 0;
+            this.mnuCreateUser.Text = "Create New User";
+            this.mnuCreateUser.Click += new System.EventHandler(this.mnuCreateUser_Click);
             // 
             // mnuHelp
             // 
-            this.mnuHelp.Index = 2;
+            this.mnuHelp.Index = 3;
             this.mnuHelp.MenuItems.AddRange(new System.Windows.Forms.MenuItem[] {
             this.mnuHelpAbout});
             this.mnuHelp.Text = "&Help";
@@ -522,5 +530,7 @@ namespace HugoLandEditeur
 
         private System.Windows.Forms.ToolBarButton toolBarButton1;
         private System.Windows.Forms.MenuItem menuItem1;
+        private System.Windows.Forms.MenuItem mnuManage;
+        private System.Windows.Forms.MenuItem mnuCreateUser;
     }
 }

@@ -58,6 +58,7 @@ namespace HugoLandEditeur.Presentation
             this.txt_password.Name = "txt_password";
             this.txt_password.Size = new System.Drawing.Size(148, 22);
             this.txt_password.TabIndex = 2;
+            this.txt_password.UseSystemPasswordChar = true;
             this.txt_password.TextChanged += new System.EventHandler(this.txt_password_TextChanged);
             // 
             // lbl_Password

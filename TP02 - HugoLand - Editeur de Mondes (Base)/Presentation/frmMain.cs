@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using TP01_Library;
 using TP01_Library.Controllers;
+using HugoLandEditeur.Presentation;
 
 namespace HugoLandEditeur
 {
@@ -743,9 +744,20 @@ namespace HugoLandEditeur
             bEnabled = m_bOpen;
             mnuFileSave.Enabled = bEnabled;
             mnuFileClose.Enabled = bEnabled;
-            mnuCreateNewUser.Enabled = bEnabled;
             mnuZoom.Enabled = bEnabled;
             tbbSave.Enabled = bEnabled;
+        }
+
+        private void mnuSettings_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void mnuCreateUser_Click(object sender, EventArgs e)
+        {
+            var form2 = new frmCreateUser();
+            form2.Closed += (s, args) => this.Close();
+            form2.Show();
         }
     }
 }

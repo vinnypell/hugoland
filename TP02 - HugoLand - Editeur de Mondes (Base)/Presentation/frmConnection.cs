@@ -45,6 +45,8 @@ namespace HugoLandEditeur.Presentation
             }
             else if(reponse == "SUCCESS")
             {
+                Outil.SetActiveUser(controller.TrouverJoueur(username));
+
                 this.Hide();
                 var form2 = new frmMain();
                 form2.Closed += (s, args) => this.Close();
