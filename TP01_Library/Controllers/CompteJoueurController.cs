@@ -102,5 +102,20 @@ namespace TP01_Library.Controllers
                 return (Convert.ToString(message.Value));
             }
         }
+
+        /// <summary>
+        /// Auteur: Mathias Lavoie-Rivard
+        /// Date: 2021-03-05
+        /// Description: Permet de trouver un joueur
+        /// </summary>
+        /// <param name="username"></param>
+        /// <returns></returns>
+        public CompteJoueur TrouverJoueur(string username)
+        {
+            using (HugoLandContext dbContext = new HugoLandContext())
+            {
+                return dbContext.CompteJoueurs.FirstOrDefault(x => x.NomJoueur == username);
+            }
+        }
     }
 }
