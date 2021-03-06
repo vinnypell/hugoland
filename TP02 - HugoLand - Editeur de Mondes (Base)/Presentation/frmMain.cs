@@ -8,6 +8,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using TP01_Library;
+using TP01_Library.Controllers;
 
 namespace HugoLandEditeur
 {
@@ -31,7 +33,9 @@ namespace HugoLandEditeur
         private int m_ActiveYIndex;
         private int m_ActiveTileID;
         private int m_ActiveTileXIndex;
-        private int m_ActiveTileYIndex;		
+        private int m_ActiveTileYIndex;
+        private HugoLandContext context = new HugoLandContext();
+        private MondeController mondeCTRL = new MondeController();
 
         /// <summary>
         /// Summary description for Form1.
@@ -56,6 +60,7 @@ namespace HugoLandEditeur
         public frmMain()
         {
             InitializeComponent();
+            this.StartPosition = FormStartPosition.CenterScreen;
         }
 
         /* -------------------------------------------------------------- *\
@@ -64,9 +69,15 @@ namespace HugoLandEditeur
     \* -------------------------------------------------------------- */
         private void frmMain_Load(object sender, System.EventArgs e)
         {
+            // Nouvelle instance de map
             m_Map = new CMap();
+
+            // Instance de base à l'aide du ctor pour une tuile dans la map
             m_TileLibrary = new CTileLibrary();
+
+            // Insère la tuile dans celle de la map générer plus haut
             m_Map.TileLibrary = m_TileLibrary;
+
 
             picMap.Parent = picEditArea;
             picMap.Left = 0;
@@ -176,16 +187,31 @@ namespace HugoLandEditeur
             m_bResize = true;
         }
 
+        /// <summary>
+        /// Où: File => Open
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void mnuFileOpen_Click(object sender, System.EventArgs e)
         {
             LoadMap();
         }
 
+        /// <summary>
+        /// Où: File => Save [lorsqu'une map à été créée]
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void mnuFileSave_Click(object sender, System.EventArgs e)
         {
             m_SaveMap();
         }
 
+        /// <summary>
+        /// Description: Gère les trois icones; la feuille avec un +, le dossier et le ?
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void tbMain_ButtonClick(object sender, System.Windows.Forms.ToolBarButtonClickEventArgs e)
         {
             if (e.Button == tbbSave)
@@ -196,7 +222,6 @@ namespace HugoLandEditeur
                 NewMap();
         }
 
-        #endregion
 
 
         /* -------------------------------------------------------------- *\
@@ -382,6 +407,52 @@ namespace HugoLandEditeur
             }
         }
 
+        private void picTiles_MouseLeave(object sender, System.EventArgs e)
+        {
+            m_bDrawTileRect = false;
+            m_LibRect.X = -1;
+            m_LibRect.Y = -1;
+            m_LibRect.Width = -1;
+            m_LibRect.Height = -1;
+            m_bRefreshLib = true;
+        }
+
+        private void picMap_MouseLeave(object sender, System.EventArgs e)
+        {
+            m_bDrawMapRect = false;
+            m_TileRect.X = -1;
+            m_TileRect.Y = -1;
+            m_TileRect.Width = -1;
+            m_TileRect.Height = -1;
+            m_bRefresh = true;
+        }
+
+        private void comboBox1_SelectedIndexChanged(object sender, System.EventArgs e)
+        {
+
+            ComboItem myItem;
+            myItem = (ComboItem)cboZoom.SelectedItem;
+            ResetScroll();
+            m_Zoom = myItem.Value;
+            m_bResize = true;
+            picTiles.Focus();
+        }
+
+        private void mnuFileNew_Click(object sender, System.EventArgs e)
+        {
+            NewMap();
+        }
+
+        /// <summary>
+        /// Description: ? Bouton existant pas placé?
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void mnuCreateNewUser_Click(object sender, EventArgs e)
+        {
+
+        }
+
         /* -------------------------------------------------------------- *\
             picMap_Click()
 			
@@ -482,11 +553,11 @@ namespace HugoLandEditeur
             m_TileLibrary.DrawTile(e.Graphics, m_ActiveTileID, destrect);
         }
 
-        /* -------------------------------------------------------------- *\
-            tmrLoad_Tick()
-			
-            - Loads the default map. 
-        \* -------------------------------------------------------------- */
+        /// <summary>
+        /// Description: Monde par défaut
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void tmrLoad_Tick(object sender, System.EventArgs e)
         {
             tmrLoad.Enabled = false;
@@ -498,50 +569,57 @@ namespace HugoLandEditeur
             m_MenuLogic();
             this.Cursor = Cursors.Default;
         }
-        #region Debug Code
+        #endregion
 
+        #region Debug Code
         private void PrintDebug(String strDebug)
         {
             Console.WriteLine(strDebug);
         }
         #endregion
 
+        /// <summary>
+        /// Description: Télécharge un [Monde] et l'applique sur la map du frmMain
+        /// Méthode: ListerMonde() => MondeController
+        /// </summary>
         private void LoadMap()
         {
-            //DialogResult result;
+            DialogResult result;
 
-            //dlgLoadMap.Title = "Load Map";
-            //dlgLoadMap.Filter = "Map Files (*.map)|*.map|All Files (*.*)|*.*";
+            dlgLoadMap.Title = "Load Map";
+            dlgLoadMap.Filter = "Map Files (*.map)|*.map|All Files (*.*)|*.*";
 
-            //result = dlgLoadMap.ShowDialog();
-            //if (result == DialogResult.OK)
-            //{
-            //    m_bOpen = false;
-            //    picMap.Visible = false;
-            //    this.Cursor = Cursors.WaitCursor;
-            //    try
-            //    {
-            //        m_Map.Load(dlgLoadMap.FileName);
-            //        m_bOpen = true;
-            //        m_bRefresh = true;
-            //        picMap.Visible = true;
-            //    }
-            //    catch
-            //    {
-            //        Console.WriteLine("Error Loading...");
-            //    }
-            //    m_MenuLogic();
-            //    this.Cursor = Cursors.Default;
-            //}
+            result = dlgLoadMap.ShowDialog();
+            if (result == DialogResult.OK)
+            {
+                m_bOpen = false;
+                picMap.Visible = false;
+                this.Cursor = Cursors.WaitCursor;
+                try
+                {
+                    m_Map.Load(dlgLoadMap.FileName);
+                    m_bOpen = true;
+                    m_bRefresh = true;
+                    picMap.Visible = true;
+                }
+                catch
+                {
+                    Console.WriteLine("Error Loading...");
+                }
+                m_MenuLogic();
+                this.Cursor = Cursors.Default;
+            }
         }
 
-        /* -------------------------------------------------------------- *\
-            m_SaveMap()
-			
-            - Saves the current map to the selected filename / path
-        \* -------------------------------------------------------------- */
+
+        /// <summary>
+        /// Description: Save la map courante [Monde]
+        /// Détails: AjouterMonde et ModifierMonde => Appeler pas ici, mais dans le code de CMap.cs
+        /// </summary>
         private void m_SaveMap()
         {
+
+
             //DialogResult result;
 
             //dlgSaveMap.Title = "Save Map";
@@ -563,21 +641,24 @@ namespace HugoLandEditeur
             //}
         }
 
-        /* -------------------------------------------------------------- *\
-            m_NewMap()
-			
-            - Creates a new map of the selected size.
-        \* -------------------------------------------------------------- */
+        /// <summary>
+        /// Description: Gère la création d'une "map" (monde?)
+        /// Détails: PAS D'AJOUT À LA BD
+        /// </summary>
         private void NewMap()
         {
+            // Variables locales
+            // Créer un objet du form pour la taille de l'image
             frmNew f;
             DialogResult result;
             bool bResult;
 
+            // Instanciation d'une nouvelle map
             f = new frmNew();
             f.MapWidth = m_Map.Width;
             f.MapHeight = m_Map.Height;
 
+            // Demande la hauteur et largeur de la map
             result = f.ShowDialog(this);
             if (result == DialogResult.OK)
             {
@@ -586,6 +667,7 @@ namespace HugoLandEditeur
                 this.Cursor = Cursors.WaitCursor;
                 try
                 {
+                    // Création de la map avec les dimensions de bases, soit 32 par 32 [tiles]
                     bResult = m_Map.CreateNew(f.MapWidth, f.MapHeight, 32);
                     if (bResult)
                     {
@@ -606,7 +688,7 @@ namespace HugoLandEditeur
 
         /* -------------------------------------------------------------- *\
             m_MenuLogic()
-			
+
             - Enables / Disables menus based on application status
         \* -------------------------------------------------------------- */
         private void m_MenuLogic()
@@ -619,50 +701,6 @@ namespace HugoLandEditeur
             mnuCreateNewUser.Enabled = bEnabled;
             mnuZoom.Enabled = bEnabled;
             tbbSave.Enabled = bEnabled;
-        }
-
-        /* -------------------------------------------------------------- *\
-            mnuFileNew_Click()
-        \* -------------------------------------------------------------- */
-        private void mnuFileNew_Click(object sender, System.EventArgs e)
-        {
-            NewMap();
-        }
-
-        private void picTiles_MouseLeave(object sender, System.EventArgs e)
-        {
-            m_bDrawTileRect = false;
-            m_LibRect.X = -1;
-            m_LibRect.Y = -1;
-            m_LibRect.Width = -1;
-            m_LibRect.Height = -1;
-            m_bRefreshLib = true;
-        }
-
-        private void picMap_MouseLeave(object sender, System.EventArgs e)
-        {
-            m_bDrawMapRect = false;
-            m_TileRect.X = -1;
-            m_TileRect.Y = -1;
-            m_TileRect.Width = -1;
-            m_TileRect.Height = -1;
-            m_bRefresh = true;
-        }
-
-        private void comboBox1_SelectedIndexChanged(object sender, System.EventArgs e)
-        {
-            
-            ComboItem myItem;
-            myItem = (ComboItem)cboZoom.SelectedItem;
-            ResetScroll();
-            m_Zoom = myItem.Value;
-            m_bResize = true;
-            picTiles.Focus();
-        }
-
-        private void mnuCreateNewUser_Click(object sender, EventArgs e)
-        {
-
         }
     }
 }

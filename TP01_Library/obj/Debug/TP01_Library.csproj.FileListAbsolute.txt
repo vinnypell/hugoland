@@ -1,0 +1,12 @@
+D:\01_cégep\session-4\dev-bdd\travaux\hugoland\TP01_Library\bin\Debug\TP01_Library.dll.config
+D:\01_cégep\session-4\dev-bdd\travaux\hugoland\TP01_Library\bin\Debug\TP01_Library.dll
+D:\01_cégep\session-4\dev-bdd\travaux\hugoland\TP01_Library\bin\Debug\TP01_Library.pdb
+D:\01_cégep\session-4\dev-bdd\travaux\hugoland\TP01_Library\bin\Debug\EntityFramework.dll
+D:\01_cégep\session-4\dev-bdd\travaux\hugoland\TP01_Library\bin\Debug\EntityFramework.SqlServer.dll
+D:\01_cégep\session-4\dev-bdd\travaux\hugoland\TP01_Library\bin\Debug\EntityFramework.xml
+D:\01_cégep\session-4\dev-bdd\travaux\hugoland\TP01_Library\bin\Debug\EntityFramework.SqlServer.xml
+D:\01_cégep\session-4\dev-bdd\travaux\hugoland\TP01_Library\obj\Debug\TP01_Library.csprojAssemblyReference.cache
+D:\01_cégep\session-4\dev-bdd\travaux\hugoland\TP01_Library\obj\Debug\TP01_Library.csproj.CoreCompileInputs.cache
+D:\01_cégep\session-4\dev-bdd\travaux\hugoland\TP01_Library\obj\Debug\TP01_Library.csproj.CopyComplete
+D:\01_cégep\session-4\dev-bdd\travaux\hugoland\TP01_Library\obj\Debug\TP01_Library.dll
+D:\01_cégep\session-4\dev-bdd\travaux\hugoland\TP01_Library\obj\Debug\TP01_Library.pdb

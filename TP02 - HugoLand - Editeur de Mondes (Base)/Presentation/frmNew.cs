@@ -18,6 +18,7 @@ namespace HugoLandEditeur
         {
             InitializeComponent();
             this.DialogResult = DialogResult.Cancel;
+            this.StartPosition = FormStartPosition.CenterParent;
             m_Width = 32;
             m_Height = 32;
         }
@@ -48,13 +49,65 @@ namespace HugoLandEditeur
             }
         }
 
+        /// <summary>
+        /// Description: Gère l'input [acceptation] des valeurs sur la largeur et la hauteur
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void btnOK_Click(object sender, System.EventArgs e)
+        {
+            int width = 0, height = 0;
 
+            if (ValidateInput(ref width, ref height))
+            {
+                m_Width = width;
+                m_Height = height;
+                this.DialogResult = DialogResult.OK;
+                this.Close();
+            }
+        }
+
+        private void btnCancel_Click(object sender, System.EventArgs e)
+        {
+            this.DialogResult = DialogResult.Cancel;
+        }
+
+        #region Hauteur et largeur lors d'une création de map
+        /// <summary>
+        /// Description: Appeler aussitôt que le contenu de la largeur est modifié
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void txtWidth_TextChanged(object sender, System.EventArgs e)
+        {
+            UpdateUI();
+        }
+
+        /// <summary>
+        /// Description: Appeler aussitôt que le contenu de la hauteur est modifié
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void txtHeight_TextChanged(object sender, System.EventArgs e)
+        {
+            UpdateUI();
+        }
+
+        /// <summary>
+        /// Description: Appeler lorsqu'il y a un changement de valeur
+        /// </summary>
         private void UpdateUI()
         {
             int val1 = 0, val2 = 0;
             btnOK.Enabled = ValidateInput(ref val1, ref val2);
         }
 
+        /// <summary>
+        /// Description: Valide la largeur et la hauteur si elle est bien une valeur de [int] et quelle est entre 8 et 64 000
+        /// </summary>
+        /// <param name="nWidth"></param>
+        /// <param name="nHeight"></param>
+        /// <returns></returns>
         private bool ValidateInput(ref int nWidth, ref int nHeight)
         {
             String strValue = txtWidth.Text.Trim();
@@ -75,33 +128,6 @@ namespace HugoLandEditeur
 
             return true;
         }
-
-        private void btnOK_Click(object sender, System.EventArgs e)
-        {
-            int width = 0, height = 0;
-
-            if (ValidateInput(ref width, ref height))
-            {
-                m_Width = width;
-                m_Height = height;
-                this.DialogResult = DialogResult.OK;
-                this.Close();
-            }
-        }
-
-        private void btnCancel_Click(object sender, System.EventArgs e)
-        {
-            this.DialogResult = DialogResult.Cancel;
-        }
-
-        private void txtWidth_TextChanged(object sender, System.EventArgs e)
-        {
-            UpdateUI();
-        }
-
-        private void txtHeight_TextChanged(object sender, System.EventArgs e)
-        {
-            UpdateUI();
-        }
+        #endregion
     }
 }

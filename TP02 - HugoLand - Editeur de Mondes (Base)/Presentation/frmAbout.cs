@@ -15,6 +15,7 @@ namespace HugoLandEditeur
         public frmAbout()
         {
             InitializeComponent();
+            this.StartPosition = FormStartPosition.CenterParent;
         }
 
         private void btnOK_Click(object sender, System.EventArgs e)
