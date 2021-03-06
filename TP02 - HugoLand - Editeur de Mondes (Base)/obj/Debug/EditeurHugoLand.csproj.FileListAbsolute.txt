@@ -15,3 +15,11 @@ D:\01_cégep\session-4\dev-bdd\travaux\hugoland\TP02 - HugoLand - Editeur de Mon
 D:\01_cégep\session-4\dev-bdd\travaux\hugoland\TP02 - HugoLand - Editeur de Mondes (Base)\obj\Debug\EditeurHugoLand.csproj.CoreCompileInputs.cache
 D:\01_cégep\session-4\dev-bdd\travaux\hugoland\TP02 - HugoLand - Editeur de Mondes (Base)\obj\Debug\HugoLandEditeur.exe
 D:\01_cégep\session-4\dev-bdd\travaux\hugoland\TP02 - HugoLand - Editeur de Mondes (Base)\obj\Debug\HugoLandEditeur.pdb
+D:\01_cégep\session-4\dev-bdd\travaux\hugoland\TP02 - HugoLand - Editeur de Mondes (Base)\bin\Debug\TP01_Library.dll
+D:\01_cégep\session-4\dev-bdd\travaux\hugoland\TP02 - HugoLand - Editeur de Mondes (Base)\bin\Debug\EntityFramework.dll
+D:\01_cégep\session-4\dev-bdd\travaux\hugoland\TP02 - HugoLand - Editeur de Mondes (Base)\bin\Debug\TP01_Library.pdb
+D:\01_cégep\session-4\dev-bdd\travaux\hugoland\TP02 - HugoLand - Editeur de Mondes (Base)\bin\Debug\TP01_Library.dll.config
+D:\01_cégep\session-4\dev-bdd\travaux\hugoland\TP02 - HugoLand - Editeur de Mondes (Base)\bin\Debug\EntityFramework.xml
+D:\01_cégep\session-4\dev-bdd\travaux\hugoland\TP02 - HugoLand - Editeur de Mondes (Base)\obj\Debug\EditeurHugoLand.csproj.CopyComplete
+D:\01_cégep\session-4\dev-bdd\travaux\hugoland\TP02 - HugoLand - Editeur de Mondes (Base)\bin\Debug\EntityFramework.SqlServer.dll
+D:\01_cégep\session-4\dev-bdd\travaux\hugoland\TP02 - HugoLand - Editeur de Mondes (Base)\bin\Debug\EntityFramework.SqlServer.xml

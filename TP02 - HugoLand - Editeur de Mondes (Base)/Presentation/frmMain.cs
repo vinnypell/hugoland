@@ -584,31 +584,33 @@ namespace HugoLandEditeur
         /// </summary>
         private void LoadMap()
         {
-            //DialogResult result;
+            DialogResult result;
 
-            //dlgLoadMap.Title = "Load Map";
-            //dlgLoadMap.Filter = "Map Files (*.map)|*.map|All Files (*.*)|*.*";
+            dlgLoadMap.Title = "Load Map";
+            dlgLoadMap.Filter = "Map Files (*.map)|*.map|All Files (*.*)|*.*";
 
-            //result = dlgLoadMap.ShowDialog();
-            //if (result == DialogResult.OK)
-            //{
-            //    m_bOpen = false;
-            //    picMap.Visible = false;
-            //    this.Cursor = Cursors.WaitCursor;
-            //    try
-            //    {
-            //        m_Map.Load(dlgLoadMap.FileName);
-            //        m_bOpen = true;
-            //        m_bRefresh = true;
-            //        picMap.Visible = true;
-            //    }
-            //    catch
-            //    {
-            //        Console.WriteLine("Error Loading...");
-            //    }
-            //    m_MenuLogic();
-            //    this.Cursor = Cursors.Default;
+            result = dlgLoadMap.ShowDialog();
+            if (result == DialogResult.OK)
+            {
+                m_bOpen = false;
+                picMap.Visible = false;
+                this.Cursor = Cursors.WaitCursor;
+                try
+                {
+                    m_Map.Load(dlgLoadMap.FileName);
+                    m_bOpen = true;
+                    m_bRefresh = true;
+                    picMap.Visible = true;
+                }
+                catch
+                {
+                    Console.WriteLine("Error Loading...");
+                }
+                m_MenuLogic();
+                this.Cursor = Cursors.Default;
+            }
         }
+
 
         /// <summary>
         /// Description: Save la map courante [Monde]
