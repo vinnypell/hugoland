@@ -77,6 +77,7 @@ namespace HugoLandEditeur.Presentation
             this.btn_connection.TabIndex = 5;
             this.btn_connection.Text = "Connect";
             this.btn_connection.UseVisualStyleBackColor = true;
+            this.btn_connection.Click += new System.EventHandler(this.btn_connection_Click);
             // 
             // frmConnection
             // 

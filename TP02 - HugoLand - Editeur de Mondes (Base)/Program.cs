@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Windows.Forms;
-
+using HugoLandEditeur.Presentation;
 namespace HugoLandEditeur
 {
     static class Program
@@ -14,7 +14,7 @@ namespace HugoLandEditeur
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new frmMain());
+            Application.Run(new frmConnection());
         }
     }
 }
