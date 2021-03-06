@@ -106,5 +106,20 @@ namespace TP01_Library.Controllers
                 return dbContext.Mondes.ToList();
             }
         }
+
+        /// <summary>
+        /// Auteur : Simon Lalancette
+        /// Description : Retourne un monde selon l'id
+        /// Date : 2021-03-05
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public Monde GetMonde(int id)
+        {
+            using (HugoLandContext dbContext = new HugoLandContext())
+            {
+                return dbContext.Mondes.Find(id);
+            }
+        }
     }
 }

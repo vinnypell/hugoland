@@ -14,7 +14,7 @@ namespace HugoLandEditeur
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new frmConnection());
+            Application.Run(new frmMain());
         }
     }
 }

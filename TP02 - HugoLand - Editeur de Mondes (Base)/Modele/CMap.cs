@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
+using TP01_Library;
 
 namespace HugoLandEditeur
 {
@@ -219,7 +220,7 @@ namespace HugoLandEditeur
         /// </summary>
         /// <param name="strFilename"></param>
         /// <returns></returns>
-        public int Load(String strFilename)
+        public int Load(Monde m)
         {
             //int i;
 
@@ -230,9 +231,9 @@ namespace HugoLandEditeur
             //char[] delim = {':'};
             //char[] delim2 = {','};
             //int id = -1;
-            //int width = -1;
-            //int height = -1;
-            //int data = -1;
+            int width = -1;
+            int height = -1;
+            int data = -1;
             //String strVar;
             //String strValue;
             //String[] arrValues;
@@ -279,19 +280,25 @@ namespace HugoLandEditeur
             //    }
             //}
 
-            //if (width <= 0 || height <=0 || data < 0 || id < 0)
-            //    return -1;
-            //if (width < 8 || width > MAP_MAX_WIDTH)
-            //    return -1;
-            //if (height < 8 || height > MAP_MAX_HEIGHT)
-            //    return -1;
+            width = m.LimiteX;
+            height = m.LimiteY;
+            if (width <= 0 || height <= 0 || data < 0 || m.Id < 0)
+                return -1;
+            if (width < 8 || width > csteApplication.MAP_MAX_WIDTH)
+                return -1;
+            if (height < 8 || height > csteApplication.MAP_MAX_HEIGHT)
+                return -1;
 
-            //// Build Backbuffer
-            //m_Width = width;
-            //m_Height = height;
-            //m_Tiles = new int[m_Height,m_Width];
-            //m_BackBuffer = new Bitmap(m_Width * TILE_WIDTH_IN_MAP, m_Height * TILE_HEIGHT_IN_MAP);
-            //m_BackBufferDC = Graphics.FromImage(m_BackBuffer);
+            // Build Backbuffer
+            m_Width = width;
+            m_Height = height;
+
+            m_Tiles = new int[m_Height, m_Width];
+            m_BackBuffer = new Bitmap(m_Width * csteApplication.TILE_WIDTH_IN_MAP, m_Height * csteApplication.TILE_HEIGHT_IN_MAP);
+            m_BackBufferDC = Graphics.FromImage(m_BackBuffer);
+
+            //Checker avec vincent pour loader les tiles
+
 
             //while(sr.Peek() >= 0)
             //{
@@ -321,8 +328,7 @@ namespace HugoLandEditeur
             //}			
             //sr.Close();
 
-            //Refresh();
-
+            Refresh();
             return 0;
         }
 

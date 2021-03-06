@@ -1,4 +1,5 @@
-﻿using System;
+﻿using HugoLandEditeur.Presentation;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -16,7 +17,7 @@ namespace HugoLandEditeur
     public partial class frmMain : Form
     {
 
-        
+
         // Variable globale interne
         public static CompteJoueur currentJoueur { get; set; }
 
@@ -193,7 +194,7 @@ namespace HugoLandEditeur
             m_bResize = true;
         }
 
-   
+
 
         /* -------------------------------------------------------------- *\
             vscMap_Scroll()
@@ -590,33 +591,70 @@ namespace HugoLandEditeur
         /// </summary>
         private void LoadMap()
         {
+            //DialogResult result;
+
+            //List<Monde> mondes = mondeCTRL.ListerMondes();
+
+            //dlgLoadMap.Title = "Load Map";
+            //dlgLoadMap.Filter = "Map Files (*.map)|*.map|All Files (*.*)|*.*";
+
+            //result = dlgLoadMap.ShowDialog();
+            //if (result == DialogResult.OK)
+            //{
+            //    m_bOpen = false;
+            //    picMap.Visible = false;
+            //    this.Cursor = Cursors.WaitCursor;
+            //    try
+            //    {
+            //        m_Map.Load(dlgLoadMap.FileName);
+            //        m_bOpen = true;
+            //        m_bRefresh = true;
+            //        picMap.Visible = true;
+            //    }
+            //    catch
+            //    {
+            //        Console.WriteLine("Error Loading...");
+            //    }
+            //    m_MenuLogic();
+            //    this.Cursor = Cursors.Default;
+            //}
+            int iResult = -1;
+            frmListSelector f;
             DialogResult result;
+            f = new frmListSelector();
+            result = f.ShowDialog();
 
-            List<Monde> mondes = mondeCTRL.ListerMondes();
-
-            dlgLoadMap.Title = "Load Map";
-            dlgLoadMap.Filter = "Map Files (*.map)|*.map|All Files (*.*)|*.*";
-
-            result = dlgLoadMap.ShowDialog();
             if (result == DialogResult.OK)
             {
+                Monde m = f.monde;
                 m_bOpen = false;
                 picMap.Visible = false;
                 this.Cursor = Cursors.WaitCursor;
+
                 try
                 {
-                    m_Map.Load(dlgLoadMap.FileName);
-                    m_bOpen = true;
-                    m_bRefresh = true;
-                    picMap.Visible = true;
+                    iResult = m_Map.Load(m);
+                    if (iResult == 0)
+                    {
+                        m_bOpen = true;
+                        m_bRefresh = true;
+                        m_bResize = true;
+                        picMap.Visible = true;
+                    }
+                    else
+                    {
+                        throw new Exception();
+                    }
                 }
-                catch
+                catch 
                 {
                     Console.WriteLine("Error Loading...");
+
                 }
-                m_MenuLogic();
-                this.Cursor = Cursors.Default;
             }
+
+            m_MenuLogic();
+            this.Cursor = Cursors.Default;
         }
 
         /// <summary>
