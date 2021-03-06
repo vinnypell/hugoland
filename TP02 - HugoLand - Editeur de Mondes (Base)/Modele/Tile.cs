@@ -1,6 +1,4 @@
 using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Drawing;
 
 namespace HugoLandEditeur
@@ -30,7 +28,6 @@ namespace HugoLandEditeur
         public string Name { get; set; }
         public int IndexTypeObjet { get; set; }
         public TypeTile TypeObjet { get; set; }
-
 
         public Tile(string[] tileData)
         {
@@ -64,9 +61,11 @@ namespace HugoLandEditeur
                     case "Objet":
                         TypeObjet = TypeTile.ObjetMonde;
                         break;
+
                     case "Monstre":
                         TypeObjet = TypeTile.Monstre;
                         break;
+
                     case "Item":
                         TypeObjet = TypeTile.Item;
                         break;
@@ -74,11 +73,9 @@ namespace HugoLandEditeur
             }
             catch (Exception ex)
             {
-
                 Console.WriteLine(ex.Message);
                 foreach (string s in tileData)
                     Console.WriteLine(s);
-
             }
         }
     }

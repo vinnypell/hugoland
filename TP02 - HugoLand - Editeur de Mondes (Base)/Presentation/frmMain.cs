@@ -1,13 +1,7 @@
 ﻿using HugoLandEditeur.Presentation;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using TP01_Library;
 using TP01_Library.Controllers;
@@ -17,8 +11,6 @@ namespace HugoLandEditeur
 {
     public partial class frmMain : Form
     {
-
-
         // Variable globale interne
         public static CompteJoueur currentJoueur { get; set; }
 
@@ -56,6 +48,7 @@ namespace HugoLandEditeur
                 Text = text;
                 Value = val;
             }
+
             public override string ToString()
             {
                 return Text;
@@ -69,8 +62,8 @@ namespace HugoLandEditeur
         }
 
         /* -------------------------------------------------------------- *\
-        frmMain_Load()			
-        - Main Form Initialization		
+        frmMain_Load()
+        - Main Form Initialization
     \* -------------------------------------------------------------- */
         private void frmMain_Load(object sender, System.EventArgs e)
         {
@@ -118,7 +111,7 @@ namespace HugoLandEditeur
             //dlgSaveMap.InitialDirectory = dlgLoadMap.InitialDirectory;
             m_bOpen = false;
             m_MenuLogic();
-            //tmrLoad.Enabled = true;	
+            //tmrLoad.Enabled = true;
 
             m_pen = new Pen(Color.Orange, 4);
             m_brush = new SolidBrush(Color.FromArgb(160, 249, 174, 55));
@@ -144,11 +137,11 @@ namespace HugoLandEditeur
             tbMain.Controls.Add(cboZoom);
         }
 
-
         /* -------------------------------------------------------------- *\
         Menus
     \* -------------------------------------------------------------- */
         #region Menu Code
+
         private void mnuFileExit_Click(object sender, System.EventArgs e)
         {
             Application.Exit();
@@ -195,11 +188,9 @@ namespace HugoLandEditeur
             m_bResize = true;
         }
 
-
-
         /* -------------------------------------------------------------- *\
             vscMap_Scroll()
-            - vertical scroll bar for map editor window		
+            - vertical scroll bar for map editor window
         \* -------------------------------------------------------------- */
         private void vscMap_Scroll(object sender, System.Windows.Forms.ScrollEventArgs e)
         {
@@ -210,7 +201,7 @@ namespace HugoLandEditeur
 
         /* -------------------------------------------------------------- *\
             hscMap_Scroll()
-            - horizontal scroll bar for map editor window		
+            - horizontal scroll bar for map editor window
         \* -------------------------------------------------------------- */
         private void hscMap_Scroll(object sender, System.Windows.Forms.ScrollEventArgs e)
         {
@@ -221,10 +212,10 @@ namespace HugoLandEditeur
 
         /* -------------------------------------------------------------- *\
             picEditArea_Resize()
-			
+
             - resize event for the parent of the map. The edit area is
-              auto-sized to the space not taken by the lower and right 
-              panes.		
+              auto-sized to the space not taken by the lower and right
+              panes.
         \* -------------------------------------------------------------- */
         private void picEditArea_Resize(object sender, System.EventArgs e)
         {
@@ -240,10 +231,10 @@ namespace HugoLandEditeur
 
         /* -------------------------------------------------------------- *\
             timer1_Tick()
-			
+
             - I'm not sure if this is necessary or not, but I was having
               difficulty updating things correctly due to timing of resizing
-              items or updating scrolls and their values not getting set 
+              items or updating scrolls and their values not getting set
               until after the event already occurred... so I'm setting
               flags instead.
         \* -------------------------------------------------------------- */
@@ -268,12 +259,13 @@ namespace HugoLandEditeur
 
         /* -------------------------------------------------------------- *\
             picMap_Paint()
-			
+
             - This is where the Map picture box is painted to.
               This event happens when Refresh() is called or any section
               of the picture box is invalidated (i.e. covering up part of
               the picture box with another windows and then moving it away)
         \* -------------------------------------------------------------- */
+
         private void picMap_Paint(object sender, System.Windows.Forms.PaintEventArgs e)
         {
             if (m_bOpen)
@@ -291,9 +283,10 @@ namespace HugoLandEditeur
 
         /* -------------------------------------------------------------- *\
             m_ResizeMap()
-			
+
             - Takes care of Zoom, scroll and visible area logic.
         \* -------------------------------------------------------------- */
+
         private void m_ResizeMap()
         {
             int xpos, ypos;
@@ -315,7 +308,7 @@ namespace HugoLandEditeur
             PrintDebug("BorderX = " + BorderX.ToString());
 
             m_Map.OffsetX = 0; //BorderX;
-            m_Map.OffsetY = 0; //BorderY;						
+            m_Map.OffsetY = 0; //BorderY;
             m_Map.Zoom = m_Zoom;
 
             if (m_TilesHoriz < m_Map.Width)
@@ -354,13 +347,13 @@ namespace HugoLandEditeur
             m_bRefresh = true;
         }
 
-
         /* -------------------------------------------------------------- *\
             picMap_MouseMove()
-			
+
             - Keeps track / translates coordinates to map tile to be
               updated if clicked on.
         \* -------------------------------------------------------------- */
+
         private void picMap_MouseMove(object sender, System.Windows.Forms.MouseEventArgs e)
         {
             if (e.X < 0 || e.Y < 0)
@@ -402,7 +395,6 @@ namespace HugoLandEditeur
 
         private void comboBox1_SelectedIndexChanged(object sender, System.EventArgs e)
         {
-
             ComboItem myItem;
             myItem = (ComboItem)cboZoom.SelectedItem;
             ResetScroll();
@@ -423,14 +415,14 @@ namespace HugoLandEditeur
         /// <param name="e"></param>
         private void mnuCreateNewUser_Click(object sender, EventArgs e)
         {
-
         }
 
         /* -------------------------------------------------------------- *\
             picTiles_Paint()
-			
+
             - Paints the tile library at the bottom of the screen.
         \* -------------------------------------------------------------- */
+
         private void picTiles_Paint(object sender, System.Windows.Forms.PaintEventArgs e)
         {
             if (m_TileLibrary != null)
@@ -443,9 +435,10 @@ namespace HugoLandEditeur
 
         /* -------------------------------------------------------------- *\
             picTiles_Click()
-			
+
             - Selects the active tile ID
         \* -------------------------------------------------------------- */
+
         private void picTiles_Click(object sender, System.EventArgs e)
         {
             m_ActiveTileID = m_TileLibrary.TileToTileID(m_ActiveTileXIndex, m_ActiveTileYIndex);
@@ -454,9 +447,10 @@ namespace HugoLandEditeur
 
         /* -------------------------------------------------------------- *\
             vscTiles_Scroll()
-			
+
             - controls the tile library scroll / position
         \* -------------------------------------------------------------- */
+
         private void vscTiles_Scroll(object sender, System.Windows.Forms.ScrollEventArgs e)
         {
             picTiles.Top = -e.NewValue;
@@ -464,10 +458,11 @@ namespace HugoLandEditeur
 
         /* -------------------------------------------------------------- *\
             picTiles_MouseMove()
-			
+
             - Keeps track / translates coordinates to tilelibrary tile to be
               selected if clicked on.
         \* -------------------------------------------------------------- */
+
         private void picTiles_MouseMove(object sender, System.Windows.Forms.MouseEventArgs e)
         {
             if (e.X < 0 || e.Y < 0)
@@ -488,11 +483,12 @@ namespace HugoLandEditeur
 
         /* -------------------------------------------------------------- *\
             ResetScroll()
-			
+
             - Resets the scrollbar to 0.
               I'm not sure if this is necessary anymore.. I was trouble-
-              shooting an odd issue.			  
+              shooting an odd issue.
         \* -------------------------------------------------------------- */
+
         private void ResetScroll()
         {
             vscMap.Value = 0;
@@ -503,9 +499,10 @@ namespace HugoLandEditeur
 
         /* -------------------------------------------------------------- *\
             picActiveTile_Paint()
-			
-            - Displays the selected tile.	  
+
+            - Displays the selected tile.
         \* -------------------------------------------------------------- */
+
         private void picActiveTile_Paint(object sender, System.Windows.Forms.PaintEventArgs e)
         {
             Rectangle destrect = new Rectangle(0, 0, picActiveTile.Width, picActiveTile.Height);
@@ -528,21 +525,25 @@ namespace HugoLandEditeur
             m_MenuLogic();
             this.Cursor = Cursors.Default;
         }
-        #endregion
+
+        #endregion Menu Code
 
         #region Debug Code
+
         private void PrintDebug(String strDebug)
         {
             Console.WriteLine(strDebug);
         }
-        #endregion
+
+        #endregion Debug Code
 
         /* -------------------------------------------------------------- *\
             picMap_Click()
-			
+
             - Plots the ActiveTile from the tile library to the selected
               tile location on the map.
         \* -------------------------------------------------------------- */
+
         private void picMap_Click(object sender, System.EventArgs e)
         {
             //hUGO : mODIFIER ICI POUR AVOIR le tile et le type
@@ -664,8 +665,6 @@ namespace HugoLandEditeur
         /// </summary>
         private void m_SaveMap()
         {
-
-
             //DialogResult result;
 
             //dlgSaveMap.Title = "Save Map";
@@ -737,6 +736,7 @@ namespace HugoLandEditeur
 
             - Enables / Disables menus based on application status
         \* -------------------------------------------------------------- */
+
         private void m_MenuLogic()
         {
             bool bEnabled;

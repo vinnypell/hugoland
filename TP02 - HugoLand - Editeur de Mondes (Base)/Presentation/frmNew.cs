@@ -1,11 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace HugoLandEditeur
@@ -14,6 +7,7 @@ namespace HugoLandEditeur
     {
         private int m_Width;
         private int m_Height;
+
         public frmNew()
         {
             InitializeComponent();
@@ -73,6 +67,7 @@ namespace HugoLandEditeur
         }
 
         #region Hauteur et largeur lors d'une création de map
+
         /// <summary>
         /// Description: Appeler aussitôt que le contenu de la largeur est modifié
         /// </summary>
@@ -128,6 +123,7 @@ namespace HugoLandEditeur
 
             return true;
         }
-        #endregion
+
+        #endregion Hauteur et largeur lors d'une création de map
     }
 }

@@ -1,6 +1,4 @@
-
 using System;
-using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
 using TP01_Library;
@@ -12,7 +10,6 @@ namespace HugoLandEditeur
     /// </summary>
     public class CMap
     {
-
         private int m_Width;			// map width (tiles)
         private int m_Height;			// map height (tiles)
         private int m_DefaultTileID;	// default tile id for outside normal bounds
@@ -65,6 +62,7 @@ namespace HugoLandEditeur
                 m_Height = value;
             }
         }
+
         // Default Tile ID
         public int DefaultTileID
         {
@@ -95,6 +93,7 @@ namespace HugoLandEditeur
                 m_OffsetX = value;
             }
         }
+
         // OffsetY (pixels)
         public int OffsetY
         {
@@ -112,6 +111,7 @@ namespace HugoLandEditeur
                 m_nTilesVert = value;
             }
         }
+
         // TilesHoriz
         public int TilesHoriz
         {
@@ -123,7 +123,6 @@ namespace HugoLandEditeur
 
         public CMap()
         {
-
         }
 
         public void Refresh()
@@ -183,12 +182,11 @@ namespace HugoLandEditeur
                 return;
             m_Tiles[yindex, xindex] = TileID;
             m_TileLibrary.DrawTile(m_BackBufferDC, TileID, xindex * csteApplication.TILE_WIDTH_IN_MAP, yindex * csteApplication.TILE_HEIGHT_IN_MAP);
-
         }
 
         /// <summary>
-        /// Description: Gère la sauvegarde d'un [Monde]
-        /// Détails: AjouterMonde() et SupprimerMonde() => MondeController
+        /// Description: Gï¿½re la sauvegarde d'un [Monde]
+        /// Dï¿½tails: AjouterMonde() et SupprimerMonde() => MondeController
         /// </summary>
         /// <param name="strFilename"></param>
         /// <returns></returns>
@@ -216,7 +214,7 @@ namespace HugoLandEditeur
         }
 
         /// <summary>
-        /// Description: Faire afficher le [Monde] choisi dans la méthode précédente, qui offrait la liste des mondes
+        /// Description: Faire afficher le [Monde] choisi dans la mï¿½thode prï¿½cï¿½dente, qui offrait la liste des mondes
         /// </summary>
         /// <param name="strFilename"></param>
         /// <returns></returns>
@@ -224,7 +222,7 @@ namespace HugoLandEditeur
         {
             //int i;
 
-            //FileStream file;						
+            //FileStream file;
             //StreamReader sr;
             //String strLine;
             //int index;
@@ -254,13 +252,13 @@ namespace HugoLandEditeur
             //}
 
             //while(sr.Peek() >= 0)
-            //{					
+            //{
             //    strLine = sr.ReadLine();
             //    index = strLine.IndexOfAny(delim);
             //    if (index > 0)
             //    {
             //        strVar = strLine.Substring(0,index);
-            //        strVar = strVar.Trim();					
+            //        strVar = strVar.Trim();
             //        strVar = strVar.ToLower();
             //        strValue = strLine.Substring(index+1);
             //        strValue = strValue.Trim();
@@ -274,7 +272,7 @@ namespace HugoLandEditeur
             //            height = Convert.ToInt32(strValue);
             //        else if (strVar == "data")
             //        {
-            //            data = 1;						
+            //            data = 1;
             //            break;
             //        }
             //    }
@@ -325,7 +323,7 @@ namespace HugoLandEditeur
             //            m_Tiles[rowcount,i] = arrData[i];
             //        rowcount++;
             //    }
-            //}			
+            //}
             //sr.Close();
 
             Refresh();
@@ -333,8 +331,8 @@ namespace HugoLandEditeur
         }
 
         /// <summary>
-        /// Description: Gère chaque tuile d'une grandeur de 32 par 32
-        /// Détails: N'ajoute pas un [Monde]
+        /// Description: Gï¿½re chaque tuile d'une grandeur de 32 par 32
+        /// Dï¿½tails: N'ajoute pas un [Monde]
         /// </summary>
         /// <param name="width"></param>
         /// <param name="height"></param>
@@ -372,7 +370,5 @@ namespace HugoLandEditeur
             }
             return true;
         }
-
-
     }
 }

@@ -117,8 +117,8 @@ namespace TP01_Library.Controllers
                 }
                 context.SaveChanges();
             }
-
         }
+
         /// <summary>
         /// Auteur : Simon Lalancette
         /// Desc : retourne la liste des objestMonde dans un rayon de 200m autour du héro
