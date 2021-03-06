@@ -24,8 +24,6 @@ namespace HugoLandEditeur
         private int m_nTilesHoriz;
         private int m_Zoom;
 
-
-
         private CTileLibrary m_TileLibrary;		// Reference to a Tile Library
 
         // Map Width (in Tiles)

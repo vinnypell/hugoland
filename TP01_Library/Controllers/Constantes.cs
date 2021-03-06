@@ -15,5 +15,11 @@ namespace TP01_Library.Controllers
         public const double MULTIPLE_HERO_STAT = 0.5d;
 
         public const int MAX_STAT = 100;
+
+        public enum Types
+        {
+            Joueur = 0,
+            Admin
+        }
     }
 }
