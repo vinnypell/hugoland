@@ -709,5 +709,10 @@ namespace HugoLandEditeur
             mnuZoom.Enabled = bEnabled;
             tbbSave.Enabled = bEnabled;
         }
+
+        private void mnuSettings_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }
