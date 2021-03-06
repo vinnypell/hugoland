@@ -16,6 +16,9 @@ namespace HugoLandEditeur
     public partial class frmMain : Form
     {
 
+        
+        // Variable globale interne
+        public static CompteJoueur currentJoueur { get; set; }
 
         private CMap m_Map;
         private CTileLibrary m_TileLibrary;
@@ -34,13 +37,13 @@ namespace HugoLandEditeur
         private int m_ActiveTileID;
         private int m_ActiveTileXIndex;
         private int m_ActiveTileYIndex;
-        private HugoLandContext context = new HugoLandContext();
         private MondeController mondeCTRL = new MondeController();
+        private CompteJoueurController compteJoueurCTRL = new CompteJoueurController();
+        private Constantes CONSTANTES = new Constantes();
 
         /// <summary>
         /// Summary description for Form1.
         /// </summary>
-        /// 	
         public struct ComboItem
         {
             public string Text;
@@ -78,21 +81,24 @@ namespace HugoLandEditeur
             // Insère la tuile dans celle de la map générer plus haut
             m_Map.TileLibrary = m_TileLibrary;
 
-
+            // Position de où la map ira
             picMap.Parent = picEditArea;
             picMap.Left = 0;
             picMap.Top = 0;
 
+            // Le look, taille des tuiles
             picTiles.Parent = picEditSel;
             picTiles.Width = m_TileLibrary.Width * csteApplication.TILE_WIDTH_IN_IMAGE;
             picTiles.Height = m_TileLibrary.Height * csteApplication.TILE_HEIGHT_IN_IMAGE;
             picTiles.Left = 0;
             picTiles.Top = 0;
 
+            // Vertical Scroll bar
             vscMap.Minimum = 0;
             vscMap.Maximum = m_Map.Height;
             m_YSel = 0;
 
+            // Horizontal Scroll bar
             hscMap.Minimum = 0;
             hscMap.Maximum = m_Map.Width;
             m_XSel = 0;
@@ -187,42 +193,7 @@ namespace HugoLandEditeur
             m_bResize = true;
         }
 
-        /// <summary>
-        /// Où: File => Open
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void mnuFileOpen_Click(object sender, System.EventArgs e)
-        {
-            LoadMap();
-        }
-
-        /// <summary>
-        /// Où: File => Save [lorsqu'une map à été créée]
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void mnuFileSave_Click(object sender, System.EventArgs e)
-        {
-            m_SaveMap();
-        }
-
-        /// <summary>
-        /// Description: Gère les trois icones; la feuille avec un +, le dossier et le ?
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void tbMain_ButtonClick(object sender, System.Windows.Forms.ToolBarButtonClickEventArgs e)
-        {
-            if (e.Button == tbbSave)
-                m_SaveMap();
-            if (e.Button == tbbOpen)
-                LoadMap();
-            else if (e.Button == tbbNew)
-                NewMap();
-        }
-
-
+   
 
         /* -------------------------------------------------------------- *\
             vscMap_Scroll()
@@ -454,20 +425,6 @@ namespace HugoLandEditeur
         }
 
         /* -------------------------------------------------------------- *\
-            picMap_Click()
-			
-            - Plots the ActiveTile from the tile library to the selected
-              tile location on the map.
-        \* -------------------------------------------------------------- */
-        private void picMap_Click(object sender, System.EventArgs e)
-        {
-            //hUGO : mODIFIER ICI POUR AVOIR le tile et le type
-            m_Map.PlotTile(m_ActiveXIndex, m_ActiveYIndex, m_ActiveTileID);
-
-            m_bRefresh = true;
-        }
-
-        /* -------------------------------------------------------------- *\
             picTiles_Paint()
 			
             - Paints the tile library at the bottom of the screen.
@@ -578,6 +535,55 @@ namespace HugoLandEditeur
         }
         #endregion
 
+        /* -------------------------------------------------------------- *\
+            picMap_Click()
+			
+            - Plots the ActiveTile from the tile library to the selected
+              tile location on the map.
+        \* -------------------------------------------------------------- */
+        private void picMap_Click(object sender, System.EventArgs e)
+        {
+            //hUGO : mODIFIER ICI POUR AVOIR le tile et le type
+            m_Map.PlotTile(m_ActiveXIndex, m_ActiveYIndex, m_ActiveTileID);
+
+            m_bRefresh = true;
+        }
+
+        /// <summary>
+        /// Où: File => Open
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void mnuFileOpen_Click(object sender, System.EventArgs e)
+        {
+            LoadMap();
+        }
+
+        /// <summary>
+        /// Où: File => Save [lorsqu'une map à été créée]
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void mnuFileSave_Click(object sender, System.EventArgs e)
+        {
+            m_SaveMap();
+        }
+
+        /// <summary>
+        /// Description: Gère les trois icones; la feuille avec un +, le dossier et le ?
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void tbMain_ButtonClick(object sender, System.Windows.Forms.ToolBarButtonClickEventArgs e)
+        {
+            if (e.Button == tbbSave)
+                m_SaveMap();
+            if (e.Button == tbbOpen)
+                LoadMap();
+            else if (e.Button == tbbNew)
+                NewMap();
+        }
+
         /// <summary>
         /// Description: Télécharge un [Monde] et l'applique sur la map du frmMain
         /// Méthode: ListerMonde() => MondeController
@@ -585,6 +591,8 @@ namespace HugoLandEditeur
         private void LoadMap()
         {
             DialogResult result;
+
+            List<Monde> mondes = mondeCTRL.ListerMondes();
 
             dlgLoadMap.Title = "Load Map";
             dlgLoadMap.Filter = "Map Files (*.map)|*.map|All Files (*.*)|*.*";
@@ -610,7 +618,6 @@ namespace HugoLandEditeur
                 this.Cursor = Cursors.Default;
             }
         }
-
 
         /// <summary>
         /// Description: Save la map courante [Monde]
