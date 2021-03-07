@@ -197,6 +197,7 @@ namespace HugoLandEditeur.Presentation
             this.btn_cancel.TabIndex = 16;
             this.btn_cancel.Text = "Cancel";
             this.btn_cancel.UseVisualStyleBackColor = true;
+            this.btn_cancel.Click += new System.EventHandler(this.btn_cancel_Click);
             // 
             // listbx_usertype
             // 
