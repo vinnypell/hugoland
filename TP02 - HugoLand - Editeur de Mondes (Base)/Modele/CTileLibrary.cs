@@ -1,6 +1,10 @@
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
+using System.Linq;
+using TP01_Library;
+using TP01_Library.Controllers;
 
 namespace HugoLandEditeur
 {
@@ -13,8 +17,22 @@ namespace HugoLandEditeur
         private Bitmap m_TileSource;		// to be loaded from external File or resource...
         private int m_Width;
         private int m_Height;
-        private Dictionary<string, Tile> _ObjMonde = new Dictionary<string, Tile>();
+        private MondeController ctrl = new MondeController();
 
+        private Tile[,] m_Tiles;
+        public Tile[,] Tiles
+        {
+            get
+            {
+                return m_Tiles;
+            }
+            set
+            {
+                m_Tiles = value;
+            }
+        }
+
+        private Dictionary<string, Tile> _ObjMonde = new Dictionary<string, Tile>();
         public Dictionary<string, Tile> ObjMonde
         {
             get { return _ObjMonde; }
@@ -58,7 +76,118 @@ namespace HugoLandEditeur
             m_Width = (m_TileSource.Width / csteApplication.TILE_WIDTH_IN_IMAGE) + 1;
             m_Height = (m_TileSource.Height / csteApplication.TILE_HEIGHT_IN_IMAGE) + 1;
 
-            readTileDefinitions(@"gamedata\AllTilesLookups.csv");
+            //readTileDefinitions(@"gamedata\AllTilesLookups.csv");
+        }
+
+        public CTileLibrary(Monde m)
+        {
+            m_TileSource = new Bitmap(@"gamedata\AllTiles.bmp");
+            m_Width = (m_TileSource.Width / csteApplication.TILE_WIDTH_IN_IMAGE) + 1;
+            m_Height = (m_TileSource.Height / csteApplication.TILE_HEIGHT_IN_IMAGE) + 1;
+
+
+            Tiles = new Tile[m_Height, m_Width];
+            for (int y = 0; y < m.LimiteY; y++)
+            {
+                for (int x = 0; x < m.LimiteX; x++)
+                {
+                    // ça plante pour une raison que j'ignore
+                    List<Item> items = ctrl.ListerItems(m).Where(i => i.x == x && i.y == y).ToList();
+                    ObjetMonde objets = ctrl.ListerObjetMondes(m).FirstOrDefault(o => o.x == x && o.y == y);
+                    Monstre monstres = ctrl.ListerMonstres(m).FirstOrDefault(o => o.x == x && o.y == y);
+
+                    // Héro n'a pas d'imageID dans la table, alors je me doute qu'on enregistre la position du joueur
+                    // dans la map, si on ne le fait pas, ce sera ici de le faire et d'ajouter une propriété à cet effet
+                    //Hero heroes = ctrl.ListerHeroes(m).FirstOrDefault(o => o.x == x && o.y == y);
+
+                    // Seul les items peuvent être stacker
+                    if (items.Count > 0)
+                    {
+                        //if (items.Count > 1)
+                        //{
+                        //    List<Tile> tiles = new List<Tile>();
+                        //    foreach (Item item in items)
+                        //    {
+                        //        tiles.Add(new Tile()
+                        //        {
+                        //            Name = item.Nom,
+                        //            Bitmap = m_TileSource,
+                        //            X_Image = (int)item.x,
+                        //            Y_Image = (int)item.y,
+                        //            TypeObjet = TypeTile.Item,
+                        //            IndexTypeObjet = (int)TypeTile.Item,
+                        //            Rectangle = new Rectangle((int)item.x - 1 * Tile.TileSizeX,
+                        //                                      (int)item.y - 1 * Tile.TileSizeY,
+                        //                                      Tile.TileSizeX * 1, Tile.TileSizeY)
+                        //        });
+                        //    }
+                        //    //Tiles[y, x] = tiles;
+                        //}
+                        //else
+                        //{
+                        //}
+
+                        Item item = items.FirstOrDefault();
+                        Tiles[y, x] = new Tile()
+                        {
+                            Name = item.Nom,
+                            Bitmap = m_TileSource,
+                            X_Image = (int)item.x,
+                            Y_Image = (int)item.y,
+                            TypeObjet = TypeTile.Item,
+                            IndexTypeObjet = (int)TypeTile.Item,
+                            Rectangle = new Rectangle((int)item.x - 1 * Tile.TileSizeX,
+                                                          (int)item.y - 1 * Tile.TileSizeY,
+                                                          Tile.TileSizeX * 1, Tile.TileSizeY)
+                        };
+                    }
+                    else if (objets != null)
+                    {
+                        Tiles[y, x] = new Tile()
+                        {
+                            Name = objets.Description,
+                            Bitmap = m_TileSource,
+                            X_Image = objets.x,
+                            Y_Image = objets.y,
+                            TypeObjet = TypeTile.ObjetMonde,
+                            IndexTypeObjet = (int)TypeTile.ObjetMonde,
+                            Rectangle = new Rectangle((int)objets.x - 1 * Tile.TileSizeX,
+                                                              (int)objets.y - 1 * Tile.TileSizeY,
+                                                              Tile.TileSizeX * 1, Tile.TileSizeY)
+                        };
+                    }
+                    else if (monstres != null)
+                    {
+                        Tiles[y, x] = new Tile()
+                        {
+                            Name = monstres.Nom,
+                            Bitmap = m_TileSource,
+                            X_Image = monstres.x,
+                            Y_Image = monstres.y,
+                            TypeObjet = TypeTile.ObjetMonde,
+                            IndexTypeObjet = (int)TypeTile.ObjetMonde,
+                            Rectangle = new Rectangle((int)monstres.x - 1 * Tile.TileSizeX,
+                                                              (int)monstres.y - 1 * Tile.TileSizeY,
+                                                              Tile.TileSizeX * 1, Tile.TileSizeY)
+                        };
+                    }
+                    //else if (heroes != null)
+                    //{
+                    //    Tiles[y, x] = new Tile()
+                    //    {
+                    //        Name = heroes.NomHero,
+                    //        Bitmap = m_TileSource,
+                    //        X_Image = heroes.x,
+                    //        Y_Image = heroes.y,
+                    //        TypeObjet = TypeTile.ObjetMonde,
+                    //        IndexTypeObjet = (int)TypeTile.ObjetMonde,
+                    //        Rectangle = new Rectangle((int)heroes.x - 1 * Tile.TileSizeX,
+                    //                                          (int)heroes.y - 1 * Tile.TileSizeY,
+                    //                                          Tile.TileSizeX * 1, Tile.TileSizeY)
+                    //    };
+                    //}
+                }
+            }
         }
 
         public void Draw(Graphics pGraphics, Rectangle destRect)

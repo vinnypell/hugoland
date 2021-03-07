@@ -1,5 +1,7 @@
 using System;
 using System.Drawing;
+using TP01_Library;
+using TP01_Library.Controllers;
 
 namespace HugoLandEditeur
 {
@@ -29,6 +31,11 @@ namespace HugoLandEditeur
         public int IndexTypeObjet { get; set; }
         public TypeTile TypeObjet { get; set; }
 
+        public Tile()
+        {
+
+        }
+
         public Tile(string[] tileData)
         {
             try
@@ -38,8 +45,9 @@ namespace HugoLandEditeur
                 Category = tileData[2].ToLower();
                 Bitmap = _bitmaps[tileData[3]];
                 NumberOfFrames = Convert.ToInt32(tileData[7]);
-                Rectangle = new Rectangle((Convert.ToInt32(tileData[4]) - 1) * TileSizeX, (Convert.ToInt32(tileData[5]) - 1) * TileSizeY,
-                                           TileSizeX * NumberOfFrames, TileSizeY);
+                Rectangle = new Rectangle((Convert.ToInt32(tileData[4]) - 1) * TileSizeX,
+                                          (Convert.ToInt32(tileData[5]) - 1) * TileSizeY,
+                                          TileSizeX * NumberOfFrames, TileSizeY);
 
                 X_Image = (Convert.ToInt32(tileData[4]) - 1);
                 Y_Image = (Convert.ToInt32(tileData[5]) - 1);

@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="HugoLandModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="HugoLandModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Classe">
           <Key>
             <PropertyRef Name="Id" />
@@ -66,6 +66,7 @@
           <Property Name="IdHero" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="ItemId" Type="int" Nullable="false" />
           <Property Name="IdInventaireHero" Type="int" Nullable="false" />
+          <Property Name="Quantite" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="Item">
           <Key>
@@ -114,6 +115,7 @@
           <Property Name="Description" Type="nvarchar(max)" Nullable="false" />
           <Property Name="TypeObjet" Type="int" Nullable="false" />
           <Property Name="MondeId" Type="int" Nullable="false" />
+          <Property Name="ImageId" Type="int" />
         </EntityType>
         <EntityType Name="sysdiagrams">
           <Key>
@@ -337,8 +339,7 @@
             <End Role="Heros" EntitySet="Heros" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="HugoLandModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -414,6 +415,7 @@
           <Property Name="IdInventaireHero" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Hero" Relationship="Self.BelongsToHero" FromRole="InventaireHero" ToRole="Heros" />
           <NavigationProperty Name="Item" Relationship="Self.BelongsToItem" FromRole="InventaireHero" ToRole="Item" />
+          <Property Name="Quantite" Type="Int32" Nullable="false" />
         </EntityType>
         <EntityType Name="Item">
           <Key>
@@ -473,6 +475,7 @@
           <Property Name="TypeObjet" Type="Int32" Nullable="false" />
           <Property Name="MondeId" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Monde" Relationship="Self.FK_ObjetMonde_Monde" FromRole="ObjetMonde" ToRole="Monde" />
+          <Property Name="ImageId" Type="Int32" />
         </EntityType>
         <EntityType Name="sysdiagram">
           <Key>
@@ -763,6 +766,7 @@
           <EntitySetMapping Name="InventaireHeroes">
             <EntityTypeMapping TypeName="HugoLandModel.InventaireHero">
               <MappingFragment StoreEntitySet="InventaireHero">
+                <ScalarProperty Name="Quantite" ColumnName="Quantite" />
                 <ScalarProperty Name="IdHero" ColumnName="IdHero" />
                 <ScalarProperty Name="ItemId" ColumnName="ItemId" />
                 <ScalarProperty Name="IdInventaireHero" ColumnName="IdInventaireHero" />
@@ -812,6 +816,7 @@
           <EntitySetMapping Name="ObjetMondes">
             <EntityTypeMapping TypeName="HugoLandModel.ObjetMonde">
               <MappingFragment StoreEntitySet="ObjetMonde">
+                <ScalarProperty Name="ImageId" ColumnName="ImageId" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="x" ColumnName="x" />
                 <ScalarProperty Name="y" ColumnName="y" />

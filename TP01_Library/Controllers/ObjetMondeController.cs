@@ -23,7 +23,7 @@ namespace TP01_Library.Controllers
         /// <param name="p_iPositionX"></param>
         /// <param name="p_iPositionY"></param>
         /// <param name="p_iTypeObjet"></param>
-        public void AjouterObjetMonde(int p_iMondeId, string p_sDescription, int p_iPositionX, int p_iPositionY, int p_iTypeObjet)
+        public void AjouterObjetMonde(int p_iMondeId, string p_sDescription, int p_iPositionX, int p_iPositionY, int p_iTypeObjet, int p_imageId)
         {
             using (HugoLandContext dbContext = new HugoLandContext())
             {
@@ -33,7 +33,8 @@ namespace TP01_Library.Controllers
                     x = p_iPositionX,
                     y = p_iPositionY,
                     TypeObjet = p_iTypeObjet,
-                    MondeId = p_iMondeId
+                    MondeId = p_iMondeId,
+                    ImageId = p_imageId
                 });
                 dbContext.SaveChanges();
             }

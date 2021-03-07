@@ -5,7 +5,8 @@ using System.Drawing;
 using System.Windows.Forms;
 using TP01_Library;
 using TP01_Library.Controllers;
-using HugoLandEditeur.Presentation;
+using System.IO;
+using System.Linq;
 
 namespace HugoLandEditeur
 {
@@ -57,6 +58,46 @@ namespace HugoLandEditeur
 
         public frmMain()
         {
+            #region Load la BD
+            //StreamReader sr = new StreamReader(@"gamedata\AllTilesLookups.csv");
+            //ObjetMondeController ctrlObj = new ObjetMondeController();
+            //MonstreController ctrlMonstre = new MonstreController();
+            //ItemController ctrlItem = new ItemController();
+
+            //Monde monde;
+            //using (HugoLandContext context = new HugoLandContext())
+            //{
+            //    monde = context.Mondes.FirstOrDefault();
+            //}
+
+            //string line;
+            //while ((line = sr.ReadLine()) != null)
+            //{
+            //    //separate out the elements of the
+            //    string[] elements = line.Split(',');
+
+            //    TypeTile tile = (TypeTile)Enum.Parse(typeof(TypeTile), elements[elements.Length - 1], true);
+            //    int x = int.Parse(elements[4]);
+            //    int y = int.Parse(elements[5]);
+            //    int imageId = int.Parse(elements[1]);
+
+            //    switch (tile)
+            //    {
+            //        case TypeTile.ObjetMonde:
+            //            ctrlObj.AjouterObjetMonde(monde.Id, elements[0], x, y, (int)tile, imageId);
+            //            break;
+            //        case TypeTile.Monstre:
+            //            ctrlMonstre.AjouterMonstre(monde, x, y, elements[0], imageId);
+            //            break;
+            //        case TypeTile.Item:
+            //            ctrlItem.AjouterItems(elements[0], elements[2], x, y, imageId, monde.Id);
+            //            break;
+            //        default:
+            //            break;
+            //    }
+            //}
+            #endregion
+
             InitializeComponent();
             this.StartPosition = FormStartPosition.CenterScreen;
         }
@@ -434,18 +475,6 @@ namespace HugoLandEditeur
         }
 
         /* -------------------------------------------------------------- *\
-            picTiles_Click()
-
-            - Selects the active tile ID
-        \* -------------------------------------------------------------- */
-
-        private void picTiles_Click(object sender, System.EventArgs e)
-        {
-            m_ActiveTileID = m_TileLibrary.TileToTileID(m_ActiveTileXIndex, m_ActiveTileYIndex);
-            picActiveTile.Refresh();
-        }
-
-        /* -------------------------------------------------------------- *\
             vscTiles_Scroll()
 
             - controls the tile library scroll / position
@@ -537,20 +566,7 @@ namespace HugoLandEditeur
 
         #endregion Debug Code
 
-        /* -------------------------------------------------------------- *\
-            picMap_Click()
 
-            - Plots the ActiveTile from the tile library to the selected
-              tile location on the map.
-        \* -------------------------------------------------------------- */
-
-        private void picMap_Click(object sender, System.EventArgs e)
-        {
-            //hUGO : mODIFIER ICI POUR AVOIR le tile et le type
-            m_Map.PlotTile(m_ActiveXIndex, m_ActiveYIndex, m_ActiveTileID);
-
-            m_bRefresh = true;
-        }
 
         /// <summary>
         /// Où: File => Open
@@ -593,33 +609,6 @@ namespace HugoLandEditeur
         /// </summary>
         private void LoadMap()
         {
-            //DialogResult result;
-
-            //List<Monde> mondes = mondeCTRL.ListerMondes();
-
-            //dlgLoadMap.Title = "Load Map";
-            //dlgLoadMap.Filter = "Map Files (*.map)|*.map|All Files (*.*)|*.*";
-
-            //result = dlgLoadMap.ShowDialog();
-            //if (result == DialogResult.OK)
-            //{
-            //    m_bOpen = false;
-            //    picMap.Visible = false;
-            //    this.Cursor = Cursors.WaitCursor;
-            //    try
-            //    {
-            //        m_Map.Load(dlgLoadMap.FileName);
-            //        m_bOpen = true;
-            //        m_bRefresh = true;
-            //        picMap.Visible = true;
-            //    }
-            //    catch
-            //    {
-            //        Console.WriteLine("Error Loading...");
-            //    }
-            //    m_MenuLogic();
-            //    this.Cursor = Cursors.Default;
-            //}
             int iResult = -1;
             frmListSelector f;
             DialogResult result;
@@ -648,7 +637,7 @@ namespace HugoLandEditeur
                         throw new Exception();
                     }
                 }
-                catch 
+                catch
                 {
                     Console.WriteLine("Error Loading...");
 
@@ -759,5 +748,91 @@ namespace HugoLandEditeur
             form2.Closed += (s, args) => this.Close();
             form2.Show();
         }
+
+
+        /* -------------------------------------------------------------- *\
+            picMap_Click()
+
+            - Plots the ActiveTile from the tile library to the selected
+            tile location on the map.
+        \* -------------------------------------------------------------- */
+
+        private void picMap_Click(object sender, System.EventArgs e)
+        {
+            //Hugo: Modifier ici pour avoir le tile et le type
+            // VP (06/03/2021) gestion dans CTileLibrary.cs
+            m_Map.PlotTile(m_ActiveXIndex, m_ActiveYIndex, m_ActiveTileID);
+
+            //UpdateInfos();
+
+            m_bRefresh = true;
+        }
+
+
+        /* -------------------------------------------------------------- *\
+            picTiles_Click()
+
+            - Selects the active tile ID
+        \* -------------------------------------------------------------- */
+
+        private void picTiles_Click(object sender, System.EventArgs e)
+        {
+            m_ActiveTileID = m_TileLibrary.TileToTileID(m_ActiveTileXIndex, m_ActiveTileYIndex);
+
+            //UpdateInfos();
+
+
+            picActiveTile.Refresh();
+        }
+
+        /* -------------------------------------------------------------- *\
+            
+        ObjetMonde => lbl_Description
+        Item => lbl_Description
+        Monstre => lstB_Monstre
+        Hero => lstB_Hero
+
+        Needs:
+        - Type de tuile (Enum)
+        - Methode de clic
+        - Controllers: ObjetMonde, Item, Monstre et Hero
+        - Models: TypeTyle.cs
+
+        \* -------------------------------------------------------------- */
+
+        private void UpdateInfos()
+        {
+            lbl_InfoType.Text = m_Map.currTile.TypeObjet.ToString();
+            switch (m_Map.currTile.TypeObjet)
+            {
+                case TypeTile.ObjetMonde:
+                case TypeTile.Item:
+                    lstB_Hero.Visible = false;
+                    lstB_Monstre.Visible = false;
+                    lbl_Description.Visible = true;
+                    lbl_Description.Text = m_Map.currTile.Name;
+                    break;
+                case TypeTile.ClasseHero:
+                    lstB_Monstre.Visible = false;
+                    lbl_Description.Visible = false;
+                    lstB_Hero.Visible = true;
+
+                    HeroController ctrl = new HeroController();
+                    Hero currHero = ctrl.GetHero(Name);
+
+                    lstB_Hero.Items.Add(currHero.NomHero);
+
+                    break;
+                case TypeTile.Monstre:
+                    lstB_Hero.Visible = false;
+                    lstB_Monstre.Visible = false;
+                    lbl_Description.Visible = true;
+                    lbl_Description.Text = m_Map.currTile.Name;
+                    break;
+                case TypeTile.Tile:
+                    break;
+            }
+        }
+
     }
 }

@@ -1,6 +1,8 @@
 using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
+using System.Linq;
 using TP01_Library;
 
 namespace HugoLandEditeur
@@ -21,6 +23,7 @@ namespace HugoLandEditeur
         private int m_nTilesVert;
         private int m_nTilesHoriz;
         private int m_Zoom;
+        private Tile m_currTile;
 
         private CTileLibrary m_TileLibrary;		// Reference to a Tile Library
 
@@ -121,6 +124,19 @@ namespace HugoLandEditeur
             }
         }
 
+        // Current Selected Tile
+        public Tile currTile
+        {
+            get
+            {
+                return m_currTile;
+            }
+            set
+            {
+                m_currTile = value;
+            }
+        }
+
         public CMap()
         {
         }
@@ -182,6 +198,12 @@ namespace HugoLandEditeur
                 return;
             m_Tiles[yindex, xindex] = TileID;
             m_TileLibrary.DrawTile(m_BackBufferDC, TileID, xindex * csteApplication.TILE_WIDTH_IN_MAP, yindex * csteApplication.TILE_HEIGHT_IN_MAP);
+
+            foreach (Tile t in m_TileLibrary.ObjMonde.Values)
+            {
+                if (t.X_Image == xindex && t.Y_Image == yindex)
+                    m_currTile = t;
+            }
         }
 
         /// <summary>
@@ -192,20 +214,21 @@ namespace HugoLandEditeur
         /// <returns></returns>
         public int Save(String strFilename)
         {
-            //int i,j;
+            //int i, j;
 
             //FileStream file = new FileStream(strFilename, FileMode.Create, FileAccess.Write);
             //StreamWriter sw = new StreamWriter(file);
 
-            //sw.WriteLine("ID: {0}",MAPFILE_ID.ToString());
-            //sw.WriteLine("WIDTH: {0}",m_Width.ToString());
-            //sw.WriteLine("HEIGHT: {0}",m_Height.ToString());
+            //sw.WriteLine("ID: {0}", MAPFILE_ID.ToString());
+            //sw.WriteLine("ID: 1 TEST");
+            //sw.WriteLine("WIDTH: {0}", m_Width.ToString());
+            //sw.WriteLine("HEIGHT: {0}", m_Height.ToString());
             //sw.WriteLine("DATA:");
 
-            //for (i=0; i<m_Height; i++)
+            //for (i = 0; i < m_Height; i++)
             //{
-            //    for (j=0; j<m_Width; j++)
-            //        sw.Write("{0},", m_Tiles[i,j]);
+            //    for (j = 0; j < m_Width; j++)
+            //        sw.Write("{0},", m_Tiles[i, j]);
             //    sw.WriteLine();
             //}
             //sw.Close();
@@ -278,9 +301,12 @@ namespace HugoLandEditeur
             //    }
             //}
 
+
+
             width = m.LimiteX;
             height = m.LimiteY;
-            if (width <= 0 || height <= 0 || data < 0 || m.Id < 0)
+            //if (width <= 0 || height <= 0 || data < 0 || m.Id < 0)
+            if (width <= 0 || height <= 0 || m.Id < 0)
                 return -1;
             if (width < 8 || width > csteApplication.MAP_MAX_WIDTH)
                 return -1;
@@ -292,10 +318,20 @@ namespace HugoLandEditeur
             m_Height = height;
 
             m_Tiles = new int[m_Height, m_Width];
+            m_TileLibrary = new CTileLibrary(m);
+
+            //Checker avec vincent pour loader les tiles
+            for (int i = 0; i < m_Height; i++)
+            {
+                for (int j = 0; j < m_Width; j++)
+                {
+                    m_Tiles[i, j] = m_DefaultTileID;
+                }
+            }
+
             m_BackBuffer = new Bitmap(m_Width * csteApplication.TILE_WIDTH_IN_MAP, m_Height * csteApplication.TILE_HEIGHT_IN_MAP);
             m_BackBufferDC = Graphics.FromImage(m_BackBuffer);
 
-            //Checker avec vincent pour loader les tiles
 
 
             //while(sr.Peek() >= 0)

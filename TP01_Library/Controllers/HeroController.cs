@@ -163,5 +163,13 @@ namespace TP01_Library.Controllers
                 context.SaveChanges();
             }
         }
+
+        public Hero GetHero(string Nom)
+        {
+            using (HugoLandContext context = new HugoLandContext())
+            {
+                return context.Heros.FirstOrDefault(x => x.NomHero == Nom);
+            }
+        }
     }
 }

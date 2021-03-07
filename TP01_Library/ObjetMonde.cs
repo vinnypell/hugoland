@@ -20,6 +20,7 @@ namespace TP01_Library
         public string Description { get; set; }
         public int TypeObjet { get; set; }
         public int MondeId { get; set; }
+        public Nullable<int> ImageId { get; set; }
     
         public virtual Monde Monde { get; set; }
     }

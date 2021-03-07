@@ -121,5 +121,10 @@ namespace TP01_Library.Controllers
                 return dbContext.Mondes.Find(id);
             }
         }
+
+        public List<Item> ListerItems(Monde p_monde) => p_monde.Items.ToList();
+        public List<ObjetMonde> ListerObjetMondes(Monde p_monde) => p_monde.ObjetMondes.ToList();
+        public List<Monstre> ListerMonstres(Monde p_monde) => p_monde.Monstres.ToList();
+        public List<Hero> ListerHeroes(Monde p_monde) => p_monde.Heros.ToList();
     }
 }
