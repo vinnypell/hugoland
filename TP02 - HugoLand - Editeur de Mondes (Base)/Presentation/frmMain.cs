@@ -763,7 +763,7 @@ namespace HugoLandEditeur
             // VP (06/03/2021) gestion dans CTileLibrary.cs
             m_Map.PlotTile(m_ActiveXIndex, m_ActiveYIndex, m_ActiveTileID);
 
-            //UpdateInfos();
+            UpdateInfos();
 
             m_bRefresh = true;
         }
@@ -778,9 +778,6 @@ namespace HugoLandEditeur
         private void picTiles_Click(object sender, System.EventArgs e)
         {
             m_ActiveTileID = m_TileLibrary.TileToTileID(m_ActiveTileXIndex, m_ActiveTileYIndex);
-
-            //UpdateInfos();
-
 
             picActiveTile.Refresh();
         }
@@ -803,36 +800,65 @@ namespace HugoLandEditeur
         private void UpdateInfos()
         {
             lbl_InfoType.Text = m_Map.currTile.TypeObjet.ToString();
+            lbl_InfoType.Visible = true;
             switch (m_Map.currTile.TypeObjet)
             {
                 case TypeTile.ObjetMonde:
-                case TypeTile.Item:
-                    lstB_Hero.Visible = false;
+                    //lstB_Hero.Visible = false;
                     lstB_Monstre.Visible = false;
                     lbl_Description.Visible = true;
+                    btnReset.Visible = true;
                     lbl_Description.Text = m_Map.currTile.Name;
+
+                    ResetInfos();
                     break;
-                case TypeTile.ClasseHero:
+                case TypeTile.Item:
+                    //lstB_Hero.Visible = false;
                     lstB_Monstre.Visible = false;
-                    lbl_Description.Visible = false;
-                    lstB_Hero.Visible = true;
+                    lbl_Description.Visible = true;
+                    btnReset.Visible = true;
+                    lbl_Description.Text = m_Map.currTile.Name;
 
-                    HeroController ctrl = new HeroController();
-                    Hero currHero = ctrl.GetHero(Name);
-
-                    lstB_Hero.Items.Add(currHero.NomHero);
-
+                    ResetInfos();
                     break;
                 case TypeTile.Monstre:
-                    lstB_Hero.Visible = false;
+                    //lstB_Hero.Visible = false;
                     lstB_Monstre.Visible = false;
                     lbl_Description.Visible = true;
+                    btnReset.Visible = true;
+
                     lbl_Description.Text = m_Map.currTile.Name;
+
+                    ResetInfos();
                     break;
-                case TypeTile.Tile:
-                    break;
+                    //case TypeTile.ClasseHero:
+                    //    lstB_Monstre.Visible = false;
+                    //    lbl_Description.Visible = false;
+                    //    lstB_Hero.Visible = true;
+                    //    btnReset.Visible = true;
+
+                    //    HeroController ctrl = new HeroController();
+                    //    Hero currHero = ctrl.GetHero(Name);
+
+                    //    lstB_Hero.Items.Add(currHero.NomHero);
+
+                    //    break;
             }
         }
 
+        private void btnReset_Click(object sender, EventArgs e)
+        {
+            m_ActiveTileID = 32;
+            ResetInfos();
+        }
+
+        private void ResetInfos()
+        {
+            picActiveTile.Refresh();
+            lbl_Description.Refresh();
+            lbl_InfoType.Refresh();
+            lstB_Hero.Refresh();
+            lstB_Monstre.Refresh();
+        }
     }
 }

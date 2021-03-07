@@ -4,6 +4,7 @@ using System.Drawing;
 using System.IO;
 using System.Linq;
 using TP01_Library;
+using TP01_Library.Controllers;
 
 namespace HugoLandEditeur
 {
@@ -12,6 +13,7 @@ namespace HugoLandEditeur
     /// </summary>
     public class CMap
     {
+        private CTileLibrary m_TileLibrary;     // Reference to a Tile Library
         private int m_Width;			// map width (tiles)
         private int m_Height;			// map height (tiles)
         private int m_DefaultTileID;	// default tile id for outside normal bounds
@@ -23,9 +25,21 @@ namespace HugoLandEditeur
         private int m_nTilesVert;
         private int m_nTilesHoriz;
         private int m_Zoom;
+
         private Tile m_currTile;
 
-        private CTileLibrary m_TileLibrary;		// Reference to a Tile Library
+        private Monde m_currentMonde;
+        public Monde currentMonde
+        {
+            get
+            {
+                return m_currentMonde;
+            }
+            set
+            {
+                m_currentMonde = value;
+            }
+        }
 
         // Map Width (in Tiles)
         public int Width
@@ -199,10 +213,15 @@ namespace HugoLandEditeur
             m_Tiles[yindex, xindex] = TileID;
             m_TileLibrary.DrawTile(m_BackBufferDC, TileID, xindex * csteApplication.TILE_WIDTH_IN_MAP, yindex * csteApplication.TILE_HEIGHT_IN_MAP);
 
-            foreach (Tile t in m_TileLibrary.ObjMonde.Values)
+            foreach (var item in m_TileLibrary.ObjMonde)
             {
-                if (t.X_Image == xindex && t.Y_Image == yindex)
-                    m_currTile = t;
+                string[] id = item.Key.Split(',').ToArray();
+                int idTile = int.Parse(id[0]);
+
+                if (idTile == TileID)
+                {
+                    m_currTile = item.Value;
+                }
             }
         }
 
@@ -243,68 +262,13 @@ namespace HugoLandEditeur
         /// <returns></returns>
         public int Load(Monde m)
         {
-            //int i;
-
-            //FileStream file;
-            //StreamReader sr;
-            //String strLine;
-            //int index;
-            //char[] delim = {':'};
-            //char[] delim2 = {','};
-            //int id = -1;
             int width = -1;
             int height = -1;
             int data = -1;
-            //String strVar;
-            //String strValue;
-            //String[] arrValues;
-            //int count;
-            //int[] arrData;
-            //int rowcount = 0;
-
-            //arrData = new int[128];
-
-            //try
-            //{
-            //    file = new FileStream(strFilename, FileMode.Open, FileAccess.Read);
-            //    sr = new StreamReader(file);
-            //}
-            //catch
-            //{
-            //    return -1;
-            //}
-
-            //while(sr.Peek() >= 0)
-            //{
-            //    strLine = sr.ReadLine();
-            //    index = strLine.IndexOfAny(delim);
-            //    if (index > 0)
-            //    {
-            //        strVar = strLine.Substring(0,index);
-            //        strVar = strVar.Trim();
-            //        strVar = strVar.ToLower();
-            //        strValue = strLine.Substring(index+1);
-            //        strValue = strValue.Trim();
-            //        strValue = strValue.ToLower();
-
-            //        if (strVar == "id")
-            //            id = Convert.ToInt32(strValue);
-            //        else if (strVar == "width")
-            //            width = Convert.ToInt32(strValue);
-            //        else if (strVar == "height")
-            //            height = Convert.ToInt32(strValue);
-            //        else if (strVar == "data")
-            //        {
-            //            data = 1;
-            //            break;
-            //        }
-            //    }
-            //}
-
-
 
             width = m.LimiteX;
             height = m.LimiteY;
+
             //if (width <= 0 || height <= 0 || data < 0 || m.Id < 0)
             if (width <= 0 || height <= 0 || m.Id < 0)
                 return -1;
@@ -317,7 +281,7 @@ namespace HugoLandEditeur
             m_Width = width;
             m_Height = height;
 
-            m_Tiles = new int[m_Height, m_Width];
+            m_Tiles = new int[m.LimiteY, m.LimiteX];
             m_TileLibrary = new CTileLibrary(m);
 
             //Checker avec vincent pour loader les tiles
@@ -325,42 +289,12 @@ namespace HugoLandEditeur
             {
                 for (int j = 0; j < m_Width; j++)
                 {
-                    m_Tiles[i, j] = m_DefaultTileID;
+                    m_Tiles[i, j] = m_TileLibrary.Tiles[i, j].imageId;
                 }
             }
 
             m_BackBuffer = new Bitmap(m_Width * csteApplication.TILE_WIDTH_IN_MAP, m_Height * csteApplication.TILE_HEIGHT_IN_MAP);
             m_BackBufferDC = Graphics.FromImage(m_BackBuffer);
-
-
-
-            //while(sr.Peek() >= 0)
-            //{
-            //    strLine = sr.ReadLine();
-            //    strLine = strLine.Trim();
-            //    if (strLine.Length > 1)
-            //    {
-            //        arrValues = strLine.Split(delim2);
-
-            //        count = 0;
-            //        for (i=0; i<=arrValues.GetUpperBound(0); i++)
-            //        {
-            //            strValue = arrValues[i].Trim();
-            //            if (strValue.Length > 0)
-            //            {
-            //                arrData[count] = Convert.ToByte(arrValues[i],10);
-            //                count++;
-            //            }
-            //        }
-            //        if (count != width)
-            //            return -1;
-
-            //        for (i=0; i<width; i++)
-            //            m_Tiles[rowcount,i] = arrData[i];
-            //        rowcount++;
-            //    }
-            //}
-            //sr.Close();
 
             Refresh();
             return 0;

@@ -17,6 +17,7 @@ namespace HugoLandEditeur
         public Bitmap Bitmap { get; set; }
         public int X_Image { get; set; }
         public int Y_Image { get; set; }
+        public int imageId { get; set; }
 
         public Rectangle Rectangle { get; set; }
         public bool IsTransparent { get; set; }

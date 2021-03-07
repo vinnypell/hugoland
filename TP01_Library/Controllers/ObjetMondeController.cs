@@ -91,5 +91,13 @@ namespace TP01_Library.Controllers
                 dbContext.SaveChanges();
             }
         }
+
+        public ObjetMonde GetObjetMondeDefault()
+        {
+            using (HugoLandContext context = new HugoLandContext())
+            {
+                return context.ObjetMondes.FirstOrDefault(x => x.ImageId == 32);
+            }
+        }
     }
 }

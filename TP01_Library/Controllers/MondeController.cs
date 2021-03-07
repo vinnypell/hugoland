@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -118,7 +119,10 @@ namespace TP01_Library.Controllers
         {
             using (HugoLandContext dbContext = new HugoLandContext())
             {
-                return dbContext.Mondes.Find(id);
+                return dbContext.Mondes.Include(x => x.Items)
+                                          .Include(x => x.ObjetMondes)
+                                          .Include(x => x.Monstres)
+                                          .FirstOrDefault(x => x.Id == id);
             }
         }
 

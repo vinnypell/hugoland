@@ -116,6 +116,9 @@ namespace HugoLandEditeur
             this.il16 = new System.Windows.Forms.ImageList(this.components);
             this.statusBar1 = new System.Windows.Forms.StatusBar();
             this.panelTools = new System.Windows.Forms.Panel();
+            this.lstB_Hero = new System.Windows.Forms.ListBox();
+            this.lstB_Monstre = new System.Windows.Forms.ListBox();
+            this.lbl_Description = new System.Windows.Forms.Label();
             this.lbl_InfoType = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.picActiveTile = new System.Windows.Forms.PictureBox();
@@ -132,9 +135,7 @@ namespace HugoLandEditeur
             this.dlgSaveMap = new System.Windows.Forms.SaveFileDialog();
             this.cboZoom = new System.Windows.Forms.ComboBox();
             this.lblZoom = new System.Windows.Forms.Label();
-            this.lbl_Description = new System.Windows.Forms.Label();
-            this.lstB_Monstre = new System.Windows.Forms.ListBox();
-            this.lstB_Hero = new System.Windows.Forms.ListBox();
+            this.btnReset = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.picEditArea)).BeginInit();
             this.panelTools.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.picActiveTile)).BeginInit();
@@ -151,7 +152,7 @@ namespace HugoLandEditeur
             this.picEditArea.Dock = System.Windows.Forms.DockStyle.Fill;
             this.picEditArea.Location = new System.Drawing.Point(0, 0);
             this.picEditArea.Name = "picEditArea";
-            this.picEditArea.Size = new System.Drawing.Size(925, 528);
+            this.picEditArea.Size = new System.Drawing.Size(939, 528);
             this.picEditArea.TabIndex = 0;
             this.picEditArea.TabStop = false;
             this.picEditArea.Resize += new System.EventHandler(this.picEditArea_Resize);
@@ -312,7 +313,7 @@ namespace HugoLandEditeur
             this.tbMain.Location = new System.Drawing.Point(0, 0);
             this.tbMain.Name = "tbMain";
             this.tbMain.ShowToolTips = true;
-            this.tbMain.Size = new System.Drawing.Size(925, 28);
+            this.tbMain.Size = new System.Drawing.Size(939, 28);
             this.tbMain.TabIndex = 1;
             this.tbMain.ButtonClick += new System.Windows.Forms.ToolBarButtonClickEventHandler(this.tbMain_ButtonClick);
             // 
@@ -361,12 +362,12 @@ namespace HugoLandEditeur
             // 
             this.statusBar1.Location = new System.Drawing.Point(0, 506);
             this.statusBar1.Name = "statusBar1";
-            this.statusBar1.Size = new System.Drawing.Size(925, 22);
+            this.statusBar1.Size = new System.Drawing.Size(939, 22);
             this.statusBar1.TabIndex = 2;
-            //this.statusBar1.Text = "sbMain";
             // 
             // panelTools
             // 
+            this.panelTools.Controls.Add(this.btnReset);
             this.panelTools.Controls.Add(this.lstB_Hero);
             this.panelTools.Controls.Add(this.lstB_Monstre);
             this.panelTools.Controls.Add(this.lbl_Description);
@@ -374,10 +375,40 @@ namespace HugoLandEditeur
             this.panelTools.Controls.Add(this.label1);
             this.panelTools.Controls.Add(this.picActiveTile);
             this.panelTools.Dock = System.Windows.Forms.DockStyle.Right;
-            this.panelTools.Location = new System.Drawing.Point(836, 28);
+            this.panelTools.Location = new System.Drawing.Point(850, 28);
             this.panelTools.Name = "panelTools";
             this.panelTools.Size = new System.Drawing.Size(89, 478);
             this.panelTools.TabIndex = 3;
+            // 
+            // lstB_Hero
+            // 
+            this.lstB_Hero.FormattingEnabled = true;
+            this.lstB_Hero.Location = new System.Drawing.Point(8, 123);
+            this.lstB_Hero.Margin = new System.Windows.Forms.Padding(3, 0, 3, 0);
+            this.lstB_Hero.MultiColumn = true;
+            this.lstB_Hero.Name = "lstB_Hero";
+            this.lstB_Hero.Size = new System.Drawing.Size(64, 199);
+            this.lstB_Hero.TabIndex = 7;
+            this.lstB_Hero.Visible = false;
+            // 
+            // lstB_Monstre
+            // 
+            this.lstB_Monstre.FormattingEnabled = true;
+            this.lstB_Monstre.Location = new System.Drawing.Point(8, 123);
+            this.lstB_Monstre.Margin = new System.Windows.Forms.Padding(3, 0, 3, 0);
+            this.lstB_Monstre.MultiColumn = true;
+            this.lstB_Monstre.Name = "lstB_Monstre";
+            this.lstB_Monstre.Size = new System.Drawing.Size(64, 199);
+            this.lstB_Monstre.TabIndex = 6;
+            this.lstB_Monstre.Visible = false;
+            // 
+            // lbl_Description
+            // 
+            this.lbl_Description.Location = new System.Drawing.Point(8, 123);
+            this.lbl_Description.Name = "lbl_Description";
+            this.lbl_Description.Size = new System.Drawing.Size(64, 200);
+            this.lbl_Description.TabIndex = 5;
+            this.lbl_Description.Visible = false;
             // 
             // lbl_InfoType
             // 
@@ -413,7 +444,7 @@ namespace HugoLandEditeur
             this.panelTiles.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.panelTiles.Location = new System.Drawing.Point(0, 372);
             this.panelTiles.Name = "panelTiles";
-            this.panelTiles.Size = new System.Drawing.Size(836, 134);
+            this.panelTiles.Size = new System.Drawing.Size(850, 134);
             this.panelTiles.TabIndex = 4;
             // 
             // picTiles
@@ -433,7 +464,7 @@ namespace HugoLandEditeur
             // 
             this.vscTiles.Dock = System.Windows.Forms.DockStyle.Right;
             this.vscTiles.LargeChange = 15;
-            this.vscTiles.Location = new System.Drawing.Point(820, 0);
+            this.vscTiles.Location = new System.Drawing.Point(834, 0);
             this.vscTiles.Maximum = 395;
             this.vscTiles.Name = "vscTiles";
             this.vscTiles.Size = new System.Drawing.Size(16, 134);
@@ -448,7 +479,7 @@ namespace HugoLandEditeur
             this.picEditSel.Dock = System.Windows.Forms.DockStyle.Fill;
             this.picEditSel.Location = new System.Drawing.Point(0, 0);
             this.picEditSel.Name = "picEditSel";
-            this.picEditSel.Size = new System.Drawing.Size(836, 134);
+            this.picEditSel.Size = new System.Drawing.Size(850, 134);
             this.picEditSel.TabIndex = 0;
             this.picEditSel.TabStop = false;
             // 
@@ -456,7 +487,7 @@ namespace HugoLandEditeur
             // 
             this.vscMap.Dock = System.Windows.Forms.DockStyle.Right;
             this.vscMap.LargeChange = 5;
-            this.vscMap.Location = new System.Drawing.Point(820, 28);
+            this.vscMap.Location = new System.Drawing.Point(834, 28);
             this.vscMap.Name = "vscMap";
             this.vscMap.Size = new System.Drawing.Size(16, 344);
             this.vscMap.TabIndex = 6;
@@ -468,7 +499,7 @@ namespace HugoLandEditeur
             this.hscMap.LargeChange = 5;
             this.hscMap.Location = new System.Drawing.Point(0, 355);
             this.hscMap.Name = "hscMap";
-            this.hscMap.Size = new System.Drawing.Size(820, 17);
+            this.hscMap.Size = new System.Drawing.Size(834, 17);
             this.hscMap.TabIndex = 7;
             this.hscMap.Scroll += new System.Windows.Forms.ScrollEventHandler(this.hscMap_Scroll);
             // 
@@ -513,40 +544,21 @@ namespace HugoLandEditeur
             this.lblZoom.Text = "Zoom:";
             this.lblZoom.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
-            // lbl_Description
+            // btnReset
             // 
-            this.lbl_Description.Location = new System.Drawing.Point(8, 123);
-            this.lbl_Description.Name = "lbl_Description";
-            this.lbl_Description.Size = new System.Drawing.Size(64, 200);
-            this.lbl_Description.TabIndex = 5;
-            this.lbl_Description.Visible = false;
-            // 
-            // lstB_Monstre
-            // 
-            this.lstB_Monstre.FormattingEnabled = true;
-            this.lstB_Monstre.MultiColumn = true;
-            this.lstB_Monstre.Location = new System.Drawing.Point(8, 123);
-            this.lstB_Monstre.Margin = new System.Windows.Forms.Padding(3, 0, 3, 0);
-            this.lstB_Monstre.Name = "lstB_Monstre";
-            this.lstB_Monstre.Size = new System.Drawing.Size(64, 199);
-            this.lstB_Monstre.TabIndex = 6;
-            this.lstB_Monstre.Visible = false;
-            // 
-            // lstB_Hero
-            // 
-            this.lstB_Hero.FormattingEnabled = true;
-            this.lstB_Hero.MultiColumn = true;
-            this.lstB_Hero.Location = new System.Drawing.Point(8, 123);
-            this.lstB_Hero.Margin = new System.Windows.Forms.Padding(3, 0, 3, 0);
-            this.lstB_Hero.Name = "lstB_Hero";
-            this.lstB_Hero.Size = new System.Drawing.Size(64, 199);
-            this.lstB_Hero.TabIndex = 7;
-            this.lstB_Hero.Visible = false;
+            this.btnReset.Location = new System.Drawing.Point(7, 327);
+            this.btnReset.Name = "btnReset";
+            this.btnReset.Size = new System.Drawing.Size(64, 25);
+            this.btnReset.TabIndex = 8;
+            this.btnReset.Text = "Reset";
+            this.btnReset.UseVisualStyleBackColor = true;
+            this.btnReset.Visible = false;
+            this.btnReset.Click += new System.EventHandler(this.btnReset_Click);
             // 
             // frmMain
             // 
             this.AutoScaleBaseSize = new System.Drawing.Size(5, 13);
-            this.ClientSize = new System.Drawing.Size(925, 528);
+            this.ClientSize = new System.Drawing.Size(939, 528);
             this.Controls.Add(this.lblZoom);
             this.Controls.Add(this.cboZoom);
             this.Controls.Add(this.picMap);
@@ -582,5 +594,6 @@ namespace HugoLandEditeur
         private System.Windows.Forms.Label lbl_Description;
         private System.Windows.Forms.ListBox lstB_Monstre;
         private System.Windows.Forms.ListBox lstB_Hero;
+        private System.Windows.Forms.Button btnReset;
     }
 }
