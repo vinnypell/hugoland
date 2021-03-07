@@ -211,6 +211,10 @@
     <Content Include="GameData\Objets.bmp">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <None Include="Resources\axe1.jpg" />
+    <None Include="Resources\axe.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="GameData\AllTilesLookups.csv">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
