@@ -131,32 +131,40 @@ namespace TP01_Library.Controllers
         public List<Monstre> ListerMonstres(Monde p_monde) => p_monde.Monstres.ToList();
         public List<Hero> ListerHeroes(Monde p_monde) => p_monde.Heros.ToList();
 
-        public void ModifierMonde(Monde p_monde, List<ObjetMonde> objetMondes)
+        public void ModifierMonde(int p_monde, List<ObjetMonde> objetMondes)
         {
             using(HugoLandContext context = new HugoLandContext())
             {
-
+                Monde monde = context.Mondes.FirstOrDefault(x => x.Id == p_monde);
+                monde.ObjetMondes = objetMondes;
+                context.SaveChanges();
             }
         }
-        public void ModifierMonde(Monde p_monde, List<Monstre> monstres)
+        public void ModifierMonde(int p_monde, List<Monstre> monstres)
         {
             using (HugoLandContext context = new HugoLandContext())
             {
-
+                Monde monde = context.Mondes.FirstOrDefault(x => x.Id == p_monde);
+                monde.Monstres = monstres;
+                context.SaveChanges();
             }
         }
-        public void ModifierMonde(Monde p_monde, List<Item> items)
+        public void ModifierMonde(int p_monde, List<Item> items)
         {
             using (HugoLandContext context = new HugoLandContext())
             {
-
+                Monde monde = context.Mondes.FirstOrDefault(x => x.Id == p_monde);
+                monde.Items = items;
+                context.SaveChanges();
             }
         }
-        public void ModifierMonde(Monde p_monde, List<Hero> heroes)
+        public void ModifierMonde(int p_monde, List<Hero> heroes)
         {
             using (HugoLandContext context = new HugoLandContext())
             {
-
+                Monde monde = context.Mondes.FirstOrDefault(x => x.Id == p_monde);
+                monde.Heros = heroes;
+                context.SaveChanges();
             }
         }
 
