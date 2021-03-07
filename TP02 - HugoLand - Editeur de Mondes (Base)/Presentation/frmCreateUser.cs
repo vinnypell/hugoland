@@ -107,7 +107,7 @@ namespace HugoLandEditeur.Presentation
                 string Validation = controller.CreerJoueur(UserName, Email, FirstName, LastName, Type, PasswordConfig);
                 if (Validation == "SUCCESS")
                 {
-                    this.Hide(); 
+                    this.Close(); 
                 }
                 else
                     MessageBox.Show(Validation, "ERROR",
@@ -119,7 +119,7 @@ namespace HugoLandEditeur.Presentation
 
         private void btn_cancel_Click(object sender, EventArgs e)
         {
-            this.Hide();
+            this.Close();
         }
     }
 }
