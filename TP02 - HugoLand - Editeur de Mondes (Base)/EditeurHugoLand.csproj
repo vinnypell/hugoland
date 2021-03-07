@@ -131,6 +131,12 @@
     <Compile Include="Presentation\frmListSelector.Designer.cs">
       <DependentUpon>frmListSelector.cs</DependentUpon>
     </Compile>
+    <Compile Include="Presentation\frmSave.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Presentation\frmSave.Designer.cs">
+      <DependentUpon>frmSave.cs</DependentUpon>
+    </Compile>
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -170,6 +176,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Presentation\frmListSelector.resx">
       <DependentUpon>frmListSelector.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Presentation\frmSave.resx">
+      <DependentUpon>frmSave.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

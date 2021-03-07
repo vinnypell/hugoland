@@ -27,6 +27,7 @@ namespace HugoLandEditeur
         private int m_Zoom;
 
         private Tile m_currTile;
+        private MondeController ctrl = new MondeController();
 
         private Monde m_currentMonde;
         public Monde currentMonde
@@ -221,6 +222,7 @@ namespace HugoLandEditeur
                 if (idTile == TileID)
                 {
                     m_currTile = item.Value;
+                    return;
                 }
             }
         }
@@ -231,26 +233,47 @@ namespace HugoLandEditeur
         /// </summary>
         /// <param name="strFilename"></param>
         /// <returns></returns>
-        public int Save(String strFilename)
+        public int Save()
         {
-            //int i, j;
+            Monde monde = ctrl.GetMonde(currentMonde.Id);
 
-            //FileStream file = new FileStream(strFilename, FileMode.Create, FileAccess.Write);
-            //StreamWriter sw = new StreamWriter(file);
+            if (monde == null)
+            {
+                ctrl.AjouterMonde(currentMonde.Description, currentMonde.LimiteX, currentMonde.LimiteY);
+            }
+            else
+            {
+                if (monde.LimiteY != currentMonde.LimiteY || monde.LimiteX != currentMonde.LimiteX)
+                    ctrl.ModifierDimensionsMonde(currentMonde.Id, currentMonde.LimiteX, currentMonde.LimiteY);
 
-            //sw.WriteLine("ID: {0}", MAPFILE_ID.ToString());
-            //sw.WriteLine("ID: 1 TEST");
-            //sw.WriteLine("WIDTH: {0}", m_Width.ToString());
-            //sw.WriteLine("HEIGHT: {0}", m_Height.ToString());
-            //sw.WriteLine("DATA:");
+                if (monde.Description != currentMonde.Description)
+                    ctrl.ModifierDescriptionMonde(currentMonde.Id, currentMonde.Description);
+            }
 
-            //for (i = 0; i < m_Height; i++)
-            //{
-            //    for (j = 0; j < m_Width; j++)
-            //        sw.Write("{0},", m_Tiles[i, j]);
-            //    sw.WriteLine();
-            //}
-            //sw.Close();
+            List<ObjetMonde> currObjs = ctrl.ListerObjetMondes(currentMonde);
+            List<Monstre> currMonstres = ctrl.ListerMonstres(currentMonde);
+            List<Item> currItems = ctrl.ListerItems(currentMonde);
+            List<Hero> currHeroes = ctrl.ListerHeroes(currentMonde);
+
+            if (currObjs != null && currObjs.Count != 0)
+            {
+                ctrl.ModifierMonde(currentMonde, currObjs);
+            }
+
+            if (currMonstres != null && currMonstres.Count != 0)
+            {
+                ctrl.ModifierMonde(currentMonde, currMonstres);
+            }
+
+            if (currItems != null && currItems.Count != 0)
+            {
+                ctrl.ModifierMonde(currentMonde, currItems);
+            }
+
+            if (currHeroes != null && currHeroes.Count != 0)
+            {
+                ctrl.ModifierMonde(currentMonde, currHeroes);
+            }
 
             return 0;
         }
@@ -296,6 +319,8 @@ namespace HugoLandEditeur
             m_BackBuffer = new Bitmap(m_Width * csteApplication.TILE_WIDTH_IN_MAP, m_Height * csteApplication.TILE_HEIGHT_IN_MAP);
             m_BackBufferDC = Graphics.FromImage(m_BackBuffer);
 
+            currentMonde = m;
+
             Refresh();
             return 0;
         }
@@ -320,6 +345,15 @@ namespace HugoLandEditeur
             // Build Backbuffer
             m_Width = width;
             m_Height = height;
+            int lastId = ctrl.ListerMondes().OrderByDescending(x => x.Id).Select(s => s.Id).First() + 1;
+            currentMonde = new Monde()
+            {
+                Id = lastId,
+                Description = "",
+                LimiteX = m_Width,
+                LimiteY = m_Height
+            };
+            m_TileLibrary = new CTileLibrary(currentMonde);
 
             try
             {
@@ -328,7 +362,6 @@ namespace HugoLandEditeur
                 for (i = 0; i < m_Height; i++)
                     for (j = 0; j < m_Width; j++)
                         m_Tiles[i, j] = defaulttile;
-
                 m_BackBuffer = new Bitmap(m_Width * csteApplication.TILE_WIDTH_IN_MAP, m_Height * csteApplication.TILE_HEIGHT_IN_MAP);
                 m_BackBufferDC = Graphics.FromImage(m_BackBuffer);
 

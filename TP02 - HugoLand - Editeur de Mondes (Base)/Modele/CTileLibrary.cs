@@ -90,7 +90,6 @@ namespace HugoLandEditeur
             m_Width = (m_TileSource.Width / csteApplication.TILE_WIDTH_IN_IMAGE) + 1;
             m_Height = (m_TileSource.Height / csteApplication.TILE_HEIGHT_IN_IMAGE) + 1;
             Monde newMonde = null;
-
             readTileDefinitions(newMonde);
         }
 
@@ -320,7 +319,7 @@ namespace HugoLandEditeur
                 };
 
                 Tiles = new Tile[m.LimiteY, m.LimiteX];
-
+                
                 for (int y = 0; y < m.LimiteY; y++)
                 {
                     for (int x = 0; x < m.LimiteX; x++)
@@ -332,7 +331,7 @@ namespace HugoLandEditeur
                             ImageId = tuileDefaut.ImageId,
                             x = x,
                             y = y,
-                            MondeId = lastId
+                            MondeId = m.Id
                         };
 
                         m.ObjetMondes.Add(obj);
@@ -366,3 +365,4 @@ namespace HugoLandEditeur
         }
     }
 }
+

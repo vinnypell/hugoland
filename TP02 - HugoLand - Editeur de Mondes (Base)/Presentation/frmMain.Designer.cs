@@ -116,6 +116,7 @@ namespace HugoLandEditeur
             this.il16 = new System.Windows.Forms.ImageList(this.components);
             this.statusBar1 = new System.Windows.Forms.StatusBar();
             this.panelTools = new System.Windows.Forms.Panel();
+            this.btnReset = new System.Windows.Forms.Button();
             this.lstB_Hero = new System.Windows.Forms.ListBox();
             this.lstB_Monstre = new System.Windows.Forms.ListBox();
             this.lbl_Description = new System.Windows.Forms.Label();
@@ -135,7 +136,6 @@ namespace HugoLandEditeur
             this.dlgSaveMap = new System.Windows.Forms.SaveFileDialog();
             this.cboZoom = new System.Windows.Forms.ComboBox();
             this.lblZoom = new System.Windows.Forms.Label();
-            this.btnReset = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.picEditArea)).BeginInit();
             this.panelTools.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.picActiveTile)).BeginInit();
@@ -152,7 +152,7 @@ namespace HugoLandEditeur
             this.picEditArea.Dock = System.Windows.Forms.DockStyle.Fill;
             this.picEditArea.Location = new System.Drawing.Point(0, 0);
             this.picEditArea.Name = "picEditArea";
-            this.picEditArea.Size = new System.Drawing.Size(939, 528);
+            this.picEditArea.Size = new System.Drawing.Size(925, 528);
             this.picEditArea.TabIndex = 0;
             this.picEditArea.TabStop = false;
             this.picEditArea.Resize += new System.EventHandler(this.picEditArea_Resize);
@@ -313,7 +313,7 @@ namespace HugoLandEditeur
             this.tbMain.Location = new System.Drawing.Point(0, 0);
             this.tbMain.Name = "tbMain";
             this.tbMain.ShowToolTips = true;
-            this.tbMain.Size = new System.Drawing.Size(939, 28);
+            this.tbMain.Size = new System.Drawing.Size(925, 28);
             this.tbMain.TabIndex = 1;
             this.tbMain.ButtonClick += new System.Windows.Forms.ToolBarButtonClickEventHandler(this.tbMain_ButtonClick);
             // 
@@ -360,9 +360,9 @@ namespace HugoLandEditeur
             // 
             // statusBar1
             // 
-            this.statusBar1.Location = new System.Drawing.Point(0, 503);
+            this.statusBar1.Location = new System.Drawing.Point(0, 506);
             this.statusBar1.Name = "statusBar1";
-            this.statusBar1.Size = new System.Drawing.Size(925, 25);
+            this.statusBar1.Size = new System.Drawing.Size(925, 22);
             this.statusBar1.TabIndex = 2;
             // 
             // panelTools
@@ -375,83 +375,74 @@ namespace HugoLandEditeur
             this.panelTools.Controls.Add(this.label1);
             this.panelTools.Controls.Add(this.picActiveTile);
             this.panelTools.Dock = System.Windows.Forms.DockStyle.Right;
-            this.panelTools.Location = new System.Drawing.Point(818, 28);
+            this.panelTools.Location = new System.Drawing.Point(836, 28);
             this.panelTools.Name = "panelTools";
-            this.panelTools.Size = new System.Drawing.Size(107, 475);
+            this.panelTools.Size = new System.Drawing.Size(89, 478);
             this.panelTools.TabIndex = 3;
+            // 
+            // btnReset
+            // 
+            this.btnReset.Location = new System.Drawing.Point(6, 283);
+            this.btnReset.Name = "btnReset";
+            this.btnReset.Size = new System.Drawing.Size(53, 22);
+            this.btnReset.TabIndex = 8;
+            this.btnReset.Text = "Reset";
+            this.btnReset.UseVisualStyleBackColor = true;
+            this.btnReset.Visible = false;
+            this.btnReset.Click += new System.EventHandler(this.btnReset_Click);
             // 
             // lstB_Hero
             // 
             this.lstB_Hero.FormattingEnabled = true;
-            this.lstB_Hero.Location = new System.Drawing.Point(8, 123);
+            this.lstB_Hero.Location = new System.Drawing.Point(7, 107);
             this.lstB_Hero.Margin = new System.Windows.Forms.Padding(3, 0, 3, 0);
             this.lstB_Hero.MultiColumn = true;
             this.lstB_Hero.Name = "lstB_Hero";
-            this.lstB_Hero.Size = new System.Drawing.Size(64, 199);
-// =======
-//             this.lstB_Hero.ItemHeight = 16;
-//             this.lstB_Hero.Location = new System.Drawing.Point(10, 142);
-//             this.lstB_Hero.Margin = new System.Windows.Forms.Padding(3, 0, 3, 0);
-//             this.lstB_Hero.MultiColumn = true;
-//             this.lstB_Hero.Name = "lstB_Hero";
-//             this.lstB_Hero.Size = new System.Drawing.Size(76, 212);
-// >>>>>>> be65a7d2f9de03c4cb9771d4e18e4a9b2b33569b
+            this.lstB_Hero.Size = new System.Drawing.Size(53, 160);
             this.lstB_Hero.TabIndex = 7;
             this.lstB_Hero.Visible = false;
             // 
             // lstB_Monstre
             // 
             this.lstB_Monstre.FormattingEnabled = true;
-            this.lstB_Monstre.Location = new System.Drawing.Point(8, 123);
+            this.lstB_Monstre.Location = new System.Drawing.Point(7, 107);
             this.lstB_Monstre.Margin = new System.Windows.Forms.Padding(3, 0, 3, 0);
             this.lstB_Monstre.MultiColumn = true;
             this.lstB_Monstre.Name = "lstB_Monstre";
-            this.lstB_Monstre.Size = new System.Drawing.Size(64, 199);
-// =======
-//             this.lstB_Monstre.ItemHeight = 16;
-//             this.lstB_Monstre.Location = new System.Drawing.Point(10, 142);
-//             this.lstB_Monstre.Margin = new System.Windows.Forms.Padding(3, 0, 3, 0);
-//             this.lstB_Monstre.MultiColumn = true;
-//             this.lstB_Monstre.Name = "lstB_Monstre";
-//             this.lstB_Monstre.Size = new System.Drawing.Size(76, 212);
-// >>>>>>> be65a7d2f9de03c4cb9771d4e18e4a9b2b33569b
+            this.lstB_Monstre.Size = new System.Drawing.Size(53, 160);
             this.lstB_Monstre.TabIndex = 6;
             this.lstB_Monstre.Visible = false;
             // 
             // lbl_Description
             // 
-            this.lbl_Description.Location = new System.Drawing.Point(8, 123);
+            this.lbl_Description.Location = new System.Drawing.Point(7, 107);
             this.lbl_Description.Name = "lbl_Description";
-            this.lbl_Description.Size = new System.Drawing.Size(64, 200);
-//             this.lbl_Description.Location = new System.Drawing.Point(10, 142);
-//             this.lbl_Description.Name = "lbl_Description";
-//             this.lbl_Description.Size = new System.Drawing.Size(76, 231);
-// >>>>>>> be65a7d2f9de03c4cb9771d4e18e4a9b2b33569b
+            this.lbl_Description.Size = new System.Drawing.Size(53, 173);
             this.lbl_Description.TabIndex = 5;
             this.lbl_Description.Visible = false;
             // 
             // lbl_InfoType
             // 
-            this.lbl_InfoType.Location = new System.Drawing.Point(10, 119);
+            this.lbl_InfoType.Location = new System.Drawing.Point(8, 103);
             this.lbl_InfoType.Name = "lbl_InfoType";
-            this.lbl_InfoType.Size = new System.Drawing.Size(76, 18);
+            this.lbl_InfoType.Size = new System.Drawing.Size(64, 16);
             this.lbl_InfoType.TabIndex = 4;
             this.lbl_InfoType.Visible = false;
             // 
             // label1
             // 
-            this.label1.Location = new System.Drawing.Point(10, 9);
+            this.label1.Location = new System.Drawing.Point(8, 8);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(76, 19);
+            this.label1.Size = new System.Drawing.Size(64, 16);
             this.label1.TabIndex = 3;
             this.label1.Text = "Active Tile";
             // 
             // picActiveTile
             // 
             this.picActiveTile.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.picActiveTile.Location = new System.Drawing.Point(10, 31);
+            this.picActiveTile.Location = new System.Drawing.Point(8, 27);
             this.picActiveTile.Name = "picActiveTile";
-            this.picActiveTile.Size = new System.Drawing.Size(76, 74);
+            this.picActiveTile.Size = new System.Drawing.Size(64, 64);
             this.picActiveTile.TabIndex = 2;
             this.picActiveTile.TabStop = false;
             this.picActiveTile.Paint += new System.Windows.Forms.PaintEventHandler(this.picActiveTile_Paint);
@@ -462,9 +453,9 @@ namespace HugoLandEditeur
             this.panelTiles.Controls.Add(this.vscTiles);
             this.panelTiles.Controls.Add(this.picEditSel);
             this.panelTiles.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panelTiles.Location = new System.Drawing.Point(0, 348);
+            this.panelTiles.Location = new System.Drawing.Point(0, 372);
             this.panelTiles.Name = "panelTiles";
-            this.panelTiles.Size = new System.Drawing.Size(818, 155);
+            this.panelTiles.Size = new System.Drawing.Size(836, 134);
             this.panelTiles.TabIndex = 4;
             // 
             // picTiles
@@ -472,7 +463,7 @@ namespace HugoLandEditeur
             this.picTiles.BackColor = System.Drawing.Color.White;
             this.picTiles.Location = new System.Drawing.Point(0, 0);
             this.picTiles.Name = "picTiles";
-            this.picTiles.Size = new System.Drawing.Size(756, 155);
+            this.picTiles.Size = new System.Drawing.Size(630, 134);
             this.picTiles.TabIndex = 2;
             this.picTiles.TabStop = false;
             this.picTiles.Click += new System.EventHandler(this.picTiles_Click);
@@ -484,10 +475,10 @@ namespace HugoLandEditeur
             // 
             this.vscTiles.Dock = System.Windows.Forms.DockStyle.Right;
             this.vscTiles.LargeChange = 15;
-            this.vscTiles.Location = new System.Drawing.Point(799, 0);
+            this.vscTiles.Location = new System.Drawing.Point(820, 0);
             this.vscTiles.Maximum = 395;
             this.vscTiles.Name = "vscTiles";
-            this.vscTiles.Size = new System.Drawing.Size(19, 155);
+            this.vscTiles.Size = new System.Drawing.Size(16, 134);
             this.vscTiles.SmallChange = 5;
             this.vscTiles.TabIndex = 10;
             this.vscTiles.Scroll += new System.Windows.Forms.ScrollEventHandler(this.vscTiles_Scroll);
@@ -499,7 +490,7 @@ namespace HugoLandEditeur
             this.picEditSel.Dock = System.Windows.Forms.DockStyle.Fill;
             this.picEditSel.Location = new System.Drawing.Point(0, 0);
             this.picEditSel.Name = "picEditSel";
-            this.picEditSel.Size = new System.Drawing.Size(818, 155);
+            this.picEditSel.Size = new System.Drawing.Size(836, 134);
             this.picEditSel.TabIndex = 0;
             this.picEditSel.TabStop = false;
             // 
@@ -507,9 +498,9 @@ namespace HugoLandEditeur
             // 
             this.vscMap.Dock = System.Windows.Forms.DockStyle.Right;
             this.vscMap.LargeChange = 5;
-            this.vscMap.Location = new System.Drawing.Point(799, 28);
+            this.vscMap.Location = new System.Drawing.Point(820, 28);
             this.vscMap.Name = "vscMap";
-            this.vscMap.Size = new System.Drawing.Size(19, 320);
+            this.vscMap.Size = new System.Drawing.Size(16, 344);
             this.vscMap.TabIndex = 6;
             this.vscMap.Scroll += new System.Windows.Forms.ScrollEventHandler(this.vscMap_Scroll);
             // 
@@ -517,9 +508,9 @@ namespace HugoLandEditeur
             // 
             this.hscMap.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.hscMap.LargeChange = 5;
-            this.hscMap.Location = new System.Drawing.Point(0, 329);
+            this.hscMap.Location = new System.Drawing.Point(0, 355);
             this.hscMap.Name = "hscMap";
-            this.hscMap.Size = new System.Drawing.Size(799, 19);
+            this.hscMap.Size = new System.Drawing.Size(820, 17);
             this.hscMap.TabIndex = 7;
             this.hscMap.Scroll += new System.Windows.Forms.ScrollEventHandler(this.hscMap_Scroll);
             // 
@@ -531,9 +522,9 @@ namespace HugoLandEditeur
             // picMap
             // 
             this.picMap.BackColor = System.Drawing.Color.White;
-            this.picMap.Location = new System.Drawing.Point(19, 46);
+            this.picMap.Location = new System.Drawing.Point(16, 40);
             this.picMap.Name = "picMap";
-            this.picMap.Size = new System.Drawing.Size(605, 351);
+            this.picMap.Size = new System.Drawing.Size(504, 304);
             this.picMap.TabIndex = 8;
             this.picMap.TabStop = false;
             this.picMap.Visible = false;
@@ -548,36 +539,25 @@ namespace HugoLandEditeur
             // 
             // cboZoom
             // 
-            this.cboZoom.Location = new System.Drawing.Point(48, 378);
+            this.cboZoom.Location = new System.Drawing.Point(40, 328);
             this.cboZoom.Name = "cboZoom";
-            this.cboZoom.Size = new System.Drawing.Size(145, 24);
+            this.cboZoom.Size = new System.Drawing.Size(121, 21);
             this.cboZoom.TabIndex = 9;
             this.cboZoom.TabStop = false;
             this.cboZoom.SelectedIndexChanged += new System.EventHandler(this.comboBox1_SelectedIndexChanged);
             // 
             // lblZoom
             // 
-            this.lblZoom.Location = new System.Drawing.Point(211, 388);
+            this.lblZoom.Location = new System.Drawing.Point(176, 336);
             this.lblZoom.Name = "lblZoom";
-            this.lblZoom.Size = new System.Drawing.Size(48, 27);
+            this.lblZoom.Size = new System.Drawing.Size(40, 24);
             this.lblZoom.TabIndex = 10;
             this.lblZoom.Text = "Zoom:";
             this.lblZoom.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
-            // btnReset
-            // 
-            this.btnReset.Location = new System.Drawing.Point(7, 327);
-            this.btnReset.Name = "btnReset";
-            this.btnReset.Size = new System.Drawing.Size(64, 25);
-            this.btnReset.TabIndex = 8;
-            this.btnReset.Text = "Reset";
-            this.btnReset.UseVisualStyleBackColor = true;
-            this.btnReset.Visible = false;
-            this.btnReset.Click += new System.EventHandler(this.btnReset_Click);
-            // 
             // frmMain
             // 
-            this.AutoScaleBaseSize = new System.Drawing.Size(6, 15);
+            this.AutoScaleBaseSize = new System.Drawing.Size(5, 13);
             this.ClientSize = new System.Drawing.Size(925, 528);
             this.Controls.Add(this.lblZoom);
             this.Controls.Add(this.cboZoom);

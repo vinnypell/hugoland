@@ -566,8 +566,6 @@ namespace HugoLandEditeur
 
         #endregion Debug Code
 
-
-
         /// <summary>
         /// Où: File => Open
         /// </summary>
@@ -654,25 +652,28 @@ namespace HugoLandEditeur
         /// </summary>
         private void m_SaveMap()
         {
-            //DialogResult result;
+            frmSave f;
+            DialogResult result;
 
-            //dlgSaveMap.Title = "Save Map";
-            //dlgSaveMap.Filter = "Map File (*.map)|*.map";
+            f = new frmSave(m_Map.currentMonde);
 
-            //result = dlgSaveMap.ShowDialog();
-            //if (result == DialogResult.OK)
-            //{
-            //    this.Cursor = Cursors.WaitCursor;
-            //    try
-            //    {
-            //        m_Map.Save(dlgSaveMap.FileName);
-            //    }
-            //    catch
-            //    {
-            //        Console.WriteLine("Error Saving...");
-            //    }
-            //    this.Cursor = Cursors.Default;
-            //}
+            result = f.ShowDialog(this);
+            if (result == DialogResult.OK)
+            {
+                this.Cursor = Cursors.WaitCursor;
+                try
+                {
+                    m_Map.currentMonde.Description = f.Description;
+                    m_Map.Save();
+                }
+                catch
+                {
+                    Console.WriteLine("Error Saving...");
+                }
+                m_MenuLogic();
+                this.Cursor = Cursors.Default;
+            }
+
         }
 
         /// <summary>
@@ -799,50 +800,53 @@ namespace HugoLandEditeur
 
         private void UpdateInfos()
         {
-            lbl_InfoType.Text = m_Map.currTile.TypeObjet.ToString();
-            lbl_InfoType.Visible = true;
-            switch (m_Map.currTile.TypeObjet)
+            if (m_Map.currTile != null)
             {
-                case TypeTile.ObjetMonde:
-                    //lstB_Hero.Visible = false;
-                    lstB_Monstre.Visible = false;
-                    lbl_Description.Visible = true;
-                    btnReset.Visible = true;
-                    lbl_Description.Text = m_Map.currTile.Name;
+                lbl_InfoType.Text = m_Map.currTile.TypeObjet.ToString();
+                lbl_InfoType.Visible = true;
+                switch (m_Map.currTile.TypeObjet)
+                {
+                    case TypeTile.ObjetMonde:
+                        //lstB_Hero.Visible = false;
+                        lstB_Monstre.Visible = false;
+                        lbl_Description.Visible = true;
+                        btnReset.Visible = true;
+                        lbl_Description.Text = m_Map.currTile.Name;
 
-                    ResetInfos();
-                    break;
-                case TypeTile.Item:
-                    //lstB_Hero.Visible = false;
-                    lstB_Monstre.Visible = false;
-                    lbl_Description.Visible = true;
-                    btnReset.Visible = true;
-                    lbl_Description.Text = m_Map.currTile.Name;
+                        ResetInfos();
+                        break;
+                    case TypeTile.Item:
+                        //lstB_Hero.Visible = false;
+                        lstB_Monstre.Visible = false;
+                        lbl_Description.Visible = true;
+                        btnReset.Visible = true;
+                        lbl_Description.Text = m_Map.currTile.Name;
 
-                    ResetInfos();
-                    break;
-                case TypeTile.Monstre:
-                    //lstB_Hero.Visible = false;
-                    lstB_Monstre.Visible = false;
-                    lbl_Description.Visible = true;
-                    btnReset.Visible = true;
+                        ResetInfos();
+                        break;
+                    case TypeTile.Monstre:
+                        //lstB_Hero.Visible = false;
+                        lstB_Monstre.Visible = false;
+                        lbl_Description.Visible = true;
+                        btnReset.Visible = true;
 
-                    lbl_Description.Text = m_Map.currTile.Name;
+                        lbl_Description.Text = m_Map.currTile.Name;
 
-                    ResetInfos();
-                    break;
-                    //case TypeTile.ClasseHero:
-                    //    lstB_Monstre.Visible = false;
-                    //    lbl_Description.Visible = false;
-                    //    lstB_Hero.Visible = true;
-                    //    btnReset.Visible = true;
+                        ResetInfos();
+                        break;
+                        //case TypeTile.ClasseHero:
+                        //    lstB_Monstre.Visible = false;
+                        //    lbl_Description.Visible = false;
+                        //    lstB_Hero.Visible = true;
+                        //    btnReset.Visible = true;
 
-                    //    HeroController ctrl = new HeroController();
-                    //    Hero currHero = ctrl.GetHero(Name);
+                        //    HeroController ctrl = new HeroController();
+                        //    Hero currHero = ctrl.GetHero(Name);
 
-                    //    lstB_Hero.Items.Add(currHero.NomHero);
+                        //    lstB_Hero.Items.Add(currHero.NomHero);
 
-                    //    break;
+                        //    break;
+                }
             }
         }
 

@@ -130,5 +130,35 @@ namespace TP01_Library.Controllers
         public List<ObjetMonde> ListerObjetMondes(Monde p_monde) => p_monde.ObjetMondes.ToList();
         public List<Monstre> ListerMonstres(Monde p_monde) => p_monde.Monstres.ToList();
         public List<Hero> ListerHeroes(Monde p_monde) => p_monde.Heros.ToList();
+
+        public void ModifierMonde(Monde p_monde, List<ObjetMonde> objetMondes)
+        {
+            using(HugoLandContext context = new HugoLandContext())
+            {
+
+            }
+        }
+        public void ModifierMonde(Monde p_monde, List<Monstre> monstres)
+        {
+            using (HugoLandContext context = new HugoLandContext())
+            {
+
+            }
+        }
+        public void ModifierMonde(Monde p_monde, List<Item> items)
+        {
+            using (HugoLandContext context = new HugoLandContext())
+            {
+
+            }
+        }
+        public void ModifierMonde(Monde p_monde, List<Hero> heroes)
+        {
+            using (HugoLandContext context = new HugoLandContext())
+            {
+
+            }
+        }
+
     }
 }
