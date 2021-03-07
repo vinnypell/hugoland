@@ -746,7 +746,6 @@ namespace HugoLandEditeur
         private void mnuCreateUser_Click(object sender, EventArgs e)
         {
             var form2 = new frmCreateUser();
-            form2.Closed += (s, args) => this.Close();
             form2.Show();
         }
 
@@ -863,6 +862,12 @@ namespace HugoLandEditeur
             lbl_InfoType.Refresh();
             lstB_Hero.Refresh();
             lstB_Monstre.Refresh();
+        }
+
+        private void menuAdmins_Click(object sender, EventArgs e)
+        {
+            var form2 = new frmAdminList();
+            form2.Show();
         }
     }
 }
