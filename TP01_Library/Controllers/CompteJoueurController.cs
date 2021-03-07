@@ -117,5 +117,18 @@ namespace TP01_Library.Controllers
                 return dbContext.CompteJoueurs.FirstOrDefault(x => x.NomJoueur == username);
             }
         }
+        /// <summary>
+        /// Auteur: Mathias Lavoie-Rivard
+        /// Date: 2021-03-07
+        /// Description: Liste tous les joueurs présent dans la bd
+        /// </summary>
+        /// <returns></returns>
+        public List<CompteJoueur> ListerCompte()
+        {
+            using (HugoLandContext dbContext = new HugoLandContext())
+            {
+                return dbContext.CompteJoueurs.ToList();
+            }
+        }
     }
 }

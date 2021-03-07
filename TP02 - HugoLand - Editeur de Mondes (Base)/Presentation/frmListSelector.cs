@@ -40,5 +40,15 @@ namespace HugoLandEditeur.Presentation
             this.DialogResult = DialogResult.OK;
             Close();
         }
+
+        private void frmListSelector_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        private void lstMondes_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
     }
 }

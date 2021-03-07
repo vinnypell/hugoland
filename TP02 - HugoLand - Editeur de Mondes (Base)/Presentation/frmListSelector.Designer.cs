@@ -43,6 +43,7 @@
             this.lstMondes.Name = "lstMondes";
             this.lstMondes.Size = new System.Drawing.Size(500, 356);
             this.lstMondes.TabIndex = 0;
+            this.lstMondes.SelectedIndexChanged += new System.EventHandler(this.lstMondes_SelectedIndexChanged);
             // 
             // lblTitle
             // 
@@ -85,6 +86,7 @@
             this.Controls.Add(this.lstMondes);
             this.Name = "frmListSelector";
             this.Text = "ListSelector";
+            this.Load += new System.EventHandler(this.frmListSelector_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 
