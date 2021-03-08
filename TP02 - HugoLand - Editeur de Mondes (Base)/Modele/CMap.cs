@@ -257,22 +257,22 @@ namespace HugoLandEditeur
 
             if (currObjs != null && currObjs.Count != 0)
             {
-                ctrl.ModifierMonde(currentMonde, currObjs);
+                ctrl.ModifierMonde(currentMonde.Id, currObjs);
             }
 
             if (currMonstres != null && currMonstres.Count != 0)
             {
-                ctrl.ModifierMonde(currentMonde, currMonstres);
+                ctrl.ModifierMonde(currentMonde.Id, currMonstres);
             }
 
             if (currItems != null && currItems.Count != 0)
             {
-                ctrl.ModifierMonde(currentMonde, currItems);
+                ctrl.ModifierMonde(currentMonde.Id, currItems);
             }
 
             if (currHeroes != null && currHeroes.Count != 0)
             {
-                ctrl.ModifierMonde(currentMonde, currHeroes);
+                ctrl.ModifierMonde(currentMonde.Id, currHeroes);
             }
 
             return 0;
