@@ -31,18 +31,30 @@ namespace HugoLandEditeur.Presentation
 
             if (reponse == "INVALIDE")
             {
-                MessageBox.Show("PASSWORD OR USERNAME INVALID", "Connection error",
+                MessageBox.Show("USERNAME IS INVALID", "Connection error",
     MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             else if (reponse == "SUCCESS")
             {
                 Outil.SetActiveUser(controller.TrouverJoueur(username));
+                if (controller.TrouverJoueur(username).TypeUtilisateur == 2)
+                {
+                    var form2 = new frmMain();
+                    form2.Closed += (s, args) => this.Close();
+                    form2.Show();
+                    this.Hide();
+                }
+                else
+                {
+                    MessageBox.Show("YOU DO NOT HAVE PERMISSION TO LOG IN", "Connection error",
+    MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
 
-                //this.Close();
-                var form2 = new frmMain();
-                form2.Closed += (s, args) => this.Close();
-                form2.Show();
-                this.Hide();
+            }
+            else if(reponse == "INCORRECT")
+            {
+                MessageBox.Show("PASSWORD IS INVALID", "Connection error",
+    MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
     }
