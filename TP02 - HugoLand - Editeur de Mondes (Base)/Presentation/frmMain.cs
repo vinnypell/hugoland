@@ -660,7 +660,7 @@ namespace HugoLandEditeur
             f = new frmSave(m_Map.currentMonde);
 
             result = f.ShowDialog(this);
-            if (result == DialogResult.OK)
+            if (result == DialogResult.Yes)
             {
                 this.Cursor = Cursors.WaitCursor;
                 try
@@ -668,7 +668,7 @@ namespace HugoLandEditeur
                     m_Map.currentMonde.Description = f.Description;
                     m_Map.Save();
                 }
-                catch
+                catch (Exception e)
                 {
                     Console.WriteLine("Error Saving...");
                 }
@@ -692,10 +692,8 @@ namespace HugoLandEditeur
 
             // Instanciation d'une nouvelle map
             f = new frmNew();
-            f.MapWidth = m_Map.Width;
-            f.MapHeight = m_Map.Height;
 
-            // Demande la hauteur et largeur de la map
+            // Demande la hauteur, largeur et description de la map
             result = f.ShowDialog(this);
             if (result == DialogResult.OK)
             {
@@ -705,7 +703,7 @@ namespace HugoLandEditeur
                 try
                 {
                     // Création de la map avec les dimensions de bases, soit 32 par 32 [tiles]
-                    bResult = m_Map.CreateNew(f.MapWidth, f.MapHeight, 32);
+                    bResult = m_Map.CreateNew(f.Monde, 32);
                     if (bResult)
                     {
                         m_bOpen = true;
