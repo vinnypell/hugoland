@@ -42,11 +42,13 @@
             this.txtHeight = new System.Windows.Forms.TextBox();
             this.btnOK = new System.Windows.Forms.Button();
             this.btnCancel = new System.Windows.Forms.Button();
+            this.lblDesc = new System.Windows.Forms.Label();
+            this.tbDesc = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
             // 
             // lblWidth
             // 
-            this.lblWidth.Location = new System.Drawing.Point(10, 18);
+            this.lblWidth.Location = new System.Drawing.Point(10, 52);
             this.lblWidth.Name = "lblWidth";
             this.lblWidth.Size = new System.Drawing.Size(96, 27);
             this.lblWidth.TabIndex = 0;
@@ -54,7 +56,7 @@
             // 
             // lblHeight
             // 
-            this.lblHeight.Location = new System.Drawing.Point(10, 46);
+            this.lblHeight.Location = new System.Drawing.Point(10, 80);
             this.lblHeight.Name = "lblHeight";
             this.lblHeight.Size = new System.Drawing.Size(86, 27);
             this.lblHeight.TabIndex = 1;
@@ -62,7 +64,7 @@
             // 
             // txtWidth
             // 
-            this.txtWidth.Location = new System.Drawing.Point(124, 18);
+            this.txtWidth.Location = new System.Drawing.Point(124, 52);
             this.txtWidth.Name = "txtWidth";
             this.txtWidth.Size = new System.Drawing.Size(120, 22);
             this.txtWidth.TabIndex = 2;
@@ -72,7 +74,7 @@
             // 
             // txtHeight
             // 
-            this.txtHeight.Location = new System.Drawing.Point(124, 46);
+            this.txtHeight.Location = new System.Drawing.Point(124, 80);
             this.txtHeight.Name = "txtHeight";
             this.txtHeight.Size = new System.Drawing.Size(120, 22);
             this.txtHeight.TabIndex = 3;
@@ -82,7 +84,7 @@
             // 
             // btnOK
             // 
-            this.btnOK.Location = new System.Drawing.Point(68, 92);
+            this.btnOK.Location = new System.Drawing.Point(58, 140);
             this.btnOK.Name = "btnOK";
             this.btnOK.Size = new System.Drawing.Size(90, 27);
             this.btnOK.TabIndex = 4;
@@ -92,19 +94,37 @@
             // btnCancel
             // 
             this.btnCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.btnCancel.Location = new System.Drawing.Point(164, 92);
+            this.btnCancel.Location = new System.Drawing.Point(154, 140);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(90, 27);
             this.btnCancel.TabIndex = 5;
             this.btnCancel.Text = "Cancel";
             this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
             // 
+            // lblDesc
+            // 
+            this.lblDesc.Location = new System.Drawing.Point(10, 25);
+            this.lblDesc.Name = "lblDesc";
+            this.lblDesc.Size = new System.Drawing.Size(96, 27);
+            this.lblDesc.TabIndex = 7;
+            this.lblDesc.Text = "Description :";
+            // 
+            // tbDesc
+            // 
+            this.tbDesc.Location = new System.Drawing.Point(124, 22);
+            this.tbDesc.Name = "tbDesc";
+            this.tbDesc.Size = new System.Drawing.Size(120, 22);
+            this.tbDesc.TabIndex = 8;
+            this.tbDesc.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
             // frmNew
             // 
             this.AcceptButton = this.btnOK;
             this.AutoScaleBaseSize = new System.Drawing.Size(6, 15);
             this.CancelButton = this.btnCancel;
-            this.ClientSize = new System.Drawing.Size(266, 120);
+            this.ClientSize = new System.Drawing.Size(260, 174);
+            this.Controls.Add(this.tbDesc);
+            this.Controls.Add(this.lblDesc);
             this.Controls.Add(this.btnCancel);
             this.Controls.Add(this.btnOK);
             this.Controls.Add(this.txtHeight);
@@ -122,5 +142,8 @@
 
         }
         #endregion
+
+        private System.Windows.Forms.Label lblDesc;
+        private System.Windows.Forms.TextBox tbDesc;
     }
 }

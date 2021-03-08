@@ -122,8 +122,11 @@ namespace HugoLandEditeur
             this.lbl_Description = new System.Windows.Forms.Label();
             this.lbl_InfoType = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
+            this.picActiveTile = new System.Windows.Forms.PictureBox();
             this.panelTiles = new System.Windows.Forms.Panel();
+            this.picTiles = new System.Windows.Forms.PictureBox();
             this.vscTiles = new System.Windows.Forms.VScrollBar();
+            this.picEditSel = new System.Windows.Forms.PictureBox();
             this.vscMap = new System.Windows.Forms.VScrollBar();
             this.hscMap = new System.Windows.Forms.HScrollBar();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
@@ -133,16 +136,13 @@ namespace HugoLandEditeur
             this.cboZoom = new System.Windows.Forms.ComboBox();
             this.lblZoom = new System.Windows.Forms.Label();
             this.picMap = new System.Windows.Forms.PictureBox();
-            this.picTiles = new System.Windows.Forms.PictureBox();
-            this.picEditSel = new System.Windows.Forms.PictureBox();
-            this.picActiveTile = new System.Windows.Forms.PictureBox();
             this.picEditArea = new System.Windows.Forms.PictureBox();
             this.panelTools.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.picActiveTile)).BeginInit();
             this.panelTiles.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.picMap)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.picTiles)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.picEditSel)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.picActiveTile)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.picMap)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.picEditArea)).BeginInit();
             this.SuspendLayout();
             // 
@@ -183,6 +183,7 @@ namespace HugoLandEditeur
             // 
             this.mnuFileClose.Index = 2;
             this.mnuFileClose.Text = "&Close";
+            this.mnuFileClose.Click += new System.EventHandler(this.mnuFileClose_Click);
             // 
             // menuItem4
             // 
@@ -433,6 +434,16 @@ namespace HugoLandEditeur
             this.label1.TabIndex = 3;
             this.label1.Text = "Active Tile";
             // 
+            // picActiveTile
+            // 
+            this.picActiveTile.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.picActiveTile.Location = new System.Drawing.Point(8, 27);
+            this.picActiveTile.Name = "picActiveTile";
+            this.picActiveTile.Size = new System.Drawing.Size(64, 64);
+            this.picActiveTile.TabIndex = 2;
+            this.picActiveTile.TabStop = false;
+            this.picActiveTile.Paint += new System.Windows.Forms.PaintEventHandler(this.picActiveTile_Paint);
+            // 
             // panelTiles
             // 
             this.panelTiles.Controls.Add(this.picTiles);
@@ -443,6 +454,19 @@ namespace HugoLandEditeur
             this.panelTiles.Name = "panelTiles";
             this.panelTiles.Size = new System.Drawing.Size(836, 134);
             this.panelTiles.TabIndex = 4;
+            // 
+            // picTiles
+            // 
+            this.picTiles.BackColor = System.Drawing.Color.White;
+            this.picTiles.Location = new System.Drawing.Point(0, 0);
+            this.picTiles.Name = "picTiles";
+            this.picTiles.Size = new System.Drawing.Size(630, 134);
+            this.picTiles.TabIndex = 2;
+            this.picTiles.TabStop = false;
+            this.picTiles.Click += new System.EventHandler(this.picTiles_Click);
+            this.picTiles.Paint += new System.Windows.Forms.PaintEventHandler(this.picTiles_Paint);
+            this.picTiles.MouseLeave += new System.EventHandler(this.picTiles_MouseLeave);
+            this.picTiles.MouseMove += new System.Windows.Forms.MouseEventHandler(this.picTiles_MouseMove);
             // 
             // vscTiles
             // 
@@ -455,6 +479,17 @@ namespace HugoLandEditeur
             this.vscTiles.SmallChange = 5;
             this.vscTiles.TabIndex = 10;
             this.vscTiles.Scroll += new System.Windows.Forms.ScrollEventHandler(this.vscTiles_Scroll);
+            // 
+            // picEditSel
+            // 
+            this.picEditSel.BackColor = System.Drawing.Color.White;
+            this.picEditSel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.picEditSel.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.picEditSel.Location = new System.Drawing.Point(0, 0);
+            this.picEditSel.Name = "picEditSel";
+            this.picEditSel.Size = new System.Drawing.Size(836, 134);
+            this.picEditSel.TabIndex = 0;
+            this.picEditSel.TabStop = false;
             // 
             // vscMap
             // 
@@ -517,40 +552,6 @@ namespace HugoLandEditeur
             this.picMap.MouseLeave += new System.EventHandler(this.picMap_MouseLeave);
             this.picMap.MouseMove += new System.Windows.Forms.MouseEventHandler(this.picMap_MouseMove);
             // 
-            // picTiles
-            // 
-            this.picTiles.BackColor = System.Drawing.Color.White;
-            this.picTiles.Location = new System.Drawing.Point(0, 0);
-            this.picTiles.Name = "picTiles";
-            this.picTiles.Size = new System.Drawing.Size(630, 134);
-            this.picTiles.TabIndex = 2;
-            this.picTiles.TabStop = false;
-            this.picTiles.Click += new System.EventHandler(this.picTiles_Click);
-            this.picTiles.Paint += new System.Windows.Forms.PaintEventHandler(this.picTiles_Paint);
-            this.picTiles.MouseLeave += new System.EventHandler(this.picTiles_MouseLeave);
-            this.picTiles.MouseMove += new System.Windows.Forms.MouseEventHandler(this.picTiles_MouseMove);
-            // 
-            // picEditSel
-            // 
-            this.picEditSel.BackColor = System.Drawing.Color.White;
-            this.picEditSel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.picEditSel.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.picEditSel.Location = new System.Drawing.Point(0, 0);
-            this.picEditSel.Name = "picEditSel";
-            this.picEditSel.Size = new System.Drawing.Size(836, 134);
-            this.picEditSel.TabIndex = 0;
-            this.picEditSel.TabStop = false;
-            // 
-            // picActiveTile
-            // 
-            this.picActiveTile.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.picActiveTile.Location = new System.Drawing.Point(8, 27);
-            this.picActiveTile.Name = "picActiveTile";
-            this.picActiveTile.Size = new System.Drawing.Size(64, 64);
-            this.picActiveTile.TabIndex = 2;
-            this.picActiveTile.TabStop = false;
-            this.picActiveTile.Paint += new System.Windows.Forms.PaintEventHandler(this.picActiveTile_Paint);
-            // 
             // picEditArea
             // 
             this.picEditArea.BackColor = System.Drawing.Color.Gray;
@@ -582,11 +583,11 @@ namespace HugoLandEditeur
             this.Text = "Éditeur de monde Hugo Land";
             this.Load += new System.EventHandler(this.frmMain_Load);
             this.panelTools.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.picActiveTile)).EndInit();
             this.panelTiles.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.picMap)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.picTiles)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.picEditSel)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.picActiveTile)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.picMap)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.picEditArea)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();

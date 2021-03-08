@@ -307,12 +307,15 @@ namespace HugoLandEditeur
             m_Tiles = new int[m.LimiteY, m.LimiteX];
             m_TileLibrary = new CTileLibrary(m);
 
-            //Checker avec vincent pour loader les tiles
             for (int i = 0; i < m_Height; i++)
             {
                 for (int j = 0; j < m_Width; j++)
                 {
                     m_Tiles[i, j] = m_TileLibrary.Tiles[i, j].imageId;
+
+                    //Grass image par défaut
+                    if (m_Tiles[i, j] == 0)
+                        m_Tiles[i, j] = 32;
                 }
             }
 
@@ -333,23 +336,23 @@ namespace HugoLandEditeur
         /// <param name="height"></param>
         /// <param name="defaulttile"></param>
         /// <returns></returns>
-        public bool CreateNew(int width, int height, int defaulttile)
+        public bool CreateNew(Monde m, int defaulttile)
         {
             int i, j;
 
-            if (width < 8 || width > csteApplication.MAP_MAX_WIDTH)
+            if (m.LimiteX < 8 || m.LimiteX > csteApplication.MAP_MAX_WIDTH)
                 return false;
-            if (height < 8 || height > csteApplication.MAP_MAX_HEIGHT)
+            if (m.LimiteY < 8 || m.LimiteY > csteApplication.MAP_MAX_HEIGHT)
                 return false;
 
             // Build Backbuffer
-            m_Width = width;
-            m_Height = height;
+            m_Width = m.LimiteX;
+            m_Height = m.LimiteY;
             int lastId = ctrl.ListerMondes().OrderByDescending(x => x.Id).Select(s => s.Id).First() + 1;
             currentMonde = new Monde()
             {
                 Id = lastId,
-                Description = "",
+                Description = m.Description,
                 LimiteX = m_Width,
                 LimiteY = m_Height
             };
@@ -365,6 +368,7 @@ namespace HugoLandEditeur
                 m_BackBuffer = new Bitmap(m_Width * csteApplication.TILE_WIDTH_IN_MAP, m_Height * csteApplication.TILE_HEIGHT_IN_MAP);
                 m_BackBufferDC = Graphics.FromImage(m_BackBuffer);
 
+                Save();
                 Refresh();
             }
             catch

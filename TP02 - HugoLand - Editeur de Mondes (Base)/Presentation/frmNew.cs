@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Windows.Forms;
+using TP01_Library;
 
 namespace HugoLandEditeur
 {
@@ -17,31 +18,7 @@ namespace HugoLandEditeur
             m_Height = 32;
         }
 
-        // Width
-        public int MapWidth
-        {
-            get
-            {
-                return m_Width;
-            }
-            set
-            {
-                m_Width = value;
-            }
-        }
-
-        // Height
-        public int MapHeight
-        {
-            get
-            {
-                return m_Height;
-            }
-            set
-            {
-                m_Height = value;
-            }
-        }
+        public Monde Monde { get; set; }
 
         /// <summary>
         /// Description: Gère l'input [acceptation] des valeurs sur la largeur et la hauteur
@@ -54,10 +31,13 @@ namespace HugoLandEditeur
 
             if (ValidateInput(ref width, ref height))
             {
-                m_Width = width;
-                m_Height = height;
+                Monde = new Monde() { LimiteX = width, LimiteY = height, Description = tbDesc.Text };
                 this.DialogResult = DialogResult.OK;
                 this.Close();
+            }
+            else
+            {
+                MessageBox.Show("Please enter valid informations.");
             }
         }
 
@@ -125,5 +105,6 @@ namespace HugoLandEditeur
         }
 
         #endregion Hauteur et largeur lors d'une création de map
+
     }
 }

@@ -122,6 +122,8 @@ namespace TP01_Library.Controllers
                 return dbContext.Mondes.Include(x => x.Items)
                                           .Include(x => x.ObjetMondes)
                                           .Include(x => x.Monstres)
+                                          .Include(x => x.Classes)
+                                          .Include(x => x.Heros)
                                           .FirstOrDefault(x => x.Id == id);
             }
         }

@@ -38,10 +38,11 @@ namespace HugoLandEditeur.Presentation
             {
                 Outil.SetActiveUser(controller.TrouverJoueur(username));
 
-                this.Close();
+                //this.Close();
                 var form2 = new frmMain();
                 form2.Closed += (s, args) => this.Close();
                 form2.Show();
+                this.Hide();
             }
         }
     }
