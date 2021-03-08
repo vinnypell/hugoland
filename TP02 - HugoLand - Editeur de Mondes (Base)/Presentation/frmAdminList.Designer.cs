@@ -35,6 +35,7 @@ namespace HugoLandEditeur.Presentation
             this.btn_Apply = new System.Windows.Forms.Button();
             this.btn_Confirm = new System.Windows.Forms.Button();
             this.Description = new System.Windows.Forms.Label();
+            this.lbl_Error = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // listviewAdmins
@@ -80,11 +81,20 @@ namespace HugoLandEditeur.Presentation
             this.Description.TabIndex = 4;
             this.Description.Text = "Check the user(s) you want to remove \r\nadmin persmissions from.";
             // 
+            // lbl_Error
+            // 
+            this.lbl_Error.AutoSize = true;
+            this.lbl_Error.Location = new System.Drawing.Point(14, 403);
+            this.lbl_Error.Name = "lbl_Error";
+            this.lbl_Error.Size = new System.Drawing.Size(0, 17);
+            this.lbl_Error.TabIndex = 5;
+            // 
             // frmAdminList
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(365, 565);
+            this.Controls.Add(this.lbl_Error);
             this.Controls.Add(this.Description);
             this.Controls.Add(this.btn_Confirm);
             this.Controls.Add(this.btn_Apply);
@@ -106,5 +116,6 @@ namespace HugoLandEditeur.Presentation
         private System.Windows.Forms.Button btn_Apply;
         private System.Windows.Forms.Button btn_Confirm;
         private System.Windows.Forms.Label Description;
+        private System.Windows.Forms.Label lbl_Error;
     }
 }

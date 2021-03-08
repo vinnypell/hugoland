@@ -78,13 +78,7 @@ namespace HugoLandEditeur.Presentation
                 }
             }
 
-            listviewAdmins.Items.Clear();
-            Loaditems();
-        }
-
-        private void btn_Revert_Click(object sender, EventArgs e)
-        {
-
+            this.Close();
         }
 
         public void Loaditems()
