@@ -59,6 +59,11 @@ namespace TP01_Library.Controllers
                     itemDelete.IdHero = p_Hero.Id;
                     dbcontext.SaveChanges();
                 }
+                else
+                {
+                    Item itemDelete = dbcontext.Items.FirstOrDefault(x => x.Id == p_iItemId);
+                    dbcontext.Items.Remove(itemDelete);
+                }
             }
         }
         /// <summary>

@@ -131,10 +131,34 @@ namespace TP01_Library.Controllers
             }
         }
 
-        public List<Item> ListerItems(Monde p_monde) => p_monde.Items.ToList();
-        public List<ObjetMonde> ListerObjetMondes(Monde p_monde) => p_monde.ObjetMondes.ToList();
-        public List<Monstre> ListerMonstres(Monde p_monde) => p_monde.Monstres.ToList();
-        public List<Hero> ListerHeroes(Monde p_monde) => p_monde.Heros.ToList();
+        public List<Item> ListerItems(Monde p_monde)
+        {
+            using (HugoLandContext ctx = new HugoLandContext())
+            {
+                return ctx.Items.Where(x => x.MondeId == p_monde.Id).ToList();
+            }
+        }
+        public List<ObjetMonde> ListerObjetMondes(Monde p_monde)
+        {
+            using (HugoLandContext ctx = new HugoLandContext())
+            {
+                return ctx.ObjetMondes.Where(x => x.MondeId == p_monde.Id).ToList();
+            }
+        }
+        public List<Monstre> ListerMonstres(Monde p_monde)
+        {
+            using (HugoLandContext ctx = new HugoLandContext())
+            {
+                return ctx.Monstres.Where(x => x.MondeId == p_monde.Id).ToList();
+            }
+        }
+        public List<Hero> ListerHeroes(Monde p_monde)
+        {
+            using (HugoLandContext ctx = new HugoLandContext())
+            {
+                return ctx.Heros.Where(x => x.MondeId == p_monde.Id).ToList();
+            }
+        }
 
         public void ModifierMonde(int p_monde, List<ObjetMonde> objetMondes)
         {
