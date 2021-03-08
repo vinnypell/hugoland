@@ -214,14 +214,12 @@ namespace HugoLandEditeur
             m_Tiles[yindex, xindex] = TileID;
             m_TileLibrary.DrawTile(m_BackBufferDC, TileID, xindex * csteApplication.TILE_WIDTH_IN_MAP, yindex * csteApplication.TILE_HEIGHT_IN_MAP);
 
-            foreach (var item in m_TileLibrary.ObjMonde)
+            foreach (Tile tile in m_TileLibrary.ObjMonde.Values)
             {
-                string[] id = item.Key.Split(',').ToArray();
-                int idTile = int.Parse(id[0]);
-
-                if (idTile == TileID)
+                if (tile.imageId == TileID)
                 {
-                    m_currTile = item.Value;
+                    m_currTile = tile;
+                    m_TileLibrary.Tiles[yindex, xindex] = tile;
                     return;
                 }
             }
@@ -250,10 +248,31 @@ namespace HugoLandEditeur
                     ctrl.ModifierDescriptionMonde(currentMonde.Id, currentMonde.Description);
             }
 
+            for (int y = 0; y < currentMonde.LimiteY; y++)
+            {
+                for (int x = 0; x < currentMonde.LimiteX; x++)
+                {
+                    Tile tile = m_TileLibrary.Tiles[y, x];
+
+                    switch (tile.TypeObjet)
+                    {
+                        case TypeTile.ObjetMonde:
+                            currentMonde.ObjetMondes.Add(m_TileLibrary.objetMondes.FirstOrDefault(x => x.ImageId == tile.imageId && x.x == xindex && x.y == yindex));
+                            break;
+                        case TypeTile.Monstre:
+                            currentMonde.Monstres.Add(m_TileLibrary.monstres.FirstOrDefault(x => x.ImageId == TileID && x.x == xindex && x.y == yindex));
+                            break;
+                        case TypeTile.Item:
+                            currentMonde.Items.Add(m_TileLibrary.items.FirstOrDefault(x => x.ImageId == TileID && x.x == xindex && x.y == yindex));
+                            break;
+                    }
+                }
+            }
+
             List<ObjetMonde> currObjs = ctrl.ListerObjetMondes(currentMonde);
             List<Monstre> currMonstres = ctrl.ListerMonstres(currentMonde);
             List<Item> currItems = ctrl.ListerItems(currentMonde);
-            List<Hero> currHeroes = ctrl.ListerHeroes(currentMonde);
+            //List<Hero> currHeroes = ctrl.ListerHeroes(currentMonde);
 
             if (currObjs != null && currObjs.Count != 0)
             {
@@ -270,10 +289,10 @@ namespace HugoLandEditeur
                 ctrl.ModifierMonde(currentMonde.Id, currItems);
             }
 
-            if (currHeroes != null && currHeroes.Count != 0)
-            {
-                ctrl.ModifierMonde(currentMonde.Id, currHeroes);
-            }
+            //if (currHeroes != null && currHeroes.Count != 0)
+            //{
+            //    ctrl.ModifierMonde(currentMonde.Id, currHeroes);
+            //}
 
             return 0;
         }
@@ -287,7 +306,7 @@ namespace HugoLandEditeur
         {
             int width = -1;
             int height = -1;
-            int data = -1;
+            //int data = -1;
 
             width = m.LimiteX;
             height = m.LimiteY;
@@ -368,7 +387,7 @@ namespace HugoLandEditeur
                 m_BackBuffer = new Bitmap(m_Width * csteApplication.TILE_WIDTH_IN_MAP, m_Height * csteApplication.TILE_HEIGHT_IN_MAP);
                 m_BackBufferDC = Graphics.FromImage(m_BackBuffer);
 
-                Save();
+                //Save();
                 Refresh();
             }
             catch

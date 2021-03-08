@@ -30,7 +30,10 @@ namespace TP01_Library.Controllers
                 {
                     Description = p_sDescription,
                     LimiteX = p_iLimiteX,
-                    LimiteY = p_iLimiteY
+                    LimiteY = p_iLimiteY,
+                    ObjetMondes = new List<ObjetMonde>(),
+                    Monstres = new List<Monstre>(),
+                    Items = new List<Item>()
                 });
                 dbContext.SaveChanges();
             }
@@ -138,6 +141,7 @@ namespace TP01_Library.Controllers
             using(HugoLandContext context = new HugoLandContext())
             {
                 Monde monde = context.Mondes.FirstOrDefault(x => x.Id == p_monde);
+                monde.ObjetMondes = new List<ObjetMonde>();
                 monde.ObjetMondes = objetMondes;
                 context.SaveChanges();
             }

@@ -20,6 +20,10 @@ namespace HugoLandEditeur
         private MondeController ctrl = new MondeController();
         private ObjetMondeController objCtrl = new ObjetMondeController();
 
+        public List<ObjetMonde> objetMondes = new List<ObjetMonde>();
+        public List<Monstre> monstres = new List<Monstre>();
+        public List<Item> items = new List<Item>();
+
         private Tile m_clickedTile;
         public Tile clickedTile
         {
@@ -33,6 +37,20 @@ namespace HugoLandEditeur
             }
         }
 
+        private List<int> m_TileID = new List<int>();
+        public List<int> TileID
+        {
+            get
+            {
+                return m_TileID;
+            }
+            set
+            {
+                m_TileID = value;
+            }
+        }
+
+        // Contient l'image à afficher
         private Tile[,] m_Tiles;
         public Tile[,] Tiles
         {
@@ -154,160 +172,53 @@ namespace HugoLandEditeur
             yindex = y / csteApplication.TILE_HEIGHT_IN_IMAGE;
         }
 
-        /// <summary>
-        ///  Each line contains a comma delimited tile definition that the tile constructor understands.
-        /// </summary>
-        /// <param name="tileDescriptionFile"></param>
-        //private void readTileDefinitions(string tileDescriptionFile)
-        //{
-        //    using (StreamReader stream = new StreamReader(tileDescriptionFile))
-        //    {
-        //        string line;
-        //        while ((line = stream.ReadLine()) != null)
-        //        {
-        //            //separate out the elements of the
-        //            string[] elements = line.Split(',');
+        private void TilesToObjects(Tile tile, Monde monde)
+        {
+            int imageId = TileToTileID(tile.X_Image, tile.Y_Image);
+            m_TileID.Add(imageId);
 
-        //            Tile objMonde;
-        //            objMonde = new Tile(elements);
-        //            _ObjMonde.Add(objMonde.Name, objMonde);
-        //        }
-        //    }
-        //}
+            switch (tile.TypeObjet)
+            {
+                case TypeTile.ObjetMonde:
+                    objetMondes.Add(new ObjetMonde
+                    {
+                        MondeId = monde.Id,
+                        Description = tile.Name,
+                        x = tile.X_Image,
+                        y = tile.Y_Image,
+                        TypeObjet = (int)tile.TypeObjet,
+                        ImageId = imageId
+                    });
+                    break;
+                case TypeTile.Monstre:
+                    monstres.Add(new Monstre
+                    {
+                        Monde = monde,
+                        x = tile.X_Image,
+                        y = tile.Y_Image,
+                        Nom = tile.Name,
+                        ImageId = imageId
+                    });
+                    break;
+                case TypeTile.Item:
+                    items.Add(new Item
+                    {
+                        Nom = tile.Name,
+                        Description = tile.Category,
+                        x = tile.X_Image,
+                        y = tile.Y_Image,
+                        ImageId = imageId,
+                        MondeId = monde.Id
+                    });
+                    break;
+                default:
+                    break;
+            }
+        }
 
         public void readTileDefinitions(Monde m)
         {
-            ObjetMonde tuileDefaut = objCtrl.GetObjetMondeDefault();
-            Tile defaultTile = new Tile()
-            {
-                Name = tuileDefaut.Description,
-                Bitmap = m_TileSource,
-                X_Image = 0,
-                Y_Image = 0,
-                TypeObjet = TypeTile.ObjetMonde,
-                IndexTypeObjet = (int)TypeTile.ObjetMonde,
-                imageId = (int)tuileDefaut.ImageId
-            };
-
-            if (m != null)
-            {
-                Tiles = new Tile[m.LimiteY, m.LimiteX];
-                for (int y = 0; y < m.LimiteY; y++)
-                {
-                    for (int x = 0; x < m.LimiteX; x++)
-                    {
-                        // ça plante pour une raison que j'ignore
-                        List<Item> items = ctrl.ListerItems(m).Where(i => i.x == x && i.y == y).ToList();
-                        ObjetMonde objets = ctrl.ListerObjetMondes(m).FirstOrDefault(o => o.x == x && o.y == y);
-                        Monstre monstres = ctrl.ListerMonstres(m).FirstOrDefault(o => o.x == x && o.y == y);
-
-                        // Héro n'a pas d'imageID dans la table, alors je me doute qu'on enregistre la position du joueur
-                        // dans la map, si on ne le fait pas, ce sera ici de le faire et d'ajouter une propriété à cet effet
-                        //Hero heroes = ctrl.ListerHeroes(m).FirstOrDefault(o => o.x == x && o.y == y);
-
-                        // Seul les items peuvent être stacker
-                        if (items.Count > 0 && items != null)
-                        {
-                            //if (items.Count > 1)
-                            //{
-                            //    List<Tile> tiles = new List<Tile>();
-                            //    foreach (Item item in items)
-                            //    {
-                            //        tiles.Add(new Tile()
-                            //        {
-                            //            Name = item.Nom,
-                            //            Bitmap = m_TileSource,
-                            //            X_Image = (int)item.x,
-                            //            Y_Image = (int)item.y,
-                            //            TypeObjet = TypeTile.Item,
-                            //            IndexTypeObjet = (int)TypeTile.Item,
-                            //            Rectangle = new Rectangle((int)item.x - 1 * Tile.TileSizeX,
-                            //                                      (int)item.y - 1 * Tile.TileSizeY,
-                            //                                      Tile.TileSizeX * 1, Tile.TileSizeY)
-                            //        });
-                            //    }
-                            //    //Tiles[y, x] = tiles;
-                            //}
-                            //else
-                            //{
-                            //}
-
-                            Item item = items.FirstOrDefault();
-                            Tiles[y, x] = new Tile()
-                            {
-                                Name = item.Nom,
-                                Bitmap = m_TileSource,
-                                X_Image = (int)item.x,
-                                Y_Image = (int)item.y,
-                                TypeObjet = TypeTile.Item,
-                                IndexTypeObjet = (int)TypeTile.Item,
-                                Rectangle = new Rectangle((int)item.x - 1 * Tile.TileSizeX,
-                                                              (int)item.y - 1 * Tile.TileSizeY,
-                                                              Tile.TileSizeX * 1, Tile.TileSizeY),
-                                imageId = (int)item.ImageId
-                            };
-                        }
-                        else if (objets != null)
-                        {
-                            Tiles[y, x] = new Tile()
-                            {
-                                Name = objets.Description,
-                                Bitmap = m_TileSource,
-                                X_Image = objets.x,
-                                Y_Image = objets.y,
-                                TypeObjet = TypeTile.ObjetMonde,
-                                IndexTypeObjet = (int)TypeTile.ObjetMonde,
-                                Rectangle = new Rectangle((int)objets.x - 1 * Tile.TileSizeX,
-                                                                  (int)objets.y - 1 * Tile.TileSizeY,
-                                                                  Tile.TileSizeX * 1, Tile.TileSizeY),
-                                imageId = (int)objets?.ImageId
-                            };
-                        }
-                        else if (monstres != null)
-                        {
-                            Tiles[y, x] = new Tile()
-                            {
-                                Name = monstres.Nom,
-                                Bitmap = m_TileSource,
-                                X_Image = monstres.x,
-                                Y_Image = monstres.y,
-                                TypeObjet = TypeTile.ObjetMonde,
-                                IndexTypeObjet = (int)TypeTile.ObjetMonde,
-                                Rectangle = new Rectangle((int)monstres.x - 1 * Tile.TileSizeX,
-                                                                  (int)monstres.y - 1 * Tile.TileSizeY,
-                                                                  Tile.TileSizeX * 1, Tile.TileSizeY),
-                                imageId = (int)monstres.ImageId
-                            };
-                        }
-                        else
-                        {
-                            defaultTile.X_Image = x;
-                            defaultTile.Y_Image = y;
-                            defaultTile.Rectangle = new Rectangle((int)x - 1 * Tile.TileSizeX,
-                                                                  (int)y - 1 * Tile.TileSizeY,
-                                                                  Tile.TileSizeX * 1, Tile.TileSizeY);
-
-                            Tiles[y, x] = defaultTile;
-                        }
-                        //else if (heroes != null)
-                        //{
-                        //    Tiles[y, x] = new Tile()
-                        //    {
-                        //        Name = heroes.NomHero,
-                        //        Bitmap = m_TileSource,
-                        //        X_Image = heroes.x,
-                        //        Y_Image = heroes.y,
-                        //        TypeObjet = TypeTile.ObjetMonde,
-                        //        IndexTypeObjet = (int)TypeTile.ObjetMonde,
-                        //        Rectangle = new Rectangle((int)heroes.x - 1 * Tile.TileSizeX,
-                        //                                          (int)heroes.y - 1 * Tile.TileSizeY,
-                        //                                          Tile.TileSizeX * 1, Tile.TileSizeY)
-                        //    };
-                        //}
-                    }
-                }
-            }
-            else
+            if (m == null)
             {
                 int lastId = ctrl.ListerMondes().OrderByDescending(x => x.Id).Select(s => s.Id).First() + 1;
                 m = new Monde()
@@ -317,52 +228,154 @@ namespace HugoLandEditeur
                     LimiteX = 32,
                     LimiteY = 32
                 };
+            }
 
-                Tiles = new Tile[m.LimiteY, m.LimiteX];
-                
-                for (int y = 0; y < m.LimiteY; y++)
+            using (StreamReader stream = new StreamReader(@"gamedata\AllTilesLookups.csv"))
+            {
+                string line;
+
+                while ((line = stream.ReadLine()) != null)
                 {
-                    for (int x = 0; x < m.LimiteX; x++)
+                    //separate out the elements of the
+                    string[] elements = line.Split(',');
+
+                    Tile objMonde;
+                    objMonde = new Tile(elements);
+                    TilesToObjects(objMonde, m);
+                    _ObjMonde.Add(objMonde.Name, objMonde);
+                }
+            }
+
+            ObjetMonde tuileDefaut = objCtrl.GetObjetMondeDefault();
+            if (tuileDefaut == null)
+            {
+                tuileDefaut = objetMondes.FirstOrDefault(x => x.ImageId == 32);
+            }
+
+            Tile defaultTile = new Tile()
+            {
+                Name = tuileDefaut.Description,
+                Bitmap = m_TileSource,
+                X_Image = tuileDefaut.x,
+                Y_Image = tuileDefaut.y,
+                TypeObjet = TypeTile.ObjetMonde,
+                IndexTypeObjet = (int)TypeTile.ObjetMonde,
+                imageId = (int)tuileDefaut.ImageId
+            };
+
+
+            Tiles = new Tile[m.LimiteY, m.LimiteX];
+            for (int y = 0; y < m.LimiteY; y++)
+            {
+                for (int x = 0; x < m.LimiteX; x++)
+                {
+                    // ça plante pour une raison que j'ignore
+                    List<Item> items = ctrl.ListerItems(m).Where(i => i.x == x && i.y == y).ToList();
+                    ObjetMonde objets = ctrl.ListerObjetMondes(m).FirstOrDefault(o => o.x == x && o.y == y);
+                    Monstre monstres = ctrl.ListerMonstres(m).FirstOrDefault(o => o.x == x && o.y == y);
+
+                    // Héro n'a pas d'imageID dans la table, alors je me doute qu'on enregistre la position du joueur
+                    // dans la map, si on ne le fait pas, ce sera ici de le faire et d'ajouter une propriété à cet effet
+                    //Hero heroes = ctrl.ListerHeroes(m).FirstOrDefault(o => o.x == x && o.y == y);
+
+                    // Seul les items peuvent être stacker
+                    if (items.Count > 0 && items != null)
                     {
-                        ObjetMonde obj = new ObjetMonde()
+                        //if (items.Count > 1)
+                        //{
+                        //    List<Tile> tiles = new List<Tile>();
+                        //    foreach (Item item in items)
+                        //    {
+                        //        tiles.Add(new Tile()
+                        //        {
+                        //            Name = item.Nom,
+                        //            Bitmap = m_TileSource,
+                        //            X_Image = (int)item.x,
+                        //            Y_Image = (int)item.y,
+                        //            TypeObjet = TypeTile.Item,
+                        //            IndexTypeObjet = (int)TypeTile.Item,
+                        //            Rectangle = new Rectangle((int)item.x - 1 * Tile.TileSizeX,
+                        //                                      (int)item.y - 1 * Tile.TileSizeY,
+                        //                                      Tile.TileSizeX * 1, Tile.TileSizeY)
+                        //        });
+                        //    }
+                        //    //Tiles[y, x] = tiles;
+                        //}
+                        //else
+                        //{
+                        //}
+
+                        Item item = items.FirstOrDefault();
+                        Tiles[y, x] = new Tile()
                         {
-                            Description = tuileDefaut.Description,
-                            TypeObjet = tuileDefaut.TypeObjet,
-                            ImageId = tuileDefaut.ImageId,
-                            x = x,
-                            y = y,
-                            MondeId = m.Id
+                            Name = item.Nom,
+                            Bitmap = m_TileSource,
+                            X_Image = (int)item.x,
+                            Y_Image = (int)item.y,
+                            TypeObjet = TypeTile.Item,
+                            IndexTypeObjet = (int)TypeTile.Item,
+                            Rectangle = new Rectangle((int)item.x - 1 * Tile.TileSizeX,
+                                                          (int)item.y - 1 * Tile.TileSizeY,
+                                                          Tile.TileSizeX * 1, Tile.TileSizeY),
+                            imageId = (int)item.ImageId
                         };
-
-                        m.ObjetMondes.Add(obj);
-
-                        defaultTile.X_Image = x;
-                        defaultTile.Y_Image = y;
-                        defaultTile.Rectangle = new Rectangle((int)x - 1 * Tile.TileSizeX,
-                                                              (int)y - 1 * Tile.TileSizeY,
-                                                              Tile.TileSizeX * 1, Tile.TileSizeY);
-
+                    }
+                    else if (objets != null)
+                    {
+                        Tiles[y, x] = new Tile()
+                        {
+                            Name = objets.Description,
+                            Bitmap = m_TileSource,
+                            X_Image = objets.x,
+                            Y_Image = objets.y,
+                            TypeObjet = TypeTile.ObjetMonde,
+                            IndexTypeObjet = (int)TypeTile.ObjetMonde,
+                            Rectangle = new Rectangle((int)objets.x - 1 * Tile.TileSizeX,
+                                                              (int)objets.y - 1 * Tile.TileSizeY,
+                                                              Tile.TileSizeX * 1, Tile.TileSizeY),
+                            imageId = (int)objets?.ImageId
+                        };
+                    }
+                    else if (monstres != null)
+                    {
+                        Tiles[y, x] = new Tile()
+                        {
+                            Name = monstres.Nom,
+                            Bitmap = m_TileSource,
+                            X_Image = monstres.x,
+                            Y_Image = monstres.y,
+                            TypeObjet = TypeTile.ObjetMonde,
+                            IndexTypeObjet = (int)TypeTile.ObjetMonde,
+                            Rectangle = new Rectangle((int)monstres.x - 1 * Tile.TileSizeX,
+                                                              (int)monstres.y - 1 * Tile.TileSizeY,
+                                                              Tile.TileSizeX * 1, Tile.TileSizeY),
+                            imageId = (int)monstres.ImageId
+                        };
+                    }
+                    else
+                    {
+                        m.ObjetMondes.Add(tuileDefaut);
                         Tiles[y, x] = defaultTile;
                     }
-                }
-
-                using (StreamReader stream = new StreamReader(@"gamedata\AllTilesLookups.csv"))
-                {
-                    string line;
-                    int imgId = 0;
-
-                    while ((line = stream.ReadLine()) != null)
-                    {
-                        //separate out the elements of the
-                        string[] elements = line.Split(',');
-
-                        Tile objMonde;
-                        objMonde = new Tile(elements);
-                        _ObjMonde.Add(imgId++ + "," + objMonde.Name, objMonde);
-                    }
+                    //else if (heroes != null)
+                    //{
+                    //    Tiles[y, x] = new Tile()
+                    //    {
+                    //        Name = heroes.NomHero,
+                    //        Bitmap = m_TileSource,
+                    //        X_Image = heroes.x,
+                    //        Y_Image = heroes.y,
+                    //        TypeObjet = TypeTile.ObjetMonde,
+                    //        IndexTypeObjet = (int)TypeTile.ObjetMonde,
+                    //        Rectangle = new Rectangle((int)heroes.x - 1 * Tile.TileSizeX,
+                    //                                          (int)heroes.y - 1 * Tile.TileSizeY,
+                    //                                          Tile.TileSizeX * 1, Tile.TileSizeY)
+                    //    };
+                    //}
                 }
             }
         }
     }
 }
+
 

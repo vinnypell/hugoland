@@ -77,9 +77,10 @@ namespace HugoLandEditeur
             //    string[] elements = line.Split(',');
 
             //    TypeTile tile = (TypeTile)Enum.Parse(typeof(TypeTile), elements[elements.Length - 1], true);
-            //    int x = int.Parse(elements[4]);
-            //    int y = int.Parse(elements[5]);
-            //    int imageId = int.Parse(elements[1]);
+            //    int x = int.Parse(elements[4]) - 1;
+            //    int y = int.Parse(elements[5]) - 1;
+            //    m_TileLibrary = new CTileLibrary();
+            //    int imageId = m_TileLibrary.TileToTileID(x, y);
 
             //    switch (tile)
             //    {
@@ -91,8 +92,6 @@ namespace HugoLandEditeur
             //            break;
             //        case TypeTile.Item:
             //            ctrlItem.AjouterItems(elements[0], elements[2], x, y, imageId, monde.Id);
-            //            break;
-            //        default:
             //            break;
             //    }
             //}
@@ -108,76 +107,74 @@ namespace HugoLandEditeur
     \* -------------------------------------------------------------- */
         private void frmMain_Load(object sender, System.EventArgs e)
         {
-            MainLoad();
-            
-            //// Nouvelle instance de map
-            //m_Map = new CMap();
+            // Nouvelle instance de map
+            m_Map = new CMap();
 
-            //// Instance de base à l'aide du ctor pour une tuile dans la map
-            //m_TileLibrary = new CTileLibrary();
+            // Instance de base à l'aide du ctor pour une tuile dans la map
+            m_TileLibrary = new CTileLibrary();
 
-            //// Insère la tuile dans celle de la map générer plus haut
-            //m_Map.TileLibrary = m_TileLibrary;
+            // Insère la tuile dans celle de la map générer plus haut
+            m_Map.TileLibrary = m_TileLibrary;
 
-            //// Position de où la map ira
-            //picMap.Parent = picEditArea;
-            //picMap.Left = 0;
-            //picMap.Top = 0;
+            // Position de où la map ira
+            picMap.Parent = picEditArea;
+            picMap.Left = 0;
+            picMap.Top = 0;
 
-            //// Le look, taille des tuiles
-            //picTiles.Parent = picEditSel;
-            //picTiles.Width = m_TileLibrary.Width * csteApplication.TILE_WIDTH_IN_IMAGE;
-            //picTiles.Height = m_TileLibrary.Height * csteApplication.TILE_HEIGHT_IN_IMAGE;
-            //picTiles.Left = 0;
-            //picTiles.Top = 0;
+            // Le look, taille des tuiles
+            picTiles.Parent = picEditSel;
+            picTiles.Width = m_TileLibrary.Width * csteApplication.TILE_WIDTH_IN_IMAGE;
+            picTiles.Height = m_TileLibrary.Height * csteApplication.TILE_HEIGHT_IN_IMAGE;
+            picTiles.Left = 0;
+            picTiles.Top = 0;
 
-            //// Vertical Scroll bar
-            //vscMap.Minimum = 0;
-            //vscMap.Maximum = m_Map.Height;
-            //m_YSel = 0;
+            // Vertical Scroll bar
+            vscMap.Minimum = 0;
+            vscMap.Maximum = m_Map.Height;
+            m_YSel = 0;
 
-            //// Horizontal Scroll bar
-            //hscMap.Minimum = 0;
-            //hscMap.Maximum = m_Map.Width;
-            //m_XSel = 0;
+            // Horizontal Scroll bar
+            hscMap.Minimum = 0;
+            hscMap.Maximum = m_Map.Width;
+            m_XSel = 0;
 
-            //m_bRefresh = true;
-            //m_bResize = true;
-            //timer1.Enabled = true;
-            //m_Zoom = csteApplication.ZOOM;
+            m_bRefresh = true;
+            m_bResize = true;
+            timer1.Enabled = true;
+            m_Zoom = csteApplication.ZOOM;
 
-            //m_TileRect = new Rectangle(-1, -1, -1, -1);
-            //m_LibRect = new Rectangle(-1, -1, -1, -1);
-            //m_ActiveTileID = 32;
+            m_TileRect = new Rectangle(-1, -1, -1, -1);
+            m_LibRect = new Rectangle(-1, -1, -1, -1);
+            m_ActiveTileID = 32;
 
-            ////dlgLoadMap.InitialDirectory = Path.GetDirectoryName(Application.ExecutablePath) + "\\maps\\";
-            ////dlgSaveMap.InitialDirectory = dlgLoadMap.InitialDirectory;
-            //m_bOpen = false;
-            //m_MenuLogic();
-            ////tmrLoad.Enabled = true;
+            //dlgLoadMap.InitialDirectory = Path.GetDirectoryName(Application.ExecutablePath) + "\\maps\\";
+            //dlgSaveMap.InitialDirectory = dlgLoadMap.InitialDirectory;
+            m_bOpen = false;
+            m_MenuLogic();
+            //tmrLoad.Enabled = true;
 
-            //m_pen = new Pen(Color.Orange, 4);
-            //m_brush = new SolidBrush(Color.FromArgb(160, 249, 174, 55));
-            //m_brush2 = new SolidBrush(Color.FromArgb(160, 255, 0, 0));
+            m_pen = new Pen(Color.Orange, 4);
+            m_brush = new SolidBrush(Color.FromArgb(160, 249, 174, 55));
+            m_brush2 = new SolidBrush(Color.FromArgb(160, 255, 0, 0));
 
-            //m_bDrawTileRect = false;
-            //m_bDrawMapRect = false;
+            m_bDrawTileRect = false;
+            m_bDrawMapRect = false;
 
-            //cboZoom.Left = 270;
-            //cboZoom.Top = 2;
-            //cboZoom.Items.Add(new ComboItem("1X", 1));
-            //cboZoom.Items.Add(new ComboItem("2X", 2));
-            //cboZoom.Items.Add(new ComboItem("4X", 4));
-            //cboZoom.Items.Add(new ComboItem("8X", 8));
-            //cboZoom.Items.Add(new ComboItem("16X", 16));
-            //cboZoom.SelectedIndex = 1;
-            //cboZoom.DropDownStyle = ComboBoxStyle.DropDownList;
+            cboZoom.Left = 270;
+            cboZoom.Top = 2;
+            cboZoom.Items.Add(new ComboItem("1X", 1));
+            cboZoom.Items.Add(new ComboItem("2X", 2));
+            cboZoom.Items.Add(new ComboItem("4X", 4));
+            cboZoom.Items.Add(new ComboItem("8X", 8));
+            cboZoom.Items.Add(new ComboItem("16X", 16));
+            cboZoom.SelectedIndex = 1;
+            cboZoom.DropDownStyle = ComboBoxStyle.DropDownList;
 
-            //lblZoom.Left = 180;
-            //lblZoom.Top = 2;
+            lblZoom.Left = 180;
+            lblZoom.Top = 2;
 
-            //tbMain.Controls.Add(lblZoom);
-            //tbMain.Controls.Add(cboZoom);
+            tbMain.Controls.Add(lblZoom);
+            tbMain.Controls.Add(cboZoom);
         }
 
         /* -------------------------------------------------------------- *\
@@ -828,7 +825,6 @@ namespace HugoLandEditeur
                         lstB_Monstre.Visible = false;
                         lbl_Description.Visible = true;
                         btnReset.Visible = true;
-
                         lbl_Description.Text = m_Map.currTile.Name;
 
                         ResetInfos();
@@ -872,85 +868,15 @@ namespace HugoLandEditeur
 
         private void mnuFileClose_Click(object sender, EventArgs e)
         {
-            DialogResult result = MessageBox.Show("Êtes-vous certain? Tout progrès non-sauvegarder sera perdu.",
-                            "Quitte la partie", MessageBoxButtons.OKCancel);
+            DialogResult result = MessageBox.Show("Are you sure you want to quit? Unsaved progress will be lost.",
+                            "Closing the world save", MessageBoxButtons.OKCancel);
 
             if (result == DialogResult.OK)
             {
-                MainLoad();
+                this.Hide();
+                frmMain reload = new frmMain();
+                reload.Show();
             }
-        }
-
-        private void MainLoad()
-        {
-            // Nouvelle instance de map
-            m_Map = new CMap();
-
-            // Instance de base à l'aide du ctor pour une tuile dans la map
-            m_TileLibrary = new CTileLibrary();
-
-            // Insère la tuile dans celle de la map générer plus haut
-            m_Map.TileLibrary = m_TileLibrary;
-
-            // Position de où la map ira
-            picMap.Parent = picEditArea;
-            picMap.Left = 0;
-            picMap.Top = 0;
-
-            // Le look, taille des tuiles
-            picTiles.Parent = picEditSel;
-            picTiles.Width = m_TileLibrary.Width * csteApplication.TILE_WIDTH_IN_IMAGE;
-            picTiles.Height = m_TileLibrary.Height * csteApplication.TILE_HEIGHT_IN_IMAGE;
-            picTiles.Left = 0;
-            picTiles.Top = 0;
-
-            // Vertical Scroll bar
-            vscMap.Minimum = 0;
-            vscMap.Maximum = m_Map.Height;
-            m_YSel = 0;
-
-            // Horizontal Scroll bar
-            hscMap.Minimum = 0;
-            hscMap.Maximum = m_Map.Width;
-            m_XSel = 0;
-
-            m_bRefresh = true;
-            m_bResize = true;
-            timer1.Enabled = true;
-            m_Zoom = csteApplication.ZOOM;
-
-            m_TileRect = new Rectangle(-1, -1, -1, -1);
-            m_LibRect = new Rectangle(-1, -1, -1, -1);
-            m_ActiveTileID = 32;
-
-            //dlgLoadMap.InitialDirectory = Path.GetDirectoryName(Application.ExecutablePath) + "\\maps\\";
-            //dlgSaveMap.InitialDirectory = dlgLoadMap.InitialDirectory;
-            m_bOpen = false;
-            m_MenuLogic();
-            //tmrLoad.Enabled = true;
-
-            m_pen = new Pen(Color.Orange, 4);
-            m_brush = new SolidBrush(Color.FromArgb(160, 249, 174, 55));
-            m_brush2 = new SolidBrush(Color.FromArgb(160, 255, 0, 0));
-
-            m_bDrawTileRect = false;
-            m_bDrawMapRect = false;
-
-            cboZoom.Left = 270;
-            cboZoom.Top = 2;
-            cboZoom.Items.Add(new ComboItem("1X", 1));
-            cboZoom.Items.Add(new ComboItem("2X", 2));
-            cboZoom.Items.Add(new ComboItem("4X", 4));
-            cboZoom.Items.Add(new ComboItem("8X", 8));
-            cboZoom.Items.Add(new ComboItem("16X", 16));
-            cboZoom.SelectedIndex = 1;
-            cboZoom.DropDownStyle = ComboBoxStyle.DropDownList;
-
-            lblZoom.Left = 180;
-            lblZoom.Top = 2;
-
-            tbMain.Controls.Add(lblZoom);
-            tbMain.Controls.Add(cboZoom);
         }
     }
 }
