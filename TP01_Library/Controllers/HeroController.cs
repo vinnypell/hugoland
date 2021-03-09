@@ -164,6 +164,11 @@ namespace TP01_Library.Controllers
             }
         }
 
+        /// <summary>
+        /// Description: Retourne l'héro par le nom fourni en paramètre
+        /// </summary>
+        /// <param name="Nom"></param>
+        /// <returns></returns>
         public Hero GetHero(string Nom)
         {
             using (HugoLandContext context = new HugoLandContext())

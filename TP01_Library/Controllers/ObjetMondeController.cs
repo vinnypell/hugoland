@@ -92,6 +92,11 @@ namespace TP01_Library.Controllers
             }
         }
 
+        /// <summary>
+        /// Auteur: Vincent Pelland
+        /// Description: Retourne l'objetmonde par défaut, soit la tuile de gazon
+        /// </summary>
+        /// <returns></returns>
         public ObjetMonde GetObjetMondeDefault()
         {
             using (HugoLandContext context = new HugoLandContext())
@@ -100,6 +105,11 @@ namespace TP01_Library.Controllers
             }
         }
 
+        /// <summary>
+        /// Auteur: Mathias Lavoie-Rivard
+        /// Description: Permet d'ajouter les objetmondes et updater le monde en cours
+        /// </summary>
+        /// <param name="list"></param>
         public void AddRange(List<ObjetMonde> list)
         {
             using (HugoLandContext context = new HugoLandContext())
@@ -109,12 +119,15 @@ namespace TP01_Library.Controllers
             }
         }
 
+        /// <summary>
+        /// Auteur: Mathias Lavoie-Rivard
+        /// Description: Supprime les objetmondes du monde précédent avant la sauvegarde, pour faire place aux nouvelles listes
+        /// </summary>
+        /// <param name="id"></param>
         public void RemoveRange(int id)
         {
             using (HugoLandContext context = new HugoLandContext())
             {
-                
-
                 //context.ObjetMondes.RemoveRange(context.ObjetMondes.Where(x => x.MondeId == id));
                 //context.SaveChanges();
 

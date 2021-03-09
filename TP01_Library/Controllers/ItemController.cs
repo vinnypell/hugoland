@@ -85,6 +85,11 @@ namespace TP01_Library.Controllers
             }
         }
 
+        /// <summary>
+        /// Auteur: Mathias Lavoie-Rivard
+        /// Description: Permet d'ajouter les items et updater le monde en cours
+        /// </summary>
+        /// <param name="list"></param>
         public void AddRange(List<Item> list)
         {
             using (HugoLandContext context = new HugoLandContext())
@@ -94,6 +99,11 @@ namespace TP01_Library.Controllers
             }
         }
 
+        /// <summary>
+        /// Auteur: Mathias Lavoie-Rivard
+        /// Description: Supprime les items du monde précédent avant la sauvegarde, pour faire place aux nouvelles listes
+        /// </summary>
+        /// <param name="id"></param>
         public void RemoveRange(int id)
         {
             using (HugoLandContext context = new HugoLandContext())
