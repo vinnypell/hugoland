@@ -231,26 +231,14 @@ namespace HugoLandEditeur
             List<Monstre> MonstreMonde = new List<Monstre>();
             List<Item> ItemMonde = new List<Item>();
 
-            List<ObjetMonde> currObjs = MondeCtrl.ListerObjetMondes(currentMonde);
-            List<Monstre> currMonstres = MondeCtrl.ListerMonstres(currentMonde);
-            List<Item> currItems = MondeCtrl.ListerItems(currentMonde);
+            ItemCtrl.RemoveRange(currentMonde.Id);
+            ObjCtrl.RemoveRange(currentMonde.Id);
+            MonstreCtrl.RemoveRange(currentMonde.Id);
             for (int y = 0; y < currentMonde.LimiteY; y++)
             {
                 for (int x = 0; x < currentMonde.LimiteX; x++)
                 {
                     Tile tile = m_TileLibrary.ObjMonde[m_Tiles[y, x]];
-
-                    ObjetMonde TileInMondeObj = currObjs.FirstOrDefault(o => o.x == x && o.y == y);
-                    if (TileInMondeObj != null)
-                        ObjCtrl.SupprimerObjetMonde(TileInMondeObj.Id);
-
-                    Item TileInMondeItem = currItems.FirstOrDefault(o => o.x == x && o.y == y);
-                    if (TileInMondeItem != null)
-                        ItemCtrl.SupprimerItem(TileInMondeItem.Id, null);
-
-                    Monstre TileInMondeMonstre = currMonstres.FirstOrDefault(o => o.x == x && o.y == y);
-                    if (TileInMondeMonstre != null)
-                        MonstreCtrl.SupprimerMonstre(TileInMondeMonstre.Id);
 
                     switch (tile.TypeObjet)
                     {
@@ -284,7 +272,8 @@ namespace HugoLandEditeur
                                 x = x,
                                 y = y,
                                 Nom = tile.Name,
-                                ImageId = m_Tiles[y, x]
+                                ImageId = m_Tiles[y, x],
+                                Description = tile.Name ?? " "
                             });
                             //currentMonde.Items.Add(m_TileLibrary.items.FirstOrDefault(x => x.ImageId == TileID && x.x == xindex && x.y == yindex));
                             break;

@@ -667,7 +667,7 @@ namespace HugoLandEditeur
                 }
                 catch (Exception e)
                 {
-                    Console.WriteLine("Error Saving...");
+                    Console.WriteLine(e.StackTrace);
                 }
                 m_MenuLogic();
                 this.Cursor = Cursors.Default;

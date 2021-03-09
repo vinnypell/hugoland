@@ -129,5 +129,18 @@ namespace TP01_Library.Controllers
                 context.SaveChanges();
             }
         }
+
+        public void RemoveRange(int id)
+        {
+            using (HugoLandContext context = new HugoLandContext())
+            {
+                //context.Monstres.RemoveRange(context.Monstres.Where(x => x.MondeId == id));
+                //context.SaveChanges();
+
+                //La requête SQL est beacoup plus rapide que le entity framework
+                context.Database.ExecuteSqlCommand($"DELETE FROM dbo.Monstre WHERE MondeId = {id}");
+
+            }
+        }
     }
 }
