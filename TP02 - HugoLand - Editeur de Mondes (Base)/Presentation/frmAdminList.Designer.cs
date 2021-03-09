@@ -74,12 +74,12 @@ namespace HugoLandEditeur.Presentation
             // Description
             // 
             this.Description.AutoSize = true;
-            this.Description.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
-            this.Description.Location = new System.Drawing.Point(7, 9);
+            this.Description.Font = new System.Drawing.Font("Microsoft Sans Serif", 30F);
+            this.Description.Location = new System.Drawing.Point(65, 8);
             this.Description.Name = "Description";
-            this.Description.Size = new System.Drawing.Size(347, 50);
+            this.Description.Size = new System.Drawing.Size(222, 58);
             this.Description.TabIndex = 4;
-            this.Description.Text = "Check the user(s) you want to remove \r\nadmin persmissions from.";
+            this.Description.Text = "User List\r\n";
             // 
             // lbl_Error
             // 
