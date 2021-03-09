@@ -99,5 +99,14 @@ namespace TP01_Library.Controllers
                 return context.ObjetMondes.FirstOrDefault(x => x.ImageId == 32);
             }
         }
+
+        public void AddRange(List<ObjetMonde> list)
+        {
+            using (HugoLandContext context = new HugoLandContext())
+            {
+                context.ObjetMondes.AddRange(list);
+                context.SaveChanges();
+            }
+        }
     }
 }

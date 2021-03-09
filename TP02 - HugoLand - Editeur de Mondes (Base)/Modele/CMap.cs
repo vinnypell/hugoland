@@ -223,6 +223,11 @@ namespace HugoLandEditeur
 
         private void UpdateTiles()
         {
+
+            List <ObjetMonde> ObjetMonde = new List<ObjetMonde>();
+            List<Monstre> MonstreMonde = new List<Monstre>();
+            List<Item> ItemMonde = new List<Item>();
+
             List<ObjetMonde> currObjs = MondeCtrl.ListerObjetMondes(currentMonde);
             List<Monstre> currMonstres = MondeCtrl.ListerMonstres(currentMonde);
             List<Item> currItems = MondeCtrl.ListerItems(currentMonde);
@@ -242,29 +247,55 @@ namespace HugoLandEditeur
                         foreach (Item i in TileInMondeItem)
                             ItemCtrl.SupprimerItem(i.Id, null);
 
-                    List<Monstre> TileInMondeMonstre = currMonstres.Where(o => o.x == x && o.y == y).ToList();
-                    if (TileInMondeMonstre.Count() > 0)
-                        foreach (Monstre m in TileInMondeMonstre)
-                            MonstreCtrl.SupprimerMonstre(m.Id);
+                    Monstre TileInMondeMonstre = currMonstres.FirstOrDefault(o => o.x == x && o.y == y);
+                    if (TileInMondeMonstre != null)
+                            MonstreCtrl.SupprimerMonstre(TileInMondeMonstre.Id);
 
                     switch (tile.TypeObjet)
                     {
                         case TypeTile.ObjetMonde:
-                            ObjCtrl.AjouterObjetMonde(currentMonde.Id, tile.Name, x, y, (int)tile.TypeObjet, m_Tiles[y, x]);
+                            ObjetMonde.Add(new ObjetMonde()
+                            {
+                                MondeId = currentMonde.Id,
+                                Description = tile.Name,
+                                x = x,
+                                y =y,
+                                TypeObjet = (int)tile.TypeObjet,
+                                ImageId = m_Tiles[y, x]
+                            });
                             //currentMonde.ObjetMondes.Add(m_TileLibrary.objetMondes.FirstOrDefault(x => x.ImageId == tile.imageId && x.x == xindex && x.y == yindex));
                             break;
                         case TypeTile.Monstre:
-                            MonstreCtrl.AjouterMonstre(currentMonde, x, y, tile.Name, m_Tiles[y, x]);
+                            MonstreMonde.Add(new Monstre()
+                            {
+                                MondeId = currentMonde.Id,
+                                x = x,
+                                y =y,
+                                Nom = tile.Name,
+                                ImageId = m_Tiles[y, x]
+                            });
                             //urrentMonde.Monstres.Add(m_TileLibrary.monstres.FirstOrDefault(x => x.ImageId == TileID && x.x == xindex && x.y == yindex));
                             break;
                         case TypeTile.Item:
-                            ItemCtrl.AjouterItems(tile.Name, "", x, y, m_Tiles[y, x], currentMonde.Id);
+                            ItemMonde.Add(new Item()
+                            {
+                                MondeId = currentMonde.Id,
+                                x = x,
+                                y = y,
+                                Nom = tile.Name,
+                                ImageId = m_Tiles[y, x]
+                            });
                             //currentMonde.Items.Add(m_TileLibrary.items.FirstOrDefault(x => x.ImageId == TileID && x.x == xindex && x.y == yindex));
                             break;
                     }
+
+                    
                 }
             }
 
+            ItemCtrl.AddRange(ItemMonde);
+            MonstreCtrl.AddRange(MonstreMonde);
+            ObjCtrl.AddRange(ObjetMonde);
         }
 
 

@@ -163,10 +163,14 @@ namespace HugoLandEditeur
         {
             if (m == null)
             {
-                int lastId = ctrl.ListerMondes().OrderByDescending(x => x.Id).Select(s => s.Id).First() + 1;
+                int? lastId = ctrl.ListerMondes().OrderByDescending(x => x.Id).Select(s => s.Id).FirstOrDefault();
+
+                if (lastId == null)
+                    lastId = 0;
+
                 m = new Monde()
                 {
-                    Id = lastId,
+                    Id = (int)lastId + 1,
                     Description = "",
                     LimiteX = 32,
                     LimiteY = 32

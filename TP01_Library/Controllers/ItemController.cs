@@ -84,5 +84,14 @@ namespace TP01_Library.Controllers
                 }
             }
         }
+
+        public void AddRange(List<Item> list)
+        {
+            using (HugoLandContext context = new HugoLandContext())
+            {
+                context.Items.AddRange(list);
+                context.SaveChanges();
+            }
+        }
     }
 }

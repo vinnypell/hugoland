@@ -118,6 +118,16 @@ namespace TP01_Library.Controllers
 
                 dbContext.SaveChanges();
             }
+
+
+        }
+        public void AddRange(List<Monstre> list)
+        {
+            using (HugoLandContext context = new HugoLandContext())
+            {
+                context.Monstres.AddRange(list);
+                context.SaveChanges();
+            }
         }
     }
 }
