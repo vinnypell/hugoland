@@ -1,16 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace TP01_Library.Controllers
 {
     public class ItemController
     {
         /// <summary>
-        /// Auteur: Mathias Lavoie-Rivard | 
-        /// Summary: Permet de créer un nouvel item. | 
+        /// Auteur: Mathias Lavoie-Rivard |
+        /// Summary: Permet de créer un nouvel item. |
         /// Date: 2021-02-11
         /// </summary>
         /// <param name="p_nom"></param>
@@ -35,13 +32,13 @@ namespace TP01_Library.Controllers
 
                 //ImageId = p_ImageID
 
-
                 dbcontext.SaveChanges();
             }
         }
+
         /// <summary>
-        /// Auteur: Mathias Lavoie-Rivard | 
-        /// Summary: Permet de supprimer un item de la map et de l'ajouter dans l'inventaire d'un hero | 
+        /// Auteur: Mathias Lavoie-Rivard |
+        /// Summary: Permet de supprimer un item de la map et de l'ajouter dans l'inventaire d'un hero |
         /// Date: 2021-02-11
         /// </summary>
         /// <param name="p_Item"></param>
@@ -66,9 +63,10 @@ namespace TP01_Library.Controllers
                 }
             }
         }
+
         /// <summary>
-        /// Auteur: Simon Lalancette | 
-        /// Summary: Permet de modifier la quantité d'item qu'un hero a | 
+        /// Auteur: Simon Lalancette |
+        /// Summary: Permet de modifier la quantité d'item qu'un hero a |
         /// Date: 2021-02-11
         /// </summary>
         public void ModifierQuantiteItem(int Item_ID, int p_quantite)
@@ -110,7 +108,7 @@ namespace TP01_Library.Controllers
             {
                 //context.Items.RemoveRange(context.Items.Where(x => x.MondeId == id));
                 //context.SaveChanges();
-                
+
                 //La requête SQL est beacoup plus rapide que le entity framework
                 context.Database.ExecuteSqlCommand($"DELETE FROM dbo.Item WHERE MondeId = {id}");
             }

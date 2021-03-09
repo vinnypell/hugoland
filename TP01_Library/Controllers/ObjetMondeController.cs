@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace TP01_Library.Controllers
 {
@@ -60,7 +57,7 @@ namespace TP01_Library.Controllers
 
         /// <summary>
         /// Auteur :        Vincent Pelland
-        /// Description:    Permet de modifier la description 
+        /// Description:    Permet de modifier la description
         ///                 d'un objetmonde spécifique à un monde, passé en paramètre.
         /// Date :          2021-02-10
         /// </summary>
@@ -72,7 +69,6 @@ namespace TP01_Library.Controllers
         {
             using (HugoLandContext dbContext = new HugoLandContext())
             {
-
                 ObjetMonde objetMonde = dbContext.ObjetMondes.FirstOrDefault(x => x.MondeId == p_iMondeId &&
                                                                              x.Id == p_iObjetMondeId);
 

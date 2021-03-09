@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace TP01_Library.Controllers
 {
@@ -59,12 +56,10 @@ namespace TP01_Library.Controllers
         {
             using (HugoLandContext dbContext = new HugoLandContext())
             {
-
                 Classe classe = dbContext.Classes.FirstOrDefault(x => x.Id == p_iClasseId);
 
                 dbContext.Classes.Remove(classe);
                 dbContext.SaveChanges();
-
             }
         }
 
@@ -92,7 +87,6 @@ namespace TP01_Library.Controllers
                 }
 
                 context.SaveChanges();
-
             }
         }
 

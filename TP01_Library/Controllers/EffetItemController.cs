@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Linq;
 
 namespace TP01_Library.Controllers
 {
@@ -10,7 +6,7 @@ namespace TP01_Library.Controllers
     {
         /// <summary>
         /// Auteur : Vincent Pelland
-        /// Description: 
+        /// Description:
         /// Date : 2021-02-13
         /// </summary>
         /// <param name="p_item"></param>
@@ -27,7 +23,6 @@ namespace TP01_Library.Controllers
                     TypeEffet = p_iTypeEffet
                 });
                 dbContext.SaveChanges();
-
             }
         }
 
@@ -61,7 +56,6 @@ namespace TP01_Library.Controllers
         {
             using (HugoLandContext dbContext = new HugoLandContext())
             {
-
                 EffetItem effetItem = dbContext.EffetItems.FirstOrDefault(x => x.Id == p_iEffetItemId);
 
                 if (p_iTypeEffet != effetItem.TypeEffet)

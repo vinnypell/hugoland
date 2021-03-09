@@ -1,20 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using TP01_Library;
 using TP01_Library.Controllers;
+
 namespace HugoLandEditeur.Presentation
 {
     public partial class frmAdminList : Form
     {
         public List<CompteJoueur> lstPlayers = new List<CompteJoueur>();
-        CompteJoueurController controller = new CompteJoueurController();
+        private CompteJoueurController controller = new CompteJoueurController();
 
         /// <summary>
         /// Description : Initialise la liste des administrateurs
@@ -38,7 +35,6 @@ namespace HugoLandEditeur.Presentation
             this.SuspendLayout();
 
             Loaditems();
-
         }
 
         private void frmAdminList_Load(object sender, EventArgs e)
@@ -47,12 +43,10 @@ namespace HugoLandEditeur.Presentation
 
         private void listView1_SelectedIndexChanged(object sender, EventArgs e)
         {
-
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
-
             foreach (ListViewItem item in listviewAdmins.Items)
             {
                 if (item.Checked)
@@ -75,7 +69,6 @@ namespace HugoLandEditeur.Presentation
 
             foreach (ListViewItem item in listviewAdmins.Items)
             {
-
                 if (item.Checked)
                 {
                     j = lstPlayers.FirstOrDefault(x => x.NomJoueur == item.SubItems[0].Text);
@@ -117,7 +110,6 @@ namespace HugoLandEditeur.Presentation
                     array[1] = "false";
                     itm = new ListViewItem(array);
                     itm.SubItems[1].BackColor = Color.Red;
-
                 }
 
                 itm.UseItemStyleForSubItems = false;

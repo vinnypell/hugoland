@@ -1,7 +1,5 @@
 using System;
 using System.Drawing;
-using TP01_Library;
-using TP01_Library.Controllers;
 
 namespace HugoLandEditeur
 {
@@ -34,7 +32,6 @@ namespace HugoLandEditeur
 
         public Tile()
         {
-
         }
 
         public Tile(string[] tileData)

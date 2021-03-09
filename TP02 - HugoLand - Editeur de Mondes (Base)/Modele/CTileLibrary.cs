@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
@@ -25,6 +24,7 @@ namespace HugoLandEditeur
         public List<Item> items = new List<Item>();
 
         private Tile m_clickedTile;
+
         public Tile clickedTile
         {
             get
@@ -39,6 +39,7 @@ namespace HugoLandEditeur
 
         // Contient l'image à afficher
         private Tile[,] m_Tiles;
+
         public Tile[,] Tiles
         {
             get
@@ -52,6 +53,7 @@ namespace HugoLandEditeur
         }
 
         private Dictionary<int, Tile> _ObjMonde = new Dictionary<int, Tile>();
+
         public Dictionary<int, Tile> ObjMonde
         {
             get { return _ObjMonde; }
@@ -159,6 +161,12 @@ namespace HugoLandEditeur
             yindex = y / csteApplication.TILE_HEIGHT_IN_IMAGE;
         }
 
+        /// <summary>
+        /// Auteur: Vincent Pelland
+        /// Description: Constructeur du CTileLibrary qui permet d'instancié le tableau de Tile dans une map
+        ///              même dans l'éventualité où on charge une partie
+        /// </summary>
+        /// <param name="m"></param>
         public void readTileDefinitions(Monde m)
         {
             if (m == null)
@@ -228,42 +236,12 @@ namespace HugoLandEditeur
                     for (int x = 0; x < m.LimiteX; x++)
                     {
                         // ça plante pour une raison que j'ignore
-                        List<Item> items = m.Items.Where(i => i.x == x && i.y == y).ToList();
+                        Item item = items.FirstOrDefault(i => i.x == x && i.y == y);
                         ObjetMonde objets = m.ObjetMondes.FirstOrDefault(o => o.x == x && o.y == y);
                         Monstre monstres = m.Monstres.FirstOrDefault(o => o.x == x && o.y == y);
 
-                        // Héro n'a pas d'imageID dans la table, alors je me doute qu'on enregistre la position du joueur
-                        // dans la map, si on ne le fait pas, ce sera ici de le faire et d'ajouter une propriété à cet effet
-                        //Hero heroes = ctrl.ListerHeroes(m).FirstOrDefault(o => o.x == x && o.y == y);
-
-                        // Seul les items peuvent être stacker
                         if (items.Count > 0 && items != null)
                         {
-                            //if (items.Count > 1)
-                            //{
-                            //    List<Tile> tiles = new List<Tile>();
-                            //    foreach (Item item in items)
-                            //    {
-                            //        tiles.Add(new Tile()
-                            //        {
-                            //            Name = item.Nom,
-                            //            Bitmap = m_TileSource,
-                            //            X_Image = (int)item.x,
-                            //            Y_Image = (int)item.y,
-                            //            TypeObjet = TypeTile.Item,
-                            //            IndexTypeObjet = (int)TypeTile.Item,
-                            //            Rectangle = new Rectangle((int)item.x - 1 * Tile.TileSizeX,
-                            //                                      (int)item.y - 1 * Tile.TileSizeY,
-                            //                                      Tile.TileSizeX * 1, Tile.TileSizeY)
-                            //        });
-                            //    }
-                            //    //Tiles[y, x] = tiles;
-                            //}
-                            //else
-                            //{
-                            //}
-
-                            Item item = items.FirstOrDefault();
                             Tiles[y, x] = new Tile()
                             {
                                 Name = item.Nom,
@@ -321,21 +299,6 @@ namespace HugoLandEditeur
 
                             Tiles[y, x] = defaultTile;
                         }
-                        //else if (heroes != null)
-                        //{
-                        //    Tiles[y, x] = new Tile()
-                        //    {
-                        //        Name = heroes.NomHero,
-                        //        Bitmap = m_TileSource,
-                        //        X_Image = heroes.x,
-                        //        Y_Image = heroes.y,
-                        //        TypeObjet = TypeTile.ObjetMonde,
-                        //        IndexTypeObjet = (int)TypeTile.ObjetMonde,
-                        //        Rectangle = new Rectangle((int)heroes.x - 1 * Tile.TileSizeX,
-                        //                                          (int)heroes.y - 1 * Tile.TileSizeY,
-                        //                                          Tile.TileSizeX * 1, Tile.TileSizeY)
-                        //    };
-                        //}
                     }
                 }
             }
@@ -359,5 +322,3 @@ namespace HugoLandEditeur
         }
     }
 }
-
-

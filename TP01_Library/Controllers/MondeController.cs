@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace TP01_Library.Controllers
 {
@@ -96,7 +93,6 @@ namespace TP01_Library.Controllers
             }
         }
 
-
         /// <summary>
         /// Auteur :        Vincent Pelland
         /// Description:    Retourne la liste des Mondes.
@@ -132,6 +128,7 @@ namespace TP01_Library.Controllers
         }
 
         #region Méthodes de gestion
+
         /// <summary>
         /// Description: Retourne les items du monde passé en paramètre
         /// </summary>
@@ -183,6 +180,7 @@ namespace TP01_Library.Controllers
                 return ctx.Heros.Where(x => x.MondeId == p_monde.Id).ToList();
             }
         }
-        #endregion
+
+        #endregion Méthodes de gestion
     }
 }

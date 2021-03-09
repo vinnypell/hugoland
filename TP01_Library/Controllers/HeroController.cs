@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace TP01_Library.Controllers
 {
@@ -13,7 +11,8 @@ namespace TP01_Library.Controllers
     /// </summary>
     public class HeroController
     {
-        Random _rnd = new Random();
+        private Random _rnd = new Random();
+
         /// <summary>
         /// Auteur : Simon Lalancette
         /// Desc : Permet de créer un héro et de le sauvegarder dans la Bd
@@ -58,7 +57,6 @@ namespace TP01_Library.Controllers
                 context.SaveChanges();
             }
         }
-
 
         /// <summary>
         /// Auteur : Simon Lalancette

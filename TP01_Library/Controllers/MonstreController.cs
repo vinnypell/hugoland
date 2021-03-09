@@ -1,9 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using TP01_Library.Controllers;
 
 namespace TP01_Library.Controllers
 {
@@ -14,7 +11,7 @@ namespace TP01_Library.Controllers
     /// </summary>
     public class MonstreController
     {
-        Random _rnd = new Random();
+        private Random _rnd = new Random();
 
         /// <summary>
         /// Auteur :        Vincent Pelland
@@ -52,7 +49,6 @@ namespace TP01_Library.Controllers
             }
         }
 
-
         /// <summary>
         /// Auteur :        Vincent Pelland
         /// Description:    Permet de supprimer/tuer un monstre selon son monde passé en paramètre.
@@ -64,7 +60,6 @@ namespace TP01_Library.Controllers
         {
             using (HugoLandContext dbContext = new HugoLandContext())
             {
-
                 Monstre monstre = dbContext.Monstres.FirstOrDefault(x => x.Id == p_iMonstreId);
 
                 dbContext.Monstres.Remove(monstre);
@@ -72,10 +67,9 @@ namespace TP01_Library.Controllers
             }
         }
 
-
         /// <summary>
         /// Auteur :    Vincent Pelland
-        /// Description:    Permet de modifier les informations 
+        /// Description:    Permet de modifier les informations
         ///                 du monstre selon son monde passé en paramètre.
         /// Date :  2021-02-10
         /// </summary>
@@ -94,11 +88,9 @@ namespace TP01_Library.Controllers
                     int iDmgMIN = Constantes.DMG_PER_LEVEL * p_iNiveau - Constantes.DMG_MIN_GAP;
                     int iDmgMAX = Constantes.DMG_PER_LEVEL * p_iNiveau;
 
-
                     monstre.Niveau = p_iNiveau;
                     monstre.StatDmgMax = iDmgMAX;
                     monstre.StatDmgMin = iDmgMIN;
-
                 }
 
                 if (p_sNom != monstre.Nom)
@@ -148,7 +140,6 @@ namespace TP01_Library.Controllers
 
                 //La requête SQL est beacoup plus rapide que le entity framework
                 context.Database.ExecuteSqlCommand($"DELETE FROM dbo.Monstre WHERE MondeId = {id}");
-
             }
         }
     }

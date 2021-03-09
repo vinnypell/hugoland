@@ -1,12 +1,9 @@
 ﻿using HugoLandEditeur.Presentation;
 using System;
-using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
 using TP01_Library;
 using TP01_Library.Controllers;
-using System.IO;
-using System.Linq;
 
 namespace HugoLandEditeur
 {
@@ -59,6 +56,7 @@ namespace HugoLandEditeur
         public frmMain()
         {
             #region Load la BD
+
             //StreamReader sr = new StreamReader(@"gamedata\AllTilesLookups.csv");
             //ObjetMondeController ctrlObj = new ObjetMondeController();
             //MonstreController ctrlMonstre = new MonstreController();
@@ -95,7 +93,8 @@ namespace HugoLandEditeur
             //            break;
             //    }
             //}
-            #endregion
+
+            #endregion Load la BD
 
             InitializeComponent();
             this.StartPosition = FormStartPosition.CenterScreen;
@@ -105,6 +104,7 @@ namespace HugoLandEditeur
         frmMain_Load()
         - Main Form Initialization
     \* -------------------------------------------------------------- */
+
         private void frmMain_Load(object sender, System.EventArgs e)
         {
             // Nouvelle instance de map
@@ -180,6 +180,7 @@ namespace HugoLandEditeur
         /* -------------------------------------------------------------- *\
         Menus
     \* -------------------------------------------------------------- */
+
         #region Menu Code
 
         private void mnuFileExit_Click(object sender, System.EventArgs e)
@@ -232,6 +233,7 @@ namespace HugoLandEditeur
             vscMap_Scroll()
             - vertical scroll bar for map editor window
         \* -------------------------------------------------------------- */
+
         private void vscMap_Scroll(object sender, System.Windows.Forms.ScrollEventArgs e)
         {
             m_YSel = e.NewValue;
@@ -243,6 +245,7 @@ namespace HugoLandEditeur
             hscMap_Scroll()
             - horizontal scroll bar for map editor window
         \* -------------------------------------------------------------- */
+
         private void hscMap_Scroll(object sender, System.Windows.Forms.ScrollEventArgs e)
         {
             m_XSel = e.NewValue;
@@ -257,6 +260,7 @@ namespace HugoLandEditeur
               auto-sized to the space not taken by the lower and right
               panes.
         \* -------------------------------------------------------------- */
+
         private void picEditArea_Resize(object sender, System.EventArgs e)
         {
             if (m_bOpen)
@@ -278,6 +282,7 @@ namespace HugoLandEditeur
               until after the event already occurred... so I'm setting
               flags instead.
         \* -------------------------------------------------------------- */
+
         private void timer1_Tick(object sender, System.EventArgs e)
         {
             if (m_bRefresh)
@@ -637,7 +642,6 @@ namespace HugoLandEditeur
                 catch
                 {
                     Console.WriteLine("Error Loading...");
-
                 }
             }
 
@@ -672,7 +676,6 @@ namespace HugoLandEditeur
                 m_MenuLogic();
                 this.Cursor = Cursors.Default;
             }
-
         }
 
         /// <summary>
@@ -737,7 +740,6 @@ namespace HugoLandEditeur
 
         private void mnuSettings_Click(object sender, EventArgs e)
         {
-
         }
 
         private void mnuCreateUser_Click(object sender, EventArgs e)
@@ -745,7 +747,6 @@ namespace HugoLandEditeur
             var form2 = new frmCreateUser();
             form2.Show();
         }
-
 
         /* -------------------------------------------------------------- *\
             picMap_Click()
@@ -765,7 +766,6 @@ namespace HugoLandEditeur
             m_bRefresh = true;
         }
 
-
         /* -------------------------------------------------------------- *\
             picTiles_Click()
 
@@ -780,7 +780,7 @@ namespace HugoLandEditeur
         }
 
         /* -------------------------------------------------------------- *\
-            
+
         ObjetMonde => lbl_Description
         Item => lbl_Description
         Monstre => lstB_Monstre

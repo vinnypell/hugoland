@@ -1,23 +1,17 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using TP01_Library;
 using TP01_Library.Controllers;
 
 namespace HugoLandEditeur.Presentation
 {
-    
     public partial class frmListSelector : Form
     {
-        MondeController ctrl = new MondeController();
+        private MondeController ctrl = new MondeController();
 
         public Monde monde { get; set; }
+
         /// <summary>
         /// Description : Initilise le formulaire de sélection de monde pour loader
         /// Date : 2021-03-08
@@ -26,7 +20,7 @@ namespace HugoLandEditeur.Presentation
         {
             InitializeComponent();
             this.StartPosition = FormStartPosition.CenterParent;
-            lstMondes.DataSource = ctrl.ListerMondes().Select(x =>x.Id + " : " + x.Description).ToArray();
+            lstMondes.DataSource = ctrl.ListerMondes().Select(x => x.Id + " : " + x.Description).ToArray();
         }
 
         /// <summary>
@@ -55,12 +49,10 @@ namespace HugoLandEditeur.Presentation
 
         private void frmListSelector_Load(object sender, EventArgs e)
         {
-
         }
 
         private void lstMondes_SelectedIndexChanged(object sender, EventArgs e)
         {
-
         }
     }
 }

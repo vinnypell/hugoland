@@ -1,14 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Text.RegularExpressions;
 using System.Windows.Forms;
 using TP01_Library.Controllers;
-using System.Text.RegularExpressions;
 
 namespace HugoLandEditeur.Presentation
 {
@@ -21,12 +14,10 @@ namespace HugoLandEditeur.Presentation
 
         private void lbl_firstname_Click(object sender, EventArgs e)
         {
-
         }
 
         private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
-
         }
 
         /// <summary>
@@ -37,7 +28,6 @@ namespace HugoLandEditeur.Presentation
         /// <param name="e"></param>
         private void btn_Click(object sender, EventArgs e)
         {
-
             Regex regex = new Regex(@"^([\w\.\-]+)@([\w\-]+)((\.(\w){2,3})+)$");
 
             string UserName = txt_username.Text;
@@ -52,6 +42,7 @@ namespace HugoLandEditeur.Presentation
                 case "Admin":
                     Type = 1;
                     break;
+
                 case "User":
                     Type = 0;
                     break;
@@ -82,7 +73,6 @@ namespace HugoLandEditeur.Presentation
                 }
             }
 
-
             if (!match.Success)
             {
                 Error1 = "The email format is not valid";
@@ -98,7 +88,7 @@ namespace HugoLandEditeur.Presentation
                 Error3 = "The confirmed password does not match the original password";
             }
 
-            if (Error !=null)
+            if (Error != null)
             {
                 MessageBox.Show(Error, "ERROR",
    MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -113,14 +103,12 @@ namespace HugoLandEditeur.Presentation
                 string Validation = controller.CreerJoueur(UserName, Email, FirstName, LastName, Type, PasswordConfig);
                 if (Validation == "SUCCESS")
                 {
-                    this.Close(); 
+                    this.Close();
                 }
                 else
                     MessageBox.Show(Validation, "ERROR",
        MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
-
-
         }
 
         private void btn_cancel_Click(object sender, EventArgs e)

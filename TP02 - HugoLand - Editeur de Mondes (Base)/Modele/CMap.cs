@@ -1,7 +1,5 @@
-using System;
 using System.Collections.Generic;
 using System.Drawing;
-using System.IO;
 using System.Linq;
 using TP01_Library;
 using TP01_Library.Controllers;
@@ -33,6 +31,7 @@ namespace HugoLandEditeur
         private MonstreController MonstreCtrl = new MonstreController();
 
         private Monde m_currentMonde;
+
         public Monde currentMonde
         {
             get
@@ -237,7 +236,7 @@ namespace HugoLandEditeur
         /// </summary>
         private void UpdateTiles()
         {
-            List <ObjetMonde> ObjetMonde = new List<ObjetMonde>();
+            List<ObjetMonde> ObjetMonde = new List<ObjetMonde>();
             List<Monstre> MonstreMonde = new List<Monstre>();
             List<Item> ItemMonde = new List<Item>();
 
@@ -264,6 +263,7 @@ namespace HugoLandEditeur
                             });
                             //currentMonde.ObjetMondes.Add(m_TileLibrary.objetMondes.FirstOrDefault(x => x.ImageId == tile.imageId && x.x == xindex && x.y == yindex));
                             break;
+
                         case TypeTile.Monstre:
                             MonstreMonde.Add(new Monstre()
                             {
@@ -275,6 +275,7 @@ namespace HugoLandEditeur
                             });
                             //urrentMonde.Monstres.Add(m_TileLibrary.monstres.FirstOrDefault(x => x.ImageId == TileID && x.x == xindex && x.y == yindex));
                             break;
+
                         case TypeTile.Item:
                             ItemMonde.Add(new Item()
                             {
@@ -288,8 +289,6 @@ namespace HugoLandEditeur
                             //currentMonde.Items.Add(m_TileLibrary.items.FirstOrDefault(x => x.ImageId == TileID && x.x == xindex && x.y == yindex));
                             break;
                     }
-
-
                 }
             }
 
@@ -297,7 +296,6 @@ namespace HugoLandEditeur
             MonstreCtrl.AddRange(MonstreMonde);
             ObjCtrl.AddRange(ObjetMonde);
         }
-
 
         /// <summary>
         /// Description: G�re la sauvegarde d'un [Monde]

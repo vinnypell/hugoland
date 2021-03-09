@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace TP01_Library.Controllers
+﻿namespace TP01_Library.Controllers
 {
     public class Constantes
     {

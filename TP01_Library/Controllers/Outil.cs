@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace TP01_Library.Controllers
 {
@@ -10,6 +6,7 @@ namespace TP01_Library.Controllers
     {
         private static CompteJoueur _ActiveUser;
         private static Monde MondeToEdit;
+
         public static int RollD20()
         {
             Random rnd = new Random();
@@ -25,7 +22,6 @@ namespace TP01_Library.Controllers
         {
             return _ActiveUser;
         }
-
 
         public static void SetMondeToEdit(Monde m)
         {

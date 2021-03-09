@@ -2,15 +2,11 @@
 using System.Collections.Generic;
 using System.Data.Entity.Core.Objects;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace TP01_Library.Controllers
 {
     public class CompteJoueurController
     {
-
-
         /// <summary>
         /// Auteur: Mathias Lavoie-Rivard |
         /// Summary: Permet de créer un compte. |
@@ -32,9 +28,10 @@ namespace TP01_Library.Controllers
                 return (Convert.ToString(message.Value));
             }
         }
+
         /// <summary>
-        /// Auteur: Mathias Lavoie-Rivard | 
-        /// Summary: Permet de supprimer un compte. | 
+        /// Auteur: Mathias Lavoie-Rivard |
+        /// Summary: Permet de supprimer un compte. |
         /// Date: 2021-02-11
         /// </summary>
         /// <param name="p_CompteJoueur"></param>
@@ -48,9 +45,10 @@ namespace TP01_Library.Controllers
                 dbcontext.SaveChanges();
             }
         }
+
         /// <summary>
-        /// Auteur: Mathias Lavoie-Rivard | 
-        /// Summary: Permet de modifier un compte. | 
+        /// Auteur: Mathias Lavoie-Rivard |
+        /// Summary: Permet de modifier un compte. |
         /// Date: 2021-02-11
         /// </summary>
         /// <param name="p_CompteJoueur"></param>
@@ -84,9 +82,10 @@ namespace TP01_Library.Controllers
                 dbContext.SaveChanges();
             }
         }
+
         /// <summary>
-        /// Auteur: Mathias Lavoie-Rivard | 
-        /// Summary: Permet de Valider la connexion du joueur | 
+        /// Auteur: Mathias Lavoie-Rivard |
+        /// Summary: Permet de Valider la connexion du joueur |
         /// Date: 2021-02-11
         /// </summary>
         /// <param name="p_Mdp"></param>
@@ -116,6 +115,7 @@ namespace TP01_Library.Controllers
                 return dbContext.CompteJoueurs.FirstOrDefault(x => x.NomJoueur == username);
             }
         }
+
         /// <summary>
         /// Auteur: Mathias Lavoie-Rivard
         /// Date: 2021-03-07

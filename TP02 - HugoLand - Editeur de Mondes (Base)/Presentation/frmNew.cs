@@ -105,7 +105,6 @@ namespace HugoLandEditeur
                 return false;
             }
 
-
             strValue = txtHeight.Text.Trim();
 
             if (int.TryParse(strValue, out nValue))
@@ -120,13 +119,9 @@ namespace HugoLandEditeur
                 return false;
             }
 
-
-
-
             return true;
         }
 
         #endregion Hauteur et largeur lors d'une création de map
-
     }
 }
