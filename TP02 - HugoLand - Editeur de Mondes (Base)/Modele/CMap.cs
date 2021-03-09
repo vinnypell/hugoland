@@ -224,7 +224,7 @@ namespace HugoLandEditeur
         private void UpdateTiles()
         {
 
-            List <ObjetMonde> ObjetMonde = new List<ObjetMonde>();
+            List<ObjetMonde> ObjetMonde = new List<ObjetMonde>();
             List<Monstre> MonstreMonde = new List<Monstre>();
             List<Item> ItemMonde = new List<Item>();
 
@@ -237,19 +237,17 @@ namespace HugoLandEditeur
                 {
                     Tile tile = m_TileLibrary.ObjMonde[m_Tiles[y, x]];
 
-                    List<ObjetMonde> TileInMondeObj = currObjs.Where(o => o.x == x && o.y == y).ToList();
-                    if (TileInMondeObj.Count() > 0)
-                        foreach (ObjetMonde o in TileInMondeObj)
-                            ObjCtrl.SupprimerObjetMonde(o.Id);
+                    ObjetMonde TileInMondeObj = currObjs.FirstOrDefault(o => o.x == x && o.y == y);
+                    if (TileInMondeObj != null)
+                        ObjCtrl.SupprimerObjetMonde(TileInMondeObj.Id);
 
-                    List<Item> TileInMondeItem = currItems.Where(o => o.x == x && o.y == y).ToList();
-                    if (TileInMondeItem.Count() > 0)
-                        foreach (Item i in TileInMondeItem)
-                            ItemCtrl.SupprimerItem(i.Id, null);
+                    Item TileInMondeItem = currItems.FirstOrDefault(o => o.x == x && o.y == y);
+                    if (TileInMondeItem != null)
+                        ItemCtrl.SupprimerItem(TileInMondeItem.Id, null);
 
                     Monstre TileInMondeMonstre = currMonstres.FirstOrDefault(o => o.x == x && o.y == y);
                     if (TileInMondeMonstre != null)
-                            MonstreCtrl.SupprimerMonstre(TileInMondeMonstre.Id);
+                        MonstreCtrl.SupprimerMonstre(TileInMondeMonstre.Id);
 
                     switch (tile.TypeObjet)
                     {
@@ -259,7 +257,7 @@ namespace HugoLandEditeur
                                 MondeId = currentMonde.Id,
                                 Description = tile.Name,
                                 x = x,
-                                y =y,
+                                y = y,
                                 TypeObjet = (int)tile.TypeObjet,
                                 ImageId = m_Tiles[y, x]
                             });
@@ -270,7 +268,7 @@ namespace HugoLandEditeur
                             {
                                 MondeId = currentMonde.Id,
                                 x = x,
-                                y =y,
+                                y = y,
                                 Nom = tile.Name,
                                 ImageId = m_Tiles[y, x]
                             });
@@ -289,7 +287,7 @@ namespace HugoLandEditeur
                             break;
                     }
 
-                    
+
                 }
             }
 
@@ -312,6 +310,7 @@ namespace HugoLandEditeur
             if (monde == null)
             {
                 MondeCtrl.AjouterMonde(currentMonde.Description, currentMonde.LimiteX, currentMonde.LimiteY);
+                currentMonde.Id = MondeCtrl.ListerMondes().LastOrDefault().Id;
             }
             else
             {
@@ -417,10 +416,11 @@ namespace HugoLandEditeur
             // Build Backbuffer
             m_Width = m.LimiteX;
             m_Height = m.LimiteY;
-            int lastId = MondeCtrl.ListerMondes().OrderByDescending(x => x.Id).Select(s => s.Id).First() + 1;
+            int? lastId = MondeCtrl.ListerMondes().OrderByDescending(x => x.Id).Select(s => s.Id).FirstOrDefault();
+            if (lastId == null)
+                lastId = 0;
             currentMonde = new Monde()
             {
-                Id = lastId,
                 Description = m.Description,
                 LimiteX = m_Width,
                 LimiteY = m_Height
