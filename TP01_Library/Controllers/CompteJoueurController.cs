@@ -56,7 +56,6 @@ namespace TP01_Library.Controllers
         /// <param name="p_CompteJoueur"></param>
         public void ModifierJoueur(int p_iCompteJoueurId, string p_NomJoueur, string p_Courriel, string p_Prenom, string p_Nom, int? p_TypeUtilisateur)
         {
-            //TODO AJOUTER LES INFORAMTION AU COMPTE ET VÉRIFIER SI L'INFORMATION EST CHANGÉ OU NON.
             using (HugoLandContext dbContext = new HugoLandContext())
             {
                 CompteJoueur joueurModif = dbContext.CompteJoueurs.FirstOrDefault(x => x.Id == p_iCompteJoueurId);
