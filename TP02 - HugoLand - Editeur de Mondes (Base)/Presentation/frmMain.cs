@@ -800,64 +800,24 @@ namespace HugoLandEditeur
             {
                 lbl_InfoType.Text = m_Map.currTile.TypeObjet.ToString();
                 lbl_InfoType.Visible = true;
-                switch (m_Map.currTile.TypeObjet)
-                {
-                    case TypeTile.ObjetMonde:
-                        //lstB_Hero.Visible = false;
-                        lstB_Monstre.Visible = false;
-                        lbl_Description.Visible = true;
-                        btnReset.Visible = true;
-                        lbl_Description.Text = m_Map.currTile.Name;
-
-                        ResetInfos();
-                        break;
-                    case TypeTile.Item:
-                        //lstB_Hero.Visible = false;
-                        lstB_Monstre.Visible = false;
-                        lbl_Description.Visible = true;
-                        btnReset.Visible = true;
-                        lbl_Description.Text = m_Map.currTile.Name;
-
-                        ResetInfos();
-                        break;
-                    case TypeTile.Monstre:
-                        //lstB_Hero.Visible = false;
-                        lstB_Monstre.Visible = false;
-                        lbl_Description.Visible = true;
-                        btnReset.Visible = true;
-                        lbl_Description.Text = m_Map.currTile.Name;
-
-                        ResetInfos();
-                        break;
-                        //case TypeTile.ClasseHero:
-                        //    lstB_Monstre.Visible = false;
-                        //    lbl_Description.Visible = false;
-                        //    lstB_Hero.Visible = true;
-                        //    btnReset.Visible = true;
-
-                        //    HeroController ctrl = new HeroController();
-                        //    Hero currHero = ctrl.GetHero(Name);
-
-                        //    lstB_Hero.Items.Add(currHero.NomHero);
-
-                        //    break;
-                }
+                lbl_Description.Visible = true;
+                btnReset.Visible = true;
+                lbl_Description.Text = m_Map.currTile.Name;
+                RefreshInfos();
             }
         }
 
         private void btnReset_Click(object sender, EventArgs e)
         {
             m_ActiveTileID = 32;
-            ResetInfos();
+            RefreshInfos();
         }
 
-        private void ResetInfos()
+        private void RefreshInfos()
         {
             picActiveTile.Refresh();
             lbl_Description.Refresh();
             lbl_InfoType.Refresh();
-            lstB_Hero.Refresh();
-            lstB_Monstre.Refresh();
         }
 
         private void menuAdmins_Click(object sender, EventArgs e)
