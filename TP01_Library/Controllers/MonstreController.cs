@@ -118,9 +118,13 @@ namespace TP01_Library.Controllers
 
                 dbContext.SaveChanges();
             }
-
-
         }
+
+        /// <summary>
+        /// Auteur: Mathias Lavoie-Rivard
+        /// Description: Permet d'ajouter les monstres et updater le monde en cours
+        /// </summary>
+        /// <param name="list"></param>
         public void AddRange(List<Monstre> list)
         {
             using (HugoLandContext context = new HugoLandContext())
@@ -130,6 +134,11 @@ namespace TP01_Library.Controllers
             }
         }
 
+        /// <summary>
+        /// Auteur: Mathias Lavoie-Rivard
+        /// Description: Supprime les monstres du monde précédent avant la sauvegarde, pour faire place aux nouvelles listes
+        /// </summary>
+        /// <param name="id"></param>
         public void RemoveRange(int id)
         {
             using (HugoLandContext context = new HugoLandContext())
