@@ -44,5 +44,6 @@ namespace HugoLandEditeur.Presentation
             this.DialogResult = DialogResult.Yes;
             this.Close();
         }
+
     }
 }

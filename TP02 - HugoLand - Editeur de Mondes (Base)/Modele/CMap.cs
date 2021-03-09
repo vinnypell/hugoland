@@ -27,7 +27,10 @@ namespace HugoLandEditeur
         private int m_Zoom;
 
         private Tile m_currTile;
-        private MondeController ctrl = new MondeController();
+        private MondeController MondeCtrl = new MondeController();
+        private ObjetMondeController ObjCtrl = new ObjetMondeController();
+        private ItemController ItemCtrl = new ItemController();
+        private MonstreController MonstreCtrl = new MonstreController();
 
         private Monde m_currentMonde;
         public Monde currentMonde
@@ -214,18 +217,64 @@ namespace HugoLandEditeur
             m_Tiles[yindex, xindex] = TileID;
             m_TileLibrary.DrawTile(m_BackBufferDC, TileID, xindex * csteApplication.TILE_WIDTH_IN_MAP, yindex * csteApplication.TILE_HEIGHT_IN_MAP);
 
-            foreach (var item in m_TileLibrary.ObjMonde)
+            foreach (Tile tile in m_TileLibrary.ObjMonde.Values)
             {
-                string[] id = item.Key.Split(',').ToArray();
-                int idTile = int.Parse(id[0]);
-
-                if (idTile == TileID)
+                if (tile.imageId == TileID)
                 {
-                    m_currTile = item.Value;
+                    m_currTile = tile;
+                    m_TileLibrary.Tiles[yindex, xindex] = tile;
                     return;
                 }
             }
         }
+
+        private void UpdateTiles()
+        {
+            List<ObjetMonde> currObjs = MondeCtrl.ListerObjetMondes(currentMonde);
+            List<Monstre> currMonstres = MondeCtrl.ListerMonstres(currentMonde);
+            List<Item> currItems = MondeCtrl.ListerItems(currentMonde);
+            for (int y = 0; y < currentMonde.LimiteY; y++)
+            {
+                for (int x = 0; x < currentMonde.LimiteX; x++)
+                {
+                    Tile tile = m_TileLibrary.Tiles[y, x];
+
+                    List<ObjetMonde> TileInMondeObj = currObjs.Where(o => o.x == x && o.y == y).ToList();
+                    if (TileInMondeObj.Count() > 0)
+                        foreach (ObjetMonde o in TileInMondeObj)
+                            ObjCtrl.SupprimerObjetMonde(o.Id);
+
+                    List<Item> TileInMondeItem = currItems.Where(o => o.x == x && o.y == y).ToList();
+                    if (TileInMondeItem.Count() > 0)
+                        foreach (Item i in TileInMondeItem)
+                            ItemCtrl.SupprimerItem(i.Id, null);
+
+                    List<Monstre> TileInMondeMonstre = currMonstres.Where(o => o.x == x && o.y == y).ToList();
+                    if (TileInMondeMonstre.Count() > 0)
+                        foreach (Monstre m in TileInMondeMonstre)
+                            MonstreCtrl.SupprimerMonstre(m.Id);
+
+                    switch (tile.TypeObjet)
+                    {
+
+                        case TypeTile.ObjetMonde:
+                            ObjCtrl.AjouterObjetMonde(currentMonde.Id, tile.Name, x, y, (int)tile.TypeObjet, tile.imageId);
+                            //currentMonde.ObjetMondes.Add(m_TileLibrary.objetMondes.FirstOrDefault(x => x.ImageId == tile.imageId && x.x == xindex && x.y == yindex));
+                            break;
+                        case TypeTile.Monstre:
+                            MonstreCtrl.AjouterMonstre(currentMonde, x, y, tile.Name, tile.imageId);
+                            //urrentMonde.Monstres.Add(m_TileLibrary.monstres.FirstOrDefault(x => x.ImageId == TileID && x.x == xindex && x.y == yindex));
+                            break;
+                        case TypeTile.Item:
+                            ItemCtrl.AjouterItems(tile.Name, "", x, y, tile.imageId, currentMonde.Id);
+                            //currentMonde.Items.Add(m_TileLibrary.items.FirstOrDefault(x => x.ImageId == TileID && x.x == xindex && x.y == yindex));
+                            break;
+                    }
+                }
+            }
+
+        }
+
 
         /// <summary>
         /// Description: G�re la sauvegarde d'un [Monde]
@@ -235,45 +284,42 @@ namespace HugoLandEditeur
         /// <returns></returns>
         public int Save()
         {
-            Monde monde = ctrl.GetMonde(currentMonde.Id);
+            Monde monde = MondeCtrl.GetMonde(currentMonde.Id);
 
             if (monde == null)
             {
-                ctrl.AjouterMonde(currentMonde.Description, currentMonde.LimiteX, currentMonde.LimiteY);
+                MondeCtrl.AjouterMonde(currentMonde.Description, currentMonde.LimiteX, currentMonde.LimiteY);
             }
             else
             {
                 if (monde.LimiteY != currentMonde.LimiteY || monde.LimiteX != currentMonde.LimiteX)
-                    ctrl.ModifierDimensionsMonde(currentMonde.Id, currentMonde.LimiteX, currentMonde.LimiteY);
+                    MondeCtrl.ModifierDimensionsMonde(currentMonde.Id, currentMonde.LimiteX, currentMonde.LimiteY);
 
                 if (monde.Description != currentMonde.Description)
-                    ctrl.ModifierDescriptionMonde(currentMonde.Id, currentMonde.Description);
+                    MondeCtrl.ModifierDescriptionMonde(currentMonde.Id, currentMonde.Description);
             }
+            UpdateTiles();
 
-            List<ObjetMonde> currObjs = ctrl.ListerObjetMondes(currentMonde);
-            List<Monstre> currMonstres = ctrl.ListerMonstres(currentMonde);
-            List<Item> currItems = ctrl.ListerItems(currentMonde);
-            List<Hero> currHeroes = ctrl.ListerHeroes(currentMonde);
 
-            if (currObjs != null && currObjs.Count != 0)
-            {
-                ctrl.ModifierMonde(currentMonde.Id, currObjs);
-            }
+            //if (currObjs != null && currObjs.Count != 0)
+            //{
+            //    MondeCtrl.ModifierMonde(currentMonde.Id, currObjs);
+            //}
 
-            if (currMonstres != null && currMonstres.Count != 0)
-            {
-                ctrl.ModifierMonde(currentMonde.Id, currMonstres);
-            }
+            //if (currMonstres != null && currMonstres.Count != 0)
+            //{
+            //    MondeCtrl.ModifierMonde(currentMonde.Id, currMonstres);
+            //}
 
-            if (currItems != null && currItems.Count != 0)
-            {
-                ctrl.ModifierMonde(currentMonde.Id, currItems);
-            }
+            //if (currItems != null && currItems.Count != 0)
+            //{
+            //    MondeCtrl.ModifierMonde(currentMonde.Id, currItems);
+            //}
 
-            if (currHeroes != null && currHeroes.Count != 0)
-            {
-                ctrl.ModifierMonde(currentMonde.Id, currHeroes);
-            }
+            //if (currHeroes != null && currHeroes.Count != 0)
+            //{
+            //    ctrl.ModifierMonde(currentMonde.Id, currHeroes);
+            //}
 
             return 0;
         }
@@ -287,7 +333,7 @@ namespace HugoLandEditeur
         {
             int width = -1;
             int height = -1;
-            int data = -1;
+            //int data = -1;
 
             width = m.LimiteX;
             height = m.LimiteY;
@@ -348,7 +394,7 @@ namespace HugoLandEditeur
             // Build Backbuffer
             m_Width = m.LimiteX;
             m_Height = m.LimiteY;
-            int lastId = ctrl.ListerMondes().OrderByDescending(x => x.Id).Select(s => s.Id).First() + 1;
+            int lastId = MondeCtrl.ListerMondes().OrderByDescending(x => x.Id).Select(s => s.Id).First() + 1;
             currentMonde = new Monde()
             {
                 Id = lastId,
@@ -368,7 +414,7 @@ namespace HugoLandEditeur
                 m_BackBuffer = new Bitmap(m_Width * csteApplication.TILE_WIDTH_IN_MAP, m_Height * csteApplication.TILE_HEIGHT_IN_MAP);
                 m_BackBufferDC = Graphics.FromImage(m_BackBuffer);
 
-                Save();
+                //Save();
                 Refresh();
             }
             catch

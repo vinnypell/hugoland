@@ -274,7 +274,7 @@ namespace HugoLandEditeur
             // mnuCreateUser
             // 
             this.mnuCreateUser.Index = 0;
-            this.mnuCreateUser.Text = "Create New User";
+            this.mnuCreateUser.Text = "Create new user";
             this.mnuCreateUser.Click += new System.EventHandler(this.mnuCreateUser_Click);
             // 
             // menuAdmins
@@ -582,7 +582,8 @@ namespace HugoLandEditeur
             this.Controls.Add(this.picEditArea);
             this.Menu = this.mbMain;
             this.Name = "frmMain";
-            this.Text = "Éditeur de monde Hugo Land";
+            //this.Text = "Éditeur de monde Hugo Land";
+            this.Text = "Hugoland world editor";
             this.Load += new System.EventHandler(this.frmMain_Load);
             this.panelTools.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.picActiveTile)).EndInit();

@@ -51,7 +51,7 @@ namespace HugoLandEditeur.Presentation
                 }
 
             }
-            else if(reponse == "INCORRECT")
+            else if (reponse == "INCORRECT")
             {
                 MessageBox.Show("PASSWORD IS INVALID", "Connection error",
     MessageBoxButtons.OK, MessageBoxIcon.Error);
