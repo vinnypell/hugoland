@@ -131,6 +131,12 @@ namespace TP01_Library.Controllers
             }
         }
 
+        #region Méthodes de gestion
+        /// <summary>
+        /// Description: Retourne les items du monde passé en paramètre
+        /// </summary>
+        /// <param name="p_monde"></param>
+        /// <returns></returns>
         public List<Item> ListerItems(Monde p_monde)
         {
             using (HugoLandContext ctx = new HugoLandContext())
@@ -138,6 +144,12 @@ namespace TP01_Library.Controllers
                 return ctx.Items.Where(x => x.MondeId == p_monde.Id).ToList();
             }
         }
+
+        /// <summary>
+        /// Description: Retourne les objetmondes du monde passé en paramètre
+        /// </summary>
+        /// <param name="p_monde"></param>
+        /// <returns></returns>
         public List<ObjetMonde> ListerObjetMondes(Monde p_monde)
         {
             using (HugoLandContext ctx = new HugoLandContext())
@@ -145,6 +157,12 @@ namespace TP01_Library.Controllers
                 return ctx.ObjetMondes.Where(x => x.MondeId == p_monde.Id).ToList();
             }
         }
+
+        /// <summary>
+        /// Description: Retourne les monstres du monde passé en paramètre
+        /// </summary>
+        /// <param name="p_monde"></param>
+        /// <returns></returns>
         public List<Monstre> ListerMonstres(Monde p_monde)
         {
             using (HugoLandContext ctx = new HugoLandContext())
@@ -152,6 +170,12 @@ namespace TP01_Library.Controllers
                 return ctx.Monstres.Where(x => x.MondeId == p_monde.Id).ToList();
             }
         }
+
+        /// <summary>
+        /// Description: Retourne les héros du monde passé en paramètre
+        /// </summary>
+        /// <param name="p_monde"></param>
+        /// <returns></returns>
         public List<Hero> ListerHeroes(Monde p_monde)
         {
             using (HugoLandContext ctx = new HugoLandContext())
@@ -159,44 +183,6 @@ namespace TP01_Library.Controllers
                 return ctx.Heros.Where(x => x.MondeId == p_monde.Id).ToList();
             }
         }
-
-        public void ModifierMonde(int p_monde, List<ObjetMonde> objetMondes)
-        {
-            using(HugoLandContext context = new HugoLandContext())
-            {
-                Monde monde = context.Mondes.FirstOrDefault(x => x.Id == p_monde);
-                monde.ObjetMondes = new List<ObjetMonde>();
-                monde.ObjetMondes = objetMondes;
-                context.SaveChanges();
-            }
-        }
-        public void ModifierMonde(int p_monde, List<Monstre> monstres)
-        {
-            using (HugoLandContext context = new HugoLandContext())
-            {
-                Monde monde = context.Mondes.FirstOrDefault(x => x.Id == p_monde);
-                monde.Monstres = monstres;
-                context.SaveChanges();
-            }
-        }
-        public void ModifierMonde(int p_monde, List<Item> items)
-        {
-            using (HugoLandContext context = new HugoLandContext())
-            {
-                Monde monde = context.Mondes.FirstOrDefault(x => x.Id == p_monde);
-                monde.Items = items;
-                context.SaveChanges();
-            }
-        }
-        public void ModifierMonde(int p_monde, List<Hero> heroes)
-        {
-            using (HugoLandContext context = new HugoLandContext())
-            {
-                Monde monde = context.Mondes.FirstOrDefault(x => x.Id == p_monde);
-                monde.Heros = heroes;
-                context.SaveChanges();
-            }
-        }
-
+        #endregion
     }
 }

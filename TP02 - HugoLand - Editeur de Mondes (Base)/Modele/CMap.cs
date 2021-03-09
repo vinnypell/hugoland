@@ -237,8 +237,7 @@ namespace HugoLandEditeur
         /// </summary>
         private void UpdateTiles()
         {
-
-            List<ObjetMonde> ObjetMonde = new List<ObjetMonde>();
+            List <ObjetMonde> ObjetMonde = new List<ObjetMonde>();
             List<Monstre> MonstreMonde = new List<Monstre>();
             List<Item> ItemMonde = new List<Item>();
 

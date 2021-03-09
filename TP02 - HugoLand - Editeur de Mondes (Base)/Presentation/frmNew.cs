@@ -90,20 +90,38 @@ namespace HugoLandEditeur
         private bool ValidateInput(ref int nWidth, ref int nHeight)
         {
             String strValue = txtWidth.Text.Trim();
-            int nValue = Convert.ToInt32(strValue, 10);
-            nWidth = nValue;
+
+            int nValue;
+
+            if (int.TryParse(strValue, out nValue))
+            {
+                nWidth = nValue;
+                // Validate Width
+                if (nWidth < 8 || nWidth > 152)
+                    return false;
+            }
+            else
+            {
+                return false;
+            }
+
 
             strValue = txtHeight.Text.Trim();
-            nValue = Convert.ToInt32(strValue, 10);
-            nHeight = nValue;
 
-            // Validate Height
-            if (nHeight < 8 || nHeight > 64000)
+            if (int.TryParse(strValue, out nValue))
+            {
+                nHeight = nValue;
+                // Validate Height
+                if (nHeight < 8 || nHeight > 152)
+                    return false;
+            }
+            else
+            {
                 return false;
+            }
 
-            // Validate Width
-            if (nWidth < 8 || nWidth > 64000)
-                return false;
+
+
 
             return true;
         }
