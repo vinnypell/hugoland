@@ -46,7 +46,7 @@ namespace HugoLandEditeur.Presentation
                 }
                 else
                 {
-                    MessageBox.Show("YOU DO NOT HAVE PERMISSION TO LOG IN", "Connection error",
+                    MessageBox.Show("YOU DO NOT HAVE PERMISSIONS TO LOG IN", "Connection error",
     MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
 

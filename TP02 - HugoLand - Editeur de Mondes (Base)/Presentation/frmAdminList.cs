@@ -13,7 +13,7 @@ namespace HugoLandEditeur.Presentation
 {
     public partial class frmAdminList : Form
     {
-        public List<CompteJoueur> lstadmins = new List<CompteJoueur>();
+        public List<CompteJoueur> lstPlayers = new List<CompteJoueur>();
         CompteJoueurController controller = new CompteJoueurController();
         public frmAdminList()
         {
@@ -33,7 +33,7 @@ namespace HugoLandEditeur.Presentation
             this.SuspendLayout();
 
             Loaditems();
-            
+
         }
 
         private void frmAdminList_Load(object sender, EventArgs e)
@@ -48,20 +48,19 @@ namespace HugoLandEditeur.Presentation
         private void button1_Click(object sender, EventArgs e)
         {
 
-            foreach(ListViewItem item in listviewAdmins.Items)
+            foreach (ListViewItem item in listviewAdmins.Items)
             {
                 if (item.Checked)
                 {
-                    item.SubItems[1].Text = "false";
-                    item.SubItems[1].BackColor = Color.Red;
-                    item.UseItemStyleForSubItems = false;
+                    item.SubItems[1].Text = "true";
+                    item.SubItems[1].BackColor = Color.Green;
                 }
                 else
                 {
-                    item.SubItems[1].Text = "true";
-                    item.SubItems[1].BackColor = Color.White;
-                    item.UseItemStyleForSubItems = false;
+                    item.SubItems[1].Text = "false";
+                    item.SubItems[1].BackColor = Color.Red;
                 }
+                item.UseItemStyleForSubItems = false;
             }
         }
 
@@ -71,9 +70,15 @@ namespace HugoLandEditeur.Presentation
 
             foreach (ListViewItem item in listviewAdmins.Items)
             {
+
                 if (item.Checked)
                 {
-                    j = lstadmins.FirstOrDefault(x => x.NomJoueur == item.SubItems[0].Text);
+                    j = lstPlayers.FirstOrDefault(x => x.NomJoueur == item.SubItems[0].Text);
+                    controller.ModifierJoueur(j.Id, j.NomJoueur, j.Courriel, j.Prenom, j.Nom, 1);
+                }
+                else
+                {
+                    j = lstPlayers.FirstOrDefault(x => x.NomJoueur == item.SubItems[0].Text);
                     controller.ModifierJoueur(j.Id, j.NomJoueur, j.Courriel, j.Prenom, j.Nom, 0);
                 }
             }
@@ -83,15 +88,30 @@ namespace HugoLandEditeur.Presentation
 
         public void Loaditems()
         {
-            lstadmins = controller.ListerCompte().Where(x => x.TypeUtilisateur.Equals(1)).ToList();
+            lstPlayers = controller.ListerCompte().Where(x => x.TypeUtilisateur == 0 || x.TypeUtilisateur == 1).ToList();
             string[] array = new string[2];
             ListViewItem itm;
 
-            foreach (var i in lstadmins)
+            foreach (var i in lstPlayers)
             {
                 array[0] = i.NomJoueur;
-                array[1] = "true";
-                itm = new ListViewItem(array);
+
+                if (i.TypeUtilisateur == 1)
+                {
+                    array[1] = "true";
+                    itm = new ListViewItem(array);
+                    itm.Checked = true;
+                    itm.SubItems[1].BackColor = Color.Green;
+                }
+                else
+                {
+                    array[1] = "false";
+                    itm = new ListViewItem(array);
+                    itm.SubItems[1].BackColor = Color.Red;
+
+                }
+
+                itm.UseItemStyleForSubItems = false;
                 listviewAdmins.Items.Add(itm);
             }
         }
