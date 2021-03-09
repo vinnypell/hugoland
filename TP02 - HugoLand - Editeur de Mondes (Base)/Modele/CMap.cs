@@ -217,8 +217,11 @@ namespace HugoLandEditeur
             m_Tiles[yindex, xindex] = TileID;
             m_TileLibrary.DrawTile(m_BackBufferDC, TileID, xindex * csteApplication.TILE_WIDTH_IN_MAP, yindex * csteApplication.TILE_HEIGHT_IN_MAP);
 
-            m_currTile = m_TileLibrary.ObjMonde[TileID];
-            m_TileLibrary.Tiles[yindex, xindex] = m_TileLibrary.ObjMonde[TileID];
+            if (m_TileLibrary.ObjMonde.ContainsKey(TileID))
+            {
+                m_currTile = m_TileLibrary.ObjMonde[TileID];
+                m_TileLibrary.Tiles[yindex, xindex] = m_TileLibrary.ObjMonde[TileID];
+            }
         }
 
         private void UpdateTiles()
