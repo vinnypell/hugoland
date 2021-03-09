@@ -217,15 +217,8 @@ namespace HugoLandEditeur
             m_Tiles[yindex, xindex] = TileID;
             m_TileLibrary.DrawTile(m_BackBufferDC, TileID, xindex * csteApplication.TILE_WIDTH_IN_MAP, yindex * csteApplication.TILE_HEIGHT_IN_MAP);
 
-            foreach (Tile tile in m_TileLibrary.ObjMonde.Values)
-            {
-                if (tile.imageId == TileID)
-                {
-                    m_currTile = tile;
-                    m_TileLibrary.Tiles[yindex, xindex] = tile;
-                    return;
-                }
-            }
+            m_currTile = m_TileLibrary.ObjMonde[TileID];
+            m_TileLibrary.Tiles[yindex, xindex] = m_TileLibrary.ObjMonde[TileID];
         }
 
         private void UpdateTiles()
@@ -237,7 +230,7 @@ namespace HugoLandEditeur
             {
                 for (int x = 0; x < currentMonde.LimiteX; x++)
                 {
-                    Tile tile = m_TileLibrary.Tiles[y, x];
+                    Tile tile = m_TileLibrary.ObjMonde[m_Tiles[y, x]];
 
                     List<ObjetMonde> TileInMondeObj = currObjs.Where(o => o.x == x && o.y == y).ToList();
                     if (TileInMondeObj.Count() > 0)
@@ -256,7 +249,6 @@ namespace HugoLandEditeur
 
                     switch (tile.TypeObjet)
                     {
-
                         case TypeTile.ObjetMonde:
                             ObjCtrl.AjouterObjetMonde(currentMonde.Id, tile.Name, x, y, (int)tile.TypeObjet, tile.imageId);
                             //currentMonde.ObjetMondes.Add(m_TileLibrary.objetMondes.FirstOrDefault(x => x.ImageId == tile.imageId && x.x == xindex && x.y == yindex));

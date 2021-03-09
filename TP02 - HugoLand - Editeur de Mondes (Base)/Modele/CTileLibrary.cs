@@ -37,19 +37,6 @@ namespace HugoLandEditeur
             }
         }
 
-        private List<int> m_TileID = new List<int>();
-        public List<int> TileID
-        {
-            get
-            {
-                return m_TileID;
-            }
-            set
-            {
-                m_TileID = value;
-            }
-        }
-
         // Contient l'image à afficher
         private Tile[,] m_Tiles;
         public Tile[,] Tiles
@@ -64,8 +51,8 @@ namespace HugoLandEditeur
             }
         }
 
-        private Dictionary<string, Tile> _ObjMonde = new Dictionary<string, Tile>();
-        public Dictionary<string, Tile> ObjMonde
+        private Dictionary<int, Tile> _ObjMonde = new Dictionary<int, Tile>();
+        public Dictionary<int, Tile> ObjMonde
         {
             get { return _ObjMonde; }
             set { _ObjMonde = value; }
@@ -172,50 +159,6 @@ namespace HugoLandEditeur
             yindex = y / csteApplication.TILE_HEIGHT_IN_IMAGE;
         }
 
-        private void TilesToObjects(Tile tile, Monde monde)
-        {
-            int imageId = TileToTileID(tile.X_Image, tile.Y_Image);
-            m_TileID.Add(imageId);
-
-            switch (tile.TypeObjet)
-            {
-                case TypeTile.ObjetMonde:
-                    objetMondes.Add(new ObjetMonde
-                    {
-                        MondeId = monde.Id,
-                        Description = tile.Name,
-                        x = tile.X_Image,
-                        y = tile.Y_Image,
-                        TypeObjet = (int)tile.TypeObjet,
-                        ImageId = imageId
-                    });
-                    break;
-                case TypeTile.Monstre:
-                    monstres.Add(new Monstre
-                    {
-                        Monde = monde,
-                        x = tile.X_Image,
-                        y = tile.Y_Image,
-                        Nom = tile.Name,
-                        ImageId = imageId
-                    });
-                    break;
-                case TypeTile.Item:
-                    items.Add(new Item
-                    {
-                        Nom = tile.Name,
-                        Description = tile.Category,
-                        x = tile.X_Image,
-                        y = tile.Y_Image,
-                        ImageId = imageId,
-                        MondeId = monde.Id
-                    });
-                    break;
-                default:
-                    break;
-            }
-        }
-
         public void readTileDefinitions(Monde m)
         {
             if (m == null)
@@ -241,8 +184,8 @@ namespace HugoLandEditeur
 
                     Tile objMonde;
                     objMonde = new Tile(elements);
-                    TilesToObjects(objMonde, m);
-                    _ObjMonde.Add(objMonde.Name, objMonde);
+                    int imageId = TileToTileID(objMonde.X_Image, objMonde.Y_Image);
+                    _ObjMonde.Add(imageId, objMonde);
                 }
             }
 
