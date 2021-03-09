@@ -274,9 +274,9 @@ namespace HugoLandEditeur
                     for (int x = 0; x < m.LimiteX; x++)
                     {
                         // ça plante pour une raison que j'ignore
-                        List<Item> items = ctrl.ListerItems(m).Where(i => i.x == x && i.y == y).ToList();
-                        ObjetMonde objets = ctrl.ListerObjetMondes(m).FirstOrDefault(o => o.x == x && o.y == y);
-                        Monstre monstres = ctrl.ListerMonstres(m).FirstOrDefault(o => o.x == x && o.y == y);
+                        List<Item> items = m.Items.Where(i => i.x == x && i.y == y).ToList();
+                        ObjetMonde objets = m.ObjetMondes.FirstOrDefault(o => o.x == x && o.y == y);
+                        Monstre monstres = m.Monstres.FirstOrDefault(o => o.x == x && o.y == y);
 
                         // Héro n'a pas d'imageID dans la table, alors je me doute qu'on enregistre la position du joueur
                         // dans la map, si on ne le fait pas, ce sera ici de le faire et d'ajouter une propriété à cet effet

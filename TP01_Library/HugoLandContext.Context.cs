@@ -20,6 +20,7 @@ namespace TP01_Library
         public HugoLandContext()
             : base("name=HugoLandContext")
         {
+            this.Database.CommandTimeout = 300;
         }
     
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
