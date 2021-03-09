@@ -29,6 +29,12 @@ namespace HugoLandEditeur.Presentation
 
         }
 
+        /// <summary>
+        /// Description : Tente de créer un nouvel utilisateur avec le formulaire
+        /// Date : 2021-03-08
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btn_Click(object sender, EventArgs e)
         {
 

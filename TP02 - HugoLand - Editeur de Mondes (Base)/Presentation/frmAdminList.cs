@@ -15,6 +15,11 @@ namespace HugoLandEditeur.Presentation
     {
         public List<CompteJoueur> lstPlayers = new List<CompteJoueur>();
         CompteJoueurController controller = new CompteJoueurController();
+
+        /// <summary>
+        /// Description : Initialise la liste des administrateurs
+        /// Date : 2021-03-08
+        /// </summary>
         public frmAdminList()
         {
             InitializeComponent();
@@ -86,6 +91,10 @@ namespace HugoLandEditeur.Presentation
             this.Close();
         }
 
+        /// <summary>
+        /// Description : Remplis la liste du formulaire
+        /// date : 2021-03-08
+        /// </summary>
         public void Loaditems()
         {
             lstPlayers = controller.ListerCompte().Where(x => x.TypeUtilisateur == 0 || x.TypeUtilisateur == 1).ToList();

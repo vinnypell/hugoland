@@ -210,6 +210,13 @@ namespace HugoLandEditeur
             bounding.Y = (y * csteApplication.TILE_HEIGHT_IN_MAP * m_Zoom) - 3;
         }
 
+        /// <summary>
+        /// Description : Modifier la tuile affichée sur la map
+        /// Date: 2021-03-08
+        /// </summary>
+        /// <param name="xindex"></param>
+        /// <param name="yindex"></param>
+        /// <param name="TileID"></param>
         public void PlotTile(int xindex, int yindex, int TileID)
         {
             if (xindex < 0 || yindex < 0 || yindex >= m_Height || xindex >= m_Width)
@@ -224,6 +231,10 @@ namespace HugoLandEditeur
             }
         }
 
+        /// <summary>
+        /// Description : Permet de mettre a jour les tiles de la map dans la base de données
+        /// Date : 2021-03-08
+        /// </summary>
         private void UpdateTiles()
         {
 
@@ -314,27 +325,6 @@ namespace HugoLandEditeur
             }
             UpdateTiles();
 
-
-            //if (currObjs != null && currObjs.Count != 0)
-            //{
-            //    MondeCtrl.ModifierMonde(currentMonde.Id, currObjs);
-            //}
-
-            //if (currMonstres != null && currMonstres.Count != 0)
-            //{
-            //    MondeCtrl.ModifierMonde(currentMonde.Id, currMonstres);
-            //}
-
-            //if (currItems != null && currItems.Count != 0)
-            //{
-            //    MondeCtrl.ModifierMonde(currentMonde.Id, currItems);
-            //}
-
-            //if (currHeroes != null && currHeroes.Count != 0)
-            //{
-            //    ctrl.ModifierMonde(currentMonde.Id, currHeroes);
-            //}
-
             return 0;
         }
 
@@ -352,7 +342,6 @@ namespace HugoLandEditeur
             width = m.LimiteX;
             height = m.LimiteY;
 
-            //if (width <= 0 || height <= 0 || data < 0 || m.Id < 0)
             if (width <= 0 || height <= 0 || m.Id < 0)
                 return -1;
             if (width < 8 || width > csteApplication.MAP_MAX_WIDTH)
@@ -429,7 +418,6 @@ namespace HugoLandEditeur
                 m_BackBuffer = new Bitmap(m_Width * csteApplication.TILE_WIDTH_IN_MAP, m_Height * csteApplication.TILE_HEIGHT_IN_MAP);
                 m_BackBufferDC = Graphics.FromImage(m_BackBuffer);
 
-                //Save();
                 Refresh();
             }
             catch

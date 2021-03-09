@@ -9,6 +9,10 @@ namespace HugoLandEditeur
         private int m_Width;
         private int m_Height;
 
+        /// <summary>
+        /// Description : Initialize le formulaire de création de monde
+        /// Date : 2021-03-08
+        /// </summary>
         public frmNew()
         {
             InitializeComponent();

@@ -18,6 +18,10 @@ namespace HugoLandEditeur.Presentation
         MondeController ctrl = new MondeController();
 
         public Monde monde { get; set; }
+        /// <summary>
+        /// Description : Initilise le formulaire de sélection de monde pour loader
+        /// Date : 2021-03-08
+        /// </summary>
         public frmListSelector()
         {
             InitializeComponent();
@@ -25,12 +29,20 @@ namespace HugoLandEditeur.Presentation
             lstMondes.DataSource = ctrl.ListerMondes().Select(x =>x.Id + " : " + x.Description).ToArray();
         }
 
+        /// <summary>
+        /// Description : annule la sélection
+        /// Date : 2021-03-08
+        /// </summary>
         private void btnCancel_Click(object sender, EventArgs e)
         {
             this.DialogResult = DialogResult.Cancel;
             this.Close();
         }
 
+        /// <summary>
+        /// Description : retourne le monde sélectionné
+        /// Date : 2021-03-08
+        /// </summary>
         private void btnConfirm_Click(object sender, EventArgs e)
         {
             string itemstr = lstMondes.SelectedItem.ToString();

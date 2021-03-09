@@ -6,6 +6,9 @@ namespace HugoLandEditeur.Presentation
 {
     public partial class frmConnection : Form
     {
+        /// <summary>
+        /// Description : Initialise le formulaire de connexion
+        /// </summary>
         public frmConnection()
         {
             InitializeComponent();
@@ -20,6 +23,12 @@ namespace HugoLandEditeur.Presentation
         {
         }
 
+        /// <summary>
+        /// Description : Tente d'authentifier l'utilisateur
+        /// Date : 2021-03-08
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btn_connection_Click(object sender, EventArgs e)
         {
             string username = txt_username.Text;

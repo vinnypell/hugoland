@@ -14,6 +14,11 @@ namespace HugoLandEditeur.Presentation
     public partial class frmSave : Form
     {
         public string Description { get; set; }
+
+        /// <summary>
+        /// Description : Initialise le formulaire pour la sauvegarde du monde
+        /// </summary>
+        /// <param name="m"></param>
         public frmSave(Monde m)
         {
             InitializeComponent();
