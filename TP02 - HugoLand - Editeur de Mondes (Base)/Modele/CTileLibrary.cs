@@ -192,7 +192,14 @@ namespace HugoLandEditeur
             ObjetMonde tuileDefaut = objCtrl.GetObjetMondeDefault();
             if (tuileDefaut == null)
             {
-                tuileDefaut = objetMondes.FirstOrDefault(x => x.ImageId == 32);
+                tuileDefaut = new ObjetMonde()
+                {
+                    Description = "Grass",
+                    x = 0,
+                    y = 0,
+                    ImageId = 32,
+                    MondeId = m.Id
+                };
             }
 
             Tile defaultTile = new Tile()
