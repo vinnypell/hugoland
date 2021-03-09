@@ -250,15 +250,15 @@ namespace HugoLandEditeur
                     switch (tile.TypeObjet)
                     {
                         case TypeTile.ObjetMonde:
-                            ObjCtrl.AjouterObjetMonde(currentMonde.Id, tile.Name, x, y, (int)tile.TypeObjet, tile.imageId);
+                            ObjCtrl.AjouterObjetMonde(currentMonde.Id, tile.Name, x, y, (int)tile.TypeObjet, m_Tiles[y, x]);
                             //currentMonde.ObjetMondes.Add(m_TileLibrary.objetMondes.FirstOrDefault(x => x.ImageId == tile.imageId && x.x == xindex && x.y == yindex));
                             break;
                         case TypeTile.Monstre:
-                            MonstreCtrl.AjouterMonstre(currentMonde, x, y, tile.Name, tile.imageId);
+                            MonstreCtrl.AjouterMonstre(currentMonde, x, y, tile.Name, m_Tiles[y, x]);
                             //urrentMonde.Monstres.Add(m_TileLibrary.monstres.FirstOrDefault(x => x.ImageId == TileID && x.x == xindex && x.y == yindex));
                             break;
                         case TypeTile.Item:
-                            ItemCtrl.AjouterItems(tile.Name, "", x, y, tile.imageId, currentMonde.Id);
+                            ItemCtrl.AjouterItems(tile.Name, "", x, y, m_Tiles[y, x], currentMonde.Id);
                             //currentMonde.Items.Add(m_TileLibrary.items.FirstOrDefault(x => x.ImageId == TileID && x.x == xindex && x.y == yindex));
                             break;
                     }
