@@ -23,8 +23,9 @@ namespace TP01_Library
         public float StatDmgMin { get; set; }
         public float StatDmgMax { get; set; }
         public int MondeId { get; set; }
-        public Nullable<int> ImageId { get; set; }
+        public int ImageId { get; set; }
     
         public virtual Monde Monde { get; set; }
+        public virtual TileImg TileImg { get; set; }
     }
 }

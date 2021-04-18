@@ -52,10 +52,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Classe.cs">
-      <DependentUpon>HugoLandContext.tt</DependentUpon>
+      <DependentUpon>HugoLand.tt</DependentUpon>
     </Compile>
     <Compile Include="CompteJoueur.cs">
-      <DependentUpon>HugoLandContext.tt</DependentUpon>
+      <DependentUpon>HugoLand.tt</DependentUpon>
     </Compile>
     <Compile Include="Controllers\ClasseController.cs" />
     <Compile Include="Controllers\CompteJoueurController.cs" />
@@ -68,71 +68,80 @@
     <Compile Include="Controllers\ObjetMondeController.cs" />
     <Compile Include="Controllers\Outil.cs" />
     <Compile Include="EffetItem.cs">
-      <DependentUpon>HugoLandContext.tt</DependentUpon>
+      <DependentUpon>HugoLand.tt</DependentUpon>
     </Compile>
     <Compile Include="Hero.cs">
-      <DependentUpon>HugoLandContext.tt</DependentUpon>
+      <DependentUpon>HugoLand.tt</DependentUpon>
     </Compile>
-    <Compile Include="HugoLandContext.Context.cs">
+    <Compile Include="HugoLand.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>HugoLandContext.Context.tt</DependentUpon>
+      <DependentUpon>HugoLand.Context.tt</DependentUpon>
     </Compile>
-    <Compile Include="HugoLandContext.cs">
+    <Compile Include="HugoLand.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>HugoLandContext.tt</DependentUpon>
+      <DependentUpon>HugoLand.tt</DependentUpon>
     </Compile>
-    <Compile Include="HugoLandContext.Designer.cs">
+    <Compile Include="HugoLand.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>HugoLandContext.edmx</DependentUpon>
+      <DependentUpon>HugoLand.edmx</DependentUpon>
     </Compile>
     <Compile Include="InventaireHero.cs">
-      <DependentUpon>HugoLandContext.tt</DependentUpon>
+      <DependentUpon>HugoLand.tt</DependentUpon>
     </Compile>
     <Compile Include="Item.cs">
-      <DependentUpon>HugoLandContext.tt</DependentUpon>
+      <DependentUpon>HugoLand.tt</DependentUpon>
     </Compile>
     <Compile Include="Monde.cs">
-      <DependentUpon>HugoLandContext.tt</DependentUpon>
+      <DependentUpon>HugoLand.tt</DependentUpon>
     </Compile>
     <Compile Include="Monstre.cs">
-      <DependentUpon>HugoLandContext.tt</DependentUpon>
+      <DependentUpon>HugoLand.tt</DependentUpon>
     </Compile>
     <Compile Include="ObjetMonde.cs">
-      <DependentUpon>HugoLandContext.tt</DependentUpon>
+      <DependentUpon>HugoLand.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="sysdiagram.cs">
-      <DependentUpon>HugoLandContext.tt</DependentUpon>
+    <Compile Include="sp_helpdiagramdefinition_Result.cs">
+      <DependentUpon>HugoLand.tt</DependentUpon>
     </Compile>
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="HugoLandContext.Context.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>HugoLandContext.edmx</DependentUpon>
-      <LastGenOutput>HugoLandContext.Context.cs</LastGenOutput>
-    </Content>
-    <Content Include="HugoLandContext.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>HugoLandContext.edmx</DependentUpon>
-      <LastGenOutput>HugoLandContext.cs</LastGenOutput>
-    </Content>
+    <Compile Include="sp_helpdiagrams_Result.cs">
+      <DependentUpon>HugoLand.tt</DependentUpon>
+    </Compile>
+    <Compile Include="sysdiagram.cs">
+      <DependentUpon>HugoLand.tt</DependentUpon>
+    </Compile>
+    <Compile Include="TileImg.cs">
+      <DependentUpon>HugoLand.tt</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <None Include="App.Config" />
-    <EntityDeploy Include="HugoLandContext.edmx">
+    <EntityDeploy Include="HugoLand.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>HugoLandContext.Designer.cs</LastGenOutput>
+      <LastGenOutput>HugoLand.Designer.cs</LastGenOutput>
     </EntityDeploy>
-    <None Include="HugoLandContext.edmx.diagram">
-      <DependentUpon>HugoLandContext.edmx</DependentUpon>
+    <None Include="HugoLand.edmx.diagram">
+      <DependentUpon>HugoLand.edmx</DependentUpon>
     </None>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="HugoLand.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>HugoLand.edmx</DependentUpon>
+      <LastGenOutput>HugoLand.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="HugoLand.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>HugoLand.edmx</DependentUpon>
+      <LastGenOutput>HugoLand.cs</LastGenOutput>
+    </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

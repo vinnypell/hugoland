@@ -10,19 +10,13 @@
 namespace TP01_Library
 {
     using System;
-    using System.Collections.Generic;
     
-    public partial class ObjetMonde
+    public partial class sp_helpdiagrams_Result
     {
-        public int Id { get; set; }
-        public int x { get; set; }
-        public int y { get; set; }
-        public string Description { get; set; }
-        public int TypeObjet { get; set; }
-        public int MondeId { get; set; }
-        public int ImageId { get; set; }
-    
-        public virtual Monde Monde { get; set; }
-        public virtual TileImg TileImg { get; set; }
+        public string Database { get; set; }
+        public string Name { get; set; }
+        public int ID { get; set; }
+        public string Owner { get; set; }
+        public int OwnerID { get; set; }
     }
 }

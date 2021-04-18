@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="895253532fe44d98948f69d853bd484d" Name="Diagram1" ZoomLevel="64">
+        <EntityTypeShape EntityType="HugolandModels.Classe" Width="1.5" PointX="3" PointY="8.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="HugolandModels.CompteJoueur" Width="1.5" PointX="3" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="HugolandModels.EffetItem" Width="1.5" PointX="12.75" PointY="9.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="HugolandModels.Hero" Width="1.5" PointX="5.25" PointY="7.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="HugolandModels.InventaireHero" Width="1.5" PointX="7.5" PointY="9" IsExpanded="true" />
+        <EntityTypeShape EntityType="HugolandModels.Item" Width="1.5" PointX="10.5" PointY="8.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="HugolandModels.Monde" Width="1.5" PointX="0.75" PointY="8.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="HugolandModels.Monstre" Width="1.5" PointX="3" PointY="4.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="HugolandModels.ObjetMonde" Width="1.5" PointX="3" PointY="12.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="HugolandModels.sysdiagram" Width="1.5" PointX="5.75" PointY="2.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="HugolandModels.TileImg" Width="1.5" PointX="0.75" PointY="5.125" IsExpanded="true" />
+        <AssociationConnector Association="HugolandModels.FK_Classe_Monde" ManuallyRouted="false" />
+        <AssociationConnector Association="HugolandModels.FK_Hero_Classe" ManuallyRouted="false" />
+        <AssociationConnector Association="HugolandModels.IsPartOfAccount" ManuallyRouted="false" />
+        <AssociationConnector Association="HugolandModels.FK_EffetItem_Item" ManuallyRouted="false" />
+        <AssociationConnector Association="HugolandModels.FK_BelongsToHero" ManuallyRouted="false" />
+        <AssociationConnector Association="HugolandModels.FK_Hero_Monde" ManuallyRouted="false" />
+        <AssociationConnector Association="HugolandModels.FK_Item_Heros" ManuallyRouted="false" />
+        <AssociationConnector Association="HugolandModels.FK_BelongsToItem" ManuallyRouted="false" />
+        <AssociationConnector Association="HugolandModels.FK_Item_Monde" ManuallyRouted="false" />
+        <AssociationConnector Association="HugolandModels.FK_TileImgItem" ManuallyRouted="false" />
+        <AssociationConnector Association="HugolandModels.FK_Monstre_Monde" ManuallyRouted="false" />
+        <AssociationConnector Association="HugolandModels.FK_ObjetMonde_Monde" ManuallyRouted="false" />
+        <AssociationConnector Association="HugolandModels.FK_MonstreTileImg" ManuallyRouted="false" />
+        <AssociationConnector Association="HugolandModels.FK_TileImgObjetMonde" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

@@ -12,30 +12,24 @@ namespace TP01_Library
     using System;
     using System.Collections.Generic;
     
-    public partial class Item
+    public partial class TileImg
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Item()
+        public TileImg()
         {
-            this.EffetItems = new HashSet<EffetItem>();
-            this.InventaireHeroes = new HashSet<InventaireHero>();
+            this.Items = new HashSet<Item>();
+            this.Monstres = new HashSet<Monstre>();
+            this.ObjetMondes = new HashSet<ObjetMonde>();
         }
     
-        public int Id { get; set; }
-        public string Nom { get; set; }
-        public string Description { get; set; }
-        public Nullable<int> x { get; set; }
-        public Nullable<int> y { get; set; }
-        public int MondeId { get; set; }
-        public Nullable<int> IdHero { get; set; }
         public int ImageId { get; set; }
+        public string Imageb64 { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<EffetItem> EffetItems { get; set; }
-        public virtual Hero Hero { get; set; }
+        public virtual ICollection<Item> Items { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<InventaireHero> InventaireHeroes { get; set; }
-        public virtual Monde Monde { get; set; }
-        public virtual TileImg TileImg { get; set; }
+        public virtual ICollection<Monstre> Monstres { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<ObjetMonde> ObjetMondes { get; set; }
     }
 }

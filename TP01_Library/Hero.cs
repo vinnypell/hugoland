@@ -35,6 +35,7 @@ namespace TP01_Library
         public int ClasseId { get; set; }
         public string NomHero { get; set; }
         public bool EstConnecte { get; set; }
+        public Nullable<int> ImageId { get; set; }
     
         public virtual Classe Classe { get; set; }
         public virtual CompteJoueur CompteJoueur { get; set; }
