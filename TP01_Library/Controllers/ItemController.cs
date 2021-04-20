@@ -73,7 +73,7 @@ namespace TP01_Library.Controllers
         {
             using (HugoLandContext context = new HugoLandContext())
             {
-                InventaireHero item = context.InventaireHeroes.FirstOrDefault(x => x.ItemId == Item_ID);
+                InventaireHeroe item = context.InventaireHeroes.FirstOrDefault(x => x.ItemId == Item_ID);
 
                 if (item != null)
                 {
@@ -106,11 +106,11 @@ namespace TP01_Library.Controllers
         {
             using (HugoLandContext context = new HugoLandContext())
             {
-                //context.Items.RemoveRange(context.Items.Where(x => x.MondeId == id));
-                //context.SaveChanges();
+                context.Items.RemoveRange(context.Items.Where(x => x.MondeId == id));
+                context.SaveChanges();
 
                 //La requête SQL est beacoup plus rapide que le entity framework
-                context.Database.ExecuteSqlCommand($"DELETE FROM dbo.Item WHERE MondeId = {id}");
+                //context.Database.ExecuteSqlCommand($"DELETE FROM dbo.Item WHERE MondeId = {id}");
             }
         }
     }

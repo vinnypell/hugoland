@@ -124,11 +124,11 @@ namespace TP01_Library.Controllers
         {
             using (HugoLandContext context = new HugoLandContext())
             {
-                //context.ObjetMondes.RemoveRange(context.ObjetMondes.Where(x => x.MondeId == id));
-                //context.SaveChanges();
+                context.ObjetMondes.RemoveRange(context.ObjetMondes.Where(x => x.MondeId == id));
+                context.SaveChanges();
 
                 //La requête SQL est beacoup plus rapide que le entity framework
-                context.Database.ExecuteSqlCommand($"DELETE FROM dbo.ObjetMonde WHERE MondeId = {id}");
+                //context.Database.ExecuteSqlCommand($"DELETE FROM dbo.ObjetMonde WHERE MondeId = {id}");
             }
         }
     }
