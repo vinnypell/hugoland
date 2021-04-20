@@ -192,7 +192,7 @@ namespace HugoLandEditeur
                 while ((line = stream.ReadLine()) != null)
                 {
                     //separate out the elements of the
-                    string[] elements = line.Split(',');
+                    string[] elements = line.Split(';');
 
                     Tile objMonde;
                     objMonde = new Tile(elements);

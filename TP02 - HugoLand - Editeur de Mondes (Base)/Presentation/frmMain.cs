@@ -664,15 +664,15 @@ namespace HugoLandEditeur
             if (result == DialogResult.Yes)
             {
                 this.Cursor = Cursors.WaitCursor;
-                try
-                {
+                //try
+                //{
                     m_Map.currentMonde.Description = f.Description;
                     m_Map.Save();
-                }
-                catch (Exception e)
-                {
-                    Console.WriteLine(e.StackTrace);
-                }
+               // }
+               // catch (Exception e)
+              //  {
+              //      Console.WriteLine(e.StackTrace);
+               // }
                 m_MenuLogic();
                 this.Cursor = Cursors.Default;
             }

@@ -259,7 +259,7 @@ namespace HugoLandEditeur
                                 x = x,
                                 y = y,
                                 TypeObjet = (int)tile.TypeObjet,
-                                ImageId = m_Tiles[y, x]
+                                ImageId = tile.imageId
                             });
                             //currentMonde.ObjetMondes.Add(m_TileLibrary.objetMondes.FirstOrDefault(x => x.ImageId == tile.imageId && x.x == xindex && x.y == yindex));
                             break;
@@ -271,7 +271,7 @@ namespace HugoLandEditeur
                                 x = x,
                                 y = y,
                                 Nom = tile.Name,
-                                ImageId = m_Tiles[y, x]
+                                ImageId = tile.imageId
                             });
                             //urrentMonde.Monstres.Add(m_TileLibrary.monstres.FirstOrDefault(x => x.ImageId == TileID && x.x == xindex && x.y == yindex));
                             break;
@@ -283,8 +283,8 @@ namespace HugoLandEditeur
                                 x = x,
                                 y = y,
                                 Nom = tile.Name,
-                                ImageId = m_Tiles[y, x],
-                                Description = tile.Name ?? " "
+                                ImageId = tile.imageId,
+                                Description = tile.Category ?? " "
                             });
                             //currentMonde.Items.Add(m_TileLibrary.items.FirstOrDefault(x => x.ImageId == TileID && x.x == xindex && x.y == yindex));
                             break;
