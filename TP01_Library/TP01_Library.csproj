@@ -113,9 +113,6 @@
     <Compile Include="sysdiagram.cs">
       <DependentUpon>HugoLand.tt</DependentUpon>
     </Compile>
-    <Compile Include="TileImg.cs">
-      <DependentUpon>HugoLand.tt</DependentUpon>
-    </Compile>
   </ItemGroup>
   <ItemGroup>
     <None Include="App.Config" />

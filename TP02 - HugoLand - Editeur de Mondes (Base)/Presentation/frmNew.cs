@@ -123,5 +123,10 @@ namespace HugoLandEditeur
         }
 
         #endregion Hauteur et largeur lors d'une création de map
+
+        private void frmNew_Load(object sender, EventArgs e)
+        {
+
+        }
     }
 }

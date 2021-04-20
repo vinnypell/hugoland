@@ -73,7 +73,7 @@ namespace TP01_Library.Controllers
         {
             using (HugoLandContext context = new HugoLandContext())
             {
-                InventaireHeroe item = context.InventaireHeroes.FirstOrDefault(x => x.ItemId == Item_ID);
+                InventaireHero item = context.InventaireHeroes.FirstOrDefault(x => x.ItemId == Item_ID);
 
                 if (item != null)
                 {

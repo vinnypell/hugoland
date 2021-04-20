@@ -63,7 +63,7 @@ namespace HugoLandEditeur
             //ItemController ctrlItem = new ItemController();
 
             //Monde monde;
-            //using (HugoLandContext context = new HugoLandContext())
+            //using (HugoLandConnection context = new HugoLandConnection())
             //{
             //    monde = context.Mondes.FirstOrDefault();
             //}
@@ -837,6 +837,11 @@ namespace HugoLandEditeur
                 frmMain reload = new frmMain();
                 reload.Show();
             }
+        }
+
+        private void mnuZoom_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

@@ -37,7 +37,6 @@ namespace TP01_Library
         public virtual DbSet<Monstre> Monstres { get; set; }
         public virtual DbSet<ObjetMonde> ObjetMondes { get; set; }
         public virtual DbSet<sysdiagram> sysdiagrams { get; set; }
-        public virtual DbSet<TileImg> TileImgs { get; set; }
     
         public virtual int Connexion(string pNomJoueur, string pMotDePasse, ObjectParameter message)
         {

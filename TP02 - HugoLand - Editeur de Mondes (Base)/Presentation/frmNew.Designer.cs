@@ -137,6 +137,7 @@
             this.Name = "frmNew";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Create New Map";
+            this.Load += new System.EventHandler(this.frmNew_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 

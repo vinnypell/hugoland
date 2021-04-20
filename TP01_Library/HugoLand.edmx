@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="HugolandModels.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+      <Schema Namespace="HugoLandModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Classes">
           <Key>
             <PropertyRef Name="Id" />
@@ -117,6 +117,7 @@
           <Property Name="TypeObjet" Type="int" Nullable="false" />
           <Property Name="MondeId" Type="int" Nullable="false" />
           <Property Name="ImageId" Type="int" Nullable="false" />
+          <Property Name="IsBlock" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="sysdiagrams">
           <Key>
@@ -127,13 +128,6 @@
           <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="version" Type="int" />
           <Property Name="definition" Type="varbinary(max)" />
-        </EntityType>
-        <EntityType Name="TileImgs">
-          <Key>
-            <PropertyRef Name="ImageId" />
-          </Key>
-          <Property Name="ImageId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Imageb64" Type="nvarchar(max)" Nullable="false" />
         </EntityType>
         <Association Name="FK_BelongsToHero">
           <End Role="Heros" Type="Self.Heros" Multiplicity="1" />
@@ -251,18 +245,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_MonstreTileImg">
-          <End Role="TileImgs" Type="Self.TileImgs" Multiplicity="1" />
-          <End Role="Monstres" Type="Self.Monstres" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="TileImgs">
-              <PropertyRef Name="ImageId" />
-            </Principal>
-            <Dependent Role="Monstres">
-              <PropertyRef Name="ImageId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_ObjetMonde_Monde">
           <End Role="Mondes" Type="Self.Mondes" Multiplicity="1">
             <OnDelete Action="Cascade" />
@@ -274,30 +256,6 @@
             </Principal>
             <Dependent Role="ObjetMondes">
               <PropertyRef Name="MondeId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_TileImgItem">
-          <End Role="TileImgs" Type="Self.TileImgs" Multiplicity="1" />
-          <End Role="Items" Type="Self.Items" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="TileImgs">
-              <PropertyRef Name="ImageId" />
-            </Principal>
-            <Dependent Role="Items">
-              <PropertyRef Name="ImageId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_TileImgObjetMonde">
-          <End Role="TileImgs" Type="Self.TileImgs" Multiplicity="1" />
-          <End Role="ObjetMondes" Type="Self.ObjetMondes" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="TileImgs">
-              <PropertyRef Name="ImageId" />
-            </Principal>
-            <Dependent Role="ObjetMondes">
-              <PropertyRef Name="ImageId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -358,7 +316,7 @@
           <Parameter Name="new_diagramname" Type="nvarchar" Mode="In" />
         </Function>
         <Function Name="sp_upgraddiagrams" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
-        <EntityContainer Name="HugolandModelsStoreContainer">
+        <EntityContainer Name="HugoLandModelStoreContainer">
           <EntitySet Name="Classes" EntityType="Self.Classes" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CompteJoueur" EntityType="Self.CompteJoueur" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="EffetItems" EntityType="Self.EffetItems" Schema="dbo" store:Type="Tables" />
@@ -369,7 +327,6 @@
           <EntitySet Name="Monstres" EntityType="Self.Monstres" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ObjetMondes" EntityType="Self.ObjetMondes" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="TileImgs" EntityType="Self.TileImgs" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK_BelongsToHero" Association="Self.FK_BelongsToHero">
             <End Role="Heros" EntitySet="Heros" />
             <End Role="InventaireHeroes" EntitySet="InventaireHeroes" />
@@ -406,20 +363,8 @@
             <End Role="Mondes" EntitySet="Mondes" />
             <End Role="Monstres" EntitySet="Monstres" />
           </AssociationSet>
-          <AssociationSet Name="FK_MonstreTileImg" Association="Self.FK_MonstreTileImg">
-            <End Role="TileImgs" EntitySet="TileImgs" />
-            <End Role="Monstres" EntitySet="Monstres" />
-          </AssociationSet>
           <AssociationSet Name="FK_ObjetMonde_Monde" Association="Self.FK_ObjetMonde_Monde">
             <End Role="Mondes" EntitySet="Mondes" />
-            <End Role="ObjetMondes" EntitySet="ObjetMondes" />
-          </AssociationSet>
-          <AssociationSet Name="FK_TileImgItem" Association="Self.FK_TileImgItem">
-            <End Role="TileImgs" EntitySet="TileImgs" />
-            <End Role="Items" EntitySet="Items" />
-          </AssociationSet>
-          <AssociationSet Name="FK_TileImgObjetMonde" Association="Self.FK_TileImgObjetMonde">
-            <End Role="TileImgs" EntitySet="TileImgs" />
             <End Role="ObjetMondes" EntitySet="ObjetMondes" />
           </AssociationSet>
           <AssociationSet Name="IsPartOfAccount" Association="Self.IsPartOfAccount">
@@ -431,7 +376,7 @@
     </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
-      <Schema Namespace="HugolandModels" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+      <Schema Namespace="HugoLandModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
         <EntityType Name="Classe">
           <Key>
             <PropertyRef Name="Id" />
@@ -523,7 +468,6 @@
           <NavigationProperty Name="Hero" Relationship="Self.FK_Item_Heros" FromRole="Items" ToRole="Heros" />
           <NavigationProperty Name="InventaireHeroes" Relationship="Self.FK_BelongsToItem" FromRole="Items" ToRole="InventaireHeroes" />
           <NavigationProperty Name="Monde" Relationship="Self.FK_Item_Monde" FromRole="Items" ToRole="Mondes" />
-          <NavigationProperty Name="TileImg" Relationship="Self.FK_TileImgItem" FromRole="Items" ToRole="TileImgs" />
         </EntityType>
         <EntityType Name="Monde">
           <Key>
@@ -554,7 +498,6 @@
           <Property Name="MondeId" Type="Int32" Nullable="false" />
           <Property Name="ImageId" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Monde" Relationship="Self.FK_Monstre_Monde" FromRole="Monstres" ToRole="Mondes" />
-          <NavigationProperty Name="TileImg" Relationship="Self.FK_MonstreTileImg" FromRole="Monstres" ToRole="TileImgs" />
         </EntityType>
         <EntityType Name="ObjetMonde">
           <Key>
@@ -567,8 +510,8 @@
           <Property Name="TypeObjet" Type="Int32" Nullable="false" />
           <Property Name="MondeId" Type="Int32" Nullable="false" />
           <Property Name="ImageId" Type="Int32" Nullable="false" />
+          <Property Name="IsBlock" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="Monde" Relationship="Self.FK_ObjetMonde_Monde" FromRole="ObjetMondes" ToRole="Mondes" />
-          <NavigationProperty Name="TileImg" Relationship="Self.FK_TileImgObjetMonde" FromRole="ObjetMondes" ToRole="TileImgs" />
         </EntityType>
         <EntityType Name="sysdiagram">
           <Key>
@@ -580,21 +523,11 @@
           <Property Name="version" Type="Int32" />
           <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
         </EntityType>
-        <EntityType Name="TileImg">
-          <Key>
-            <PropertyRef Name="ImageId" />
-          </Key>
-          <Property Name="ImageId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Imageb64" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
-          <NavigationProperty Name="Items" Relationship="Self.FK_TileImgItem" FromRole="TileImgs" ToRole="Items" />
-          <NavigationProperty Name="Monstres" Relationship="Self.FK_MonstreTileImg" FromRole="TileImgs" ToRole="Monstres" />
-          <NavigationProperty Name="ObjetMondes" Relationship="Self.FK_TileImgObjetMonde" FromRole="TileImgs" ToRole="ObjetMondes" />
-        </EntityType>
         <Association Name="FK_Classe_Monde">
           <End Role="Mondes" Type="Self.Monde" Multiplicity="1">
             <OnDelete Action="Cascade" />
           </End>
-          <End Role="Classes" Type="HugolandModels.Classe" Multiplicity="*" />
+          <End Role="Classes" Type="HugoLandModel.Classe" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Mondes">
               <PropertyRef Name="Id" />
@@ -605,7 +538,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Hero_Classe">
-          <End Role="Classes" Type="HugolandModels.Classe" Multiplicity="1" />
+          <End Role="Classes" Type="HugoLandModel.Classe" Multiplicity="1" />
           <End Role="Heros" Type="Self.Hero" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Classes">
@@ -704,18 +637,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_TileImgItem">
-          <End Role="TileImgs" Type="Self.TileImg" Multiplicity="1" />
-          <End Role="Items" Type="Self.Item" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="TileImgs">
-              <PropertyRef Name="ImageId" />
-            </Principal>
-            <Dependent Role="Items">
-              <PropertyRef Name="ImageId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_Monstre_Monde">
           <End Role="Mondes" Type="Self.Monde" Multiplicity="1">
             <OnDelete Action="Cascade" />
@@ -744,32 +665,8 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_MonstreTileImg">
-          <End Role="TileImgs" Type="Self.TileImg" Multiplicity="1" />
-          <End Role="Monstres" Type="Self.Monstre" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="TileImgs">
-              <PropertyRef Name="ImageId" />
-            </Principal>
-            <Dependent Role="Monstres">
-              <PropertyRef Name="ImageId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_TileImgObjetMonde">
-          <End Role="TileImgs" Type="Self.TileImg" Multiplicity="1" />
-          <End Role="ObjetMondes" Type="Self.ObjetMonde" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="TileImgs">
-              <PropertyRef Name="ImageId" />
-            </Principal>
-            <Dependent Role="ObjetMondes">
-              <PropertyRef Name="ImageId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <EntityContainer Name="HugoLandContext" annotation:LazyLoadingEnabled="true">
-          <EntitySet Name="Classes" EntityType="HugolandModels.Classe" />
+          <EntitySet Name="Classes" EntityType="HugoLandModel.Classe" />
           <EntitySet Name="CompteJoueurs" EntityType="Self.CompteJoueur" />
           <EntitySet Name="EffetItems" EntityType="Self.EffetItem" />
           <EntitySet Name="Heros" EntityType="Self.Hero" />
@@ -779,7 +676,6 @@
           <EntitySet Name="Monstres" EntityType="Self.Monstre" />
           <EntitySet Name="ObjetMondes" EntityType="Self.ObjetMonde" />
           <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagram" />
-          <EntitySet Name="TileImgs" EntityType="Self.TileImg" />
           <AssociationSet Name="FK_Classe_Monde" Association="Self.FK_Classe_Monde">
             <End Role="Mondes" EntitySet="Mondes" />
             <End Role="Classes" EntitySet="Classes" />
@@ -816,24 +712,12 @@
             <End Role="Mondes" EntitySet="Mondes" />
             <End Role="Items" EntitySet="Items" />
           </AssociationSet>
-          <AssociationSet Name="FK_TileImgItem" Association="Self.FK_TileImgItem">
-            <End Role="TileImgs" EntitySet="TileImgs" />
-            <End Role="Items" EntitySet="Items" />
-          </AssociationSet>
           <AssociationSet Name="FK_Monstre_Monde" Association="Self.FK_Monstre_Monde">
             <End Role="Mondes" EntitySet="Mondes" />
             <End Role="Monstres" EntitySet="Monstres" />
           </AssociationSet>
           <AssociationSet Name="FK_ObjetMonde_Monde" Association="Self.FK_ObjetMonde_Monde">
             <End Role="Mondes" EntitySet="Mondes" />
-            <End Role="ObjetMondes" EntitySet="ObjetMondes" />
-          </AssociationSet>
-          <AssociationSet Name="FK_MonstreTileImg" Association="Self.FK_MonstreTileImg">
-            <End Role="TileImgs" EntitySet="TileImgs" />
-            <End Role="Monstres" EntitySet="Monstres" />
-          </AssociationSet>
-          <AssociationSet Name="FK_TileImgObjetMonde" Association="Self.FK_TileImgObjetMonde">
-            <End Role="TileImgs" EntitySet="TileImgs" />
             <End Role="ObjetMondes" EntitySet="ObjetMondes" />
           </AssociationSet>
           <FunctionImport Name="Connexion">
@@ -866,11 +750,11 @@
             <Parameter Name="diagramname" Mode="In" Type="String" />
             <Parameter Name="owner_id" Mode="In" Type="Int32" />
           </FunctionImport>
-          <FunctionImport Name="sp_helpdiagramdefinition" ReturnType="Collection(HugolandModels.sp_helpdiagramdefinition_Result)">
+          <FunctionImport Name="sp_helpdiagramdefinition" ReturnType="Collection(HugoLandModel.sp_helpdiagramdefinition_Result)">
             <Parameter Name="diagramname" Mode="In" Type="String" />
             <Parameter Name="owner_id" Mode="In" Type="Int32" />
           </FunctionImport>
-          <FunctionImport Name="sp_helpdiagrams" ReturnType="Collection(HugolandModels.sp_helpdiagrams_Result)">
+          <FunctionImport Name="sp_helpdiagrams" ReturnType="Collection(HugoLandModel.sp_helpdiagrams_Result)">
             <Parameter Name="diagramname" Mode="In" Type="String" />
             <Parameter Name="owner_id" Mode="In" Type="Int32" />
           </FunctionImport>
@@ -897,9 +781,9 @@
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="HugolandModelsStoreContainer" CdmEntityContainer="HugoLandContext">
+        <EntityContainerMapping StorageEntityContainer="HugoLandModelStoreContainer" CdmEntityContainer="HugoLandContext">
           <EntitySetMapping Name="Classes">
-            <EntityTypeMapping TypeName="HugolandModels.Classe">
+            <EntityTypeMapping TypeName="HugoLandModel.Classe">
               <MappingFragment StoreEntitySet="Classes">
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="NomClasse" ColumnName="NomClasse" />
@@ -913,7 +797,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="CompteJoueurs">
-            <EntityTypeMapping TypeName="HugolandModels.CompteJoueur">
+            <EntityTypeMapping TypeName="HugoLandModel.CompteJoueur">
               <MappingFragment StoreEntitySet="CompteJoueur">
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="NomJoueur" ColumnName="NomJoueur" />
@@ -927,7 +811,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="EffetItems">
-            <EntityTypeMapping TypeName="HugolandModels.EffetItem">
+            <EntityTypeMapping TypeName="HugoLandModel.EffetItem">
               <MappingFragment StoreEntitySet="EffetItems">
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="ItemId" ColumnName="ItemId" />
@@ -937,7 +821,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Heros">
-            <EntityTypeMapping TypeName="HugolandModels.Hero">
+            <EntityTypeMapping TypeName="HugoLandModel.Hero">
               <MappingFragment StoreEntitySet="Heros">
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="CompteJoueurId" ColumnName="CompteJoueurId" />
@@ -958,7 +842,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="InventaireHeroes">
-            <EntityTypeMapping TypeName="HugolandModels.InventaireHero">
+            <EntityTypeMapping TypeName="HugoLandModel.InventaireHero">
               <MappingFragment StoreEntitySet="InventaireHeroes">
                 <ScalarProperty Name="IdHero" ColumnName="IdHero" />
                 <ScalarProperty Name="ItemId" ColumnName="ItemId" />
@@ -968,7 +852,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Items">
-            <EntityTypeMapping TypeName="HugolandModels.Item">
+            <EntityTypeMapping TypeName="HugoLandModel.Item">
               <MappingFragment StoreEntitySet="Items">
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="Nom" ColumnName="Nom" />
@@ -982,7 +866,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Mondes">
-            <EntityTypeMapping TypeName="HugolandModels.Monde">
+            <EntityTypeMapping TypeName="HugoLandModel.Monde">
               <MappingFragment StoreEntitySet="Mondes">
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="Description" ColumnName="Description" />
@@ -992,7 +876,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Monstres">
-            <EntityTypeMapping TypeName="HugolandModels.Monstre">
+            <EntityTypeMapping TypeName="HugoLandModel.Monstre">
               <MappingFragment StoreEntitySet="Monstres">
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="Nom" ColumnName="Nom" />
@@ -1008,7 +892,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="ObjetMondes">
-            <EntityTypeMapping TypeName="HugolandModels.ObjetMonde">
+            <EntityTypeMapping TypeName="HugoLandModel.ObjetMonde">
               <MappingFragment StoreEntitySet="ObjetMondes">
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="x" ColumnName="x" />
@@ -1017,11 +901,12 @@
                 <ScalarProperty Name="TypeObjet" ColumnName="TypeObjet" />
                 <ScalarProperty Name="MondeId" ColumnName="MondeId" />
                 <ScalarProperty Name="ImageId" ColumnName="ImageId" />
+                <ScalarProperty Name="IsBlock" ColumnName="IsBlock" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="sysdiagrams">
-            <EntityTypeMapping TypeName="HugolandModels.sysdiagram">
+            <EntityTypeMapping TypeName="HugoLandModel.sysdiagram">
               <MappingFragment StoreEntitySet="sysdiagrams">
                 <ScalarProperty Name="name" ColumnName="name" />
                 <ScalarProperty Name="principal_id" ColumnName="principal_id" />
@@ -1031,30 +916,22 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="TileImgs">
-            <EntityTypeMapping TypeName="HugolandModels.TileImg">
-              <MappingFragment StoreEntitySet="TileImgs">
-                <ScalarProperty Name="ImageId" ColumnName="ImageId" />
-                <ScalarProperty Name="Imageb64" ColumnName="Imageb64" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <FunctionImportMapping FunctionImportName="Connexion" FunctionName="HugolandModels.Store.Connexion" />
-          <FunctionImportMapping FunctionImportName="CreerCompteJoueur" FunctionName="HugolandModels.Store.CreerCompteJoueur" />
-          <FunctionImportMapping FunctionImportName="sp_alterdiagram" FunctionName="HugolandModels.Store.sp_alterdiagram" />
-          <FunctionImportMapping FunctionImportName="sp_creatediagram" FunctionName="HugolandModels.Store.sp_creatediagram" />
-          <FunctionImportMapping FunctionImportName="sp_dropdiagram" FunctionName="HugolandModels.Store.sp_dropdiagram" />
-          <FunctionImportMapping FunctionImportName="sp_helpdiagramdefinition" FunctionName="HugolandModels.Store.sp_helpdiagramdefinition">
+          <FunctionImportMapping FunctionImportName="Connexion" FunctionName="HugoLandModel.Store.Connexion" />
+          <FunctionImportMapping FunctionImportName="CreerCompteJoueur" FunctionName="HugoLandModel.Store.CreerCompteJoueur" />
+          <FunctionImportMapping FunctionImportName="sp_alterdiagram" FunctionName="HugoLandModel.Store.sp_alterdiagram" />
+          <FunctionImportMapping FunctionImportName="sp_creatediagram" FunctionName="HugoLandModel.Store.sp_creatediagram" />
+          <FunctionImportMapping FunctionImportName="sp_dropdiagram" FunctionName="HugoLandModel.Store.sp_dropdiagram" />
+          <FunctionImportMapping FunctionImportName="sp_helpdiagramdefinition" FunctionName="HugoLandModel.Store.sp_helpdiagramdefinition">
             <ResultMapping>
-              <ComplexTypeMapping TypeName="HugolandModels.sp_helpdiagramdefinition_Result">
+              <ComplexTypeMapping TypeName="HugoLandModel.sp_helpdiagramdefinition_Result">
                 <ScalarProperty Name="version" ColumnName="version" />
                 <ScalarProperty Name="definition" ColumnName="definition" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="sp_helpdiagrams" FunctionName="HugolandModels.Store.sp_helpdiagrams">
+          <FunctionImportMapping FunctionImportName="sp_helpdiagrams" FunctionName="HugoLandModel.Store.sp_helpdiagrams">
             <ResultMapping>
-              <ComplexTypeMapping TypeName="HugolandModels.sp_helpdiagrams_Result">
+              <ComplexTypeMapping TypeName="HugoLandModel.sp_helpdiagrams_Result">
                 <ScalarProperty Name="Database" ColumnName="Database" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
@@ -1063,8 +940,8 @@
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="sp_renamediagram" FunctionName="HugolandModels.Store.sp_renamediagram" />
-          <FunctionImportMapping FunctionImportName="sp_upgraddiagrams" FunctionName="HugolandModels.Store.sp_upgraddiagrams" />
+          <FunctionImportMapping FunctionImportName="sp_renamediagram" FunctionName="HugoLandModel.Store.sp_renamediagram" />
+          <FunctionImportMapping FunctionImportName="sp_upgraddiagrams" FunctionName="HugoLandModel.Store.sp_upgraddiagrams" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
